@@ -136,6 +136,10 @@ public class Transportes {
                 getChegada().equals(t.getChegada());
     }
 
+    public Transportes clone(){
+        return new Transportes(this);
+    }
+
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -161,5 +165,8 @@ public class Transportes {
 
         return sb.toString();
     }
-    
+
+
+
+
 }
