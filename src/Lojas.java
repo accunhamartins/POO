@@ -112,11 +112,11 @@ public class Lojas {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lojas lojas = (Lojas) o;
-        return tempo_espera == lojas.tempo_espera &&
-                lojas.distancia_loja == this.distancia_loja &&
-                lojas.velocidade_deslocacao == this.velocidade_deslocacao &&
-                lojas.tempo_espera_fila == this.tempo_espera_fila &&
-                lojas.tempo_atendimento_medio == this.tempo_atendimento_medio &&
+        return tempo_espera == lojas.getTempo_espera() &&
+                lojas.getDistancia_loja() == this.distancia_loja &&
+                lojas.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
+                lojas.getTempo_espera_fila() == this.tempo_espera_fila &&
+                lojas.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
                 this.iD_loja.equals(lojas.iD_loja) &&
                 this.encomendas_recebidas.equals(lojas.encomendas_recebidas);
     }
