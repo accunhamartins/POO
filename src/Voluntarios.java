@@ -1,10 +1,11 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Voluntarios {
   private boolean disponivel;
   private float latitude;
   private float longitude;
-  private LocalDateTime inicio_transporte;
+  private LocalDate inicio_transporte;
   private float raio_acao;
   private ArrayList<Encomenda> historico;
   float custo;
@@ -15,7 +16,7 @@ public class Voluntarios {
     this.disponivel = false;
     this.latitude = 0;
     this.longitude = 0;
-    this.inicio_transporte = LocalDateTime.now();
+    this.inicio_transporte = LocalDate.now();
     this.raio_acao = 0;
     this.historico = new ArrayList<>();
     this.custo = 0;
@@ -87,7 +88,7 @@ public class Voluntarios {
   }
 
   public void setInicio_Transporte(LocalDate a){
-    this.historico = a;
+    this.inicio_transporte = a;
   }
 
   public void setRaio_acao(float a){
@@ -96,7 +97,7 @@ public class Voluntarios {
 
   public void setHistorico(ArrayList<Encomenda> a){
     this.historico = new ArrayList<>();
-    for(Encomenda s: a.registos) this.historico.add(s);
+    for(Encomenda s: a) this.historico.add(s);
   }
   public void setCusto(float a){
     this.custo = a;
@@ -108,16 +109,16 @@ public class Voluntarios {
 
   //public equals
   public boolean equals(Object o){
-    if (this == 0) return true;
+    if (o == this) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Voluntarios v = (Voluntarios) o;
-    return this.disponivel.equals(v.getDisponibilidade())
-      && this.latitude.equals(v.getLatitude())
-      && this.longitude.equals(v.getLongitude())
+    return this.disponivel ==  v.getDisponibilidade()
+      && this.latitude == v.getLatitude()
+      && this.longitude == v.getLongitude()
       && this.inicio_transporte.equals(v.getInicio_transporte())
-      && this.raio_acao.equals(v.getRaio_acao())
+      && this.raio_acao == v.getRaio_acao()
       && this.historico.equals(v.getHistorico())
-      && this.custo.equals(v.getCusto());
+      && this.custo == v.getCusto();
   }
 
   public String toString(){
