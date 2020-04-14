@@ -1,11 +1,12 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Encomenda {
     private double peso;
     private String comprador;
     private String vendedor;
-    private ArrayList<String> produtos;
+    private Map<String, Produto> produtos;
     private boolean encomendaMedica;
 
 
@@ -13,11 +14,11 @@ public class Encomenda {
         this.peso = 0.0;
         this.comprador = "";
         this.vendedor = "";
-        this.produtos = new ArrayList<>();
+        this.produtos = new HashMap<>();
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(double peso, String comprador, String vendedor, ArrayList<String> produtos, boolean encomendaMedica){
+    public  Encomenda(double peso, String comprador, String vendedor, HashMap<String, Produto> produtos, boolean encomendaMedica){
         this.peso = peso;
         this.comprador = comprador;
         this.vendedor = vendedor;
@@ -45,8 +46,8 @@ public class Encomenda {
         return this.vendedor;
     }
 
-    public ArrayList<String> getProdutos(){
-        return this.produtos.stream().collect(Collectors.toCollection(ArrayList::new));
+    public Map<String, Produto> getProdutos(){
+        return this.produtos.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
     public boolean isEncomendaMedica() {
@@ -65,9 +66,9 @@ public class Encomenda {
         this.vendedor = vendedor;
     }
 
-    public void setProdutos(ArrayList<String> produtos) {
-        this.produtos = new ArrayList<>();
-        produtos.forEach(a -> this.produtos.add(a));
+    public void setProdutos(Map<String, Produto> produtos) {
+        this.produtos = new HashMap<>();
+        produtos.entrySet().forEach(p -> this.produtos.put(p.getKey(), p.getValue().clone()));
     }
 
     public void setEncomendaMedica(boolean encomendaMedica) {
@@ -96,9 +97,9 @@ public class Encomenda {
         sb.append("Comprador: ");
         sb.append(this.comprador + "\n");
         sb.append("Vendedor: ");
-        sb.append(this.vendedor);
+        sb.append(this.vendedor+"\n");
         sb.append("Produtos: ");
-        this.produtos.forEach(s -> sb.append(s.toString()+"\n"));
+        sb.append(this.produtos);
         sb.append("Encomenda médica: ");
         sb.append(this.encomendaMedica+"\n");
 

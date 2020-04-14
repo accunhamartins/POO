@@ -3,8 +3,8 @@ import java.util.stream.Collectors;
 
 public class EmpresaTransportes {
     private String local;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private double raioDeAcao;
     private ArrayList<Transportes> transportes;
     private ArrayList<Encomenda> registos;
@@ -23,7 +23,7 @@ public class EmpresaTransportes {
         this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String local,float latitude, float longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+    public EmpresaTransportes(String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
         this.local = local;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -49,11 +49,11 @@ public class EmpresaTransportes {
         return local;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return this.latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return this.longitude;
     }
 
@@ -81,11 +81,11 @@ public class EmpresaTransportes {
         this.local = local;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -99,12 +99,20 @@ public class EmpresaTransportes {
 
     public void setTransportes(ArrayList<Transportes> transportes) {
         this.transportes = new ArrayList<>();
-        for(Transportes t: transportes) this.transportes.add(t.clone());
+        ArrayList<Transportes> aux = new ArrayList<Transportes>();
+        for(Transportes t: transportes){
+            aux.add(t.clone());
+            setTransportes(aux);
+        }
     }
 
     public void setRegistos(ArrayList<Encomenda> registos) {
         this.registos = new ArrayList<>();
-        for(Encomenda e: registos) this.registos.add(e.clone());
+        ArrayList<Encomenda> aux = new ArrayList<Encomenda>();
+        for(Encomenda e: registos){
+            aux.add(e.clone());
+            setRegistos(aux);
+        }
     }
 
     public void setTransporteMedico(boolean transporteMedico) {

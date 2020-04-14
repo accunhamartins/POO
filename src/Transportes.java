@@ -12,7 +12,6 @@ public class Transportes {
     private double custo;
     private boolean aceitaEncomendaMedica;
 
-
     public Transportes(){
         this.disponivel = true;
         this.partida = LocalDate.now();
