@@ -9,6 +9,7 @@ public class EmpresaTransportes {
     private ArrayList<Transportes> transportes;
     private ArrayList<Encomenda> registos;
     private int numeroMinimoEncomenda;
+    private boolean transporteMedico;
 
 
     public EmpresaTransportes(){
@@ -19,9 +20,10 @@ public class EmpresaTransportes {
         this.transportes = new ArrayList<>();
         this.registos = new ArrayList<>();
         this.numeroMinimoEncomenda = 0;
+        this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String local,float latitude, float longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda){
+    public EmpresaTransportes(String local,float latitude, float longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
         this.local = local;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -29,6 +31,7 @@ public class EmpresaTransportes {
         this.setTransportes(transportes);
         this.setRegistos(registos);
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
+        this.transporteMedico = transporteMedico;
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
@@ -39,6 +42,7 @@ public class EmpresaTransportes {
         this.setTransportes(a.getTransportes());
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
+        this.transporteMedico = a.isTransporteMedico();
     }
 
     public String getLocal() {
@@ -67,6 +71,10 @@ public class EmpresaTransportes {
 
     public int getNumeroMinimoEncomenda() {
         return numeroMinimoEncomenda;
+    }
+
+    public boolean isTransporteMedico() {
+        return this.transporteMedico;
     }
 
     public void setLocal(String local) {
@@ -99,6 +107,10 @@ public class EmpresaTransportes {
         for(Encomenda e: registos) this.registos.add(e.clone());
     }
 
+    public void setTransporteMedico(boolean transporteMedico) {
+        this.transporteMedico = transporteMedico;
+    }
+
     public EmpresaTransportes clone(){
         return  new EmpresaTransportes(this);
     }
@@ -113,7 +125,8 @@ public class EmpresaTransportes {
                 this.raioDeAcao == e.getRaioDeAcao() &&
                 this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
                 this.transportes.equals((e.getTransportes())) &&
-                this.registos.equals(e.getRegistos());
+                this.registos.equals(e.getRegistos()) &&
+                this.transporteMedico == e.isTransporteMedico();
     }
 
     public String toString(){
@@ -132,6 +145,8 @@ public class EmpresaTransportes {
         sb.append(this.registos.toString());
         sb.append("Número mínimo de encomendas: ");
         sb.append(this.numeroMinimoEncomenda+"\n");
+        sb.append("Apta para transportes médicos: ");
+        sb.append(this.transporteMedico+"\n");
 
         return sb.toString();
     }
