@@ -113,12 +113,12 @@ public class Lojas {
         if (o == null || getClass() != o.getClass()) return false;
         Lojas lojas = (Lojas) o;
         return tempo_espera == lojas.tempo_espera &&
-                Double.compare(lojas.distancia_loja, distancia_loja) == 0 &&
-                Double.compare(lojas.velocidade_deslocacao, velocidade_deslocacao) == 0 &&
-                Double.compare(lojas.tempo_espera_fila, tempo_espera_fila) == 0 &&
-                Double.compare(lojas.tempo_atendimento_medio, tempo_atendimento_medio) == 0 &&
-                Objects.equals(iD_loja, lojas.iD_loja) &&
-                Objects.equals(encomendas_recebidas, lojas.encomendas_recebidas);
+                lojas.distancia_loja == this.distancia_loja &&
+                lojas.velocidade_deslocacao == this.velocidade_deslocacao &&
+                lojas.tempo_espera_fila == this.tempo_espera_fila &&
+                lojas.tempo_atendimento_medio == this.tempo_atendimento_medio &&
+                this.iD_loja.equals(lojas.iD_loja) &&
+                this.encomendas_recebidas.equals(lojas.encomendas_recebidas);
     }
 
     public String toString() {

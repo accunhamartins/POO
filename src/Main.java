@@ -6,6 +6,5 @@ public class Main{
         Encomenda enc = new Encomenda();
         Voluntarios v = new Voluntarios();
         Lojas l = new Lojas();
-
     }
 }

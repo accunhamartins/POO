@@ -49,9 +49,7 @@ public class Transportes {
         this.aceitaEncomendaMedica = a.isAceitaEncomendaMedica();
     }
 
-    public boolean isDisponivel() {
-        return this.disponivel;
-    }
+    public boolean isDisponivel() {return this.disponivel; }
 
     public LocalDate getPartida() {
         return this.partida;
