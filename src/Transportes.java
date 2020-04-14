@@ -3,7 +3,7 @@ import java.util.Objects;
 
 public class Transportes {
     private boolean disponivel;
-    private LocalDate partida;
+    private LocalDate  partida;
     private LocalDate chegada;
     private double precoTransporte;
     private double distancia;
