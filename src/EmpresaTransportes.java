@@ -101,8 +101,7 @@ public class EmpresaTransportes {
         this.transportes = new ArrayList<>();
         ArrayList<Transportes> aux = new ArrayList<Transportes>();
         for(Transportes t: transportes){
-            aux.add(t.clone());
-            setTransportes(aux);
+            this.transportes.add(t.clone());
         }
     }
 
@@ -110,8 +109,7 @@ public class EmpresaTransportes {
         this.registos = new ArrayList<>();
         ArrayList<Encomenda> aux = new ArrayList<Encomenda>();
         for(Encomenda e: registos){
-            aux.add(e.clone());
-            setRegistos(aux);
+            this.registos.add(e.clone());
         }
     }
 
