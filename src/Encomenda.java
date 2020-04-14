@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Encomenda {
     private double peso;
@@ -45,9 +46,7 @@ public class Encomenda {
     }
 
     public ArrayList<String> getProdutos(){
-        ArrayList<String> aux = new ArrayList<>();
-        for(String s: this.produtos) aux.add(s);
-        return aux;
+        return this.produtos.stream().collect(Collectors.toCollection(ArrayList::new));
     }
 
     public boolean isEncomendaMedica() {
@@ -68,7 +67,7 @@ public class Encomenda {
 
     public void setProdutos(ArrayList<String> produtos) {
         this.produtos = new ArrayList<>();
-        for(String s: produtos) this.produtos.add(s);
+        produtos.forEach(a -> this.produtos.add(a));
     }
 
     public void setEncomendaMedica(boolean encomendaMedica) {

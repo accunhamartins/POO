@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class EmpresaTransportes {
     private String local;
@@ -57,15 +58,11 @@ public class EmpresaTransportes {
     }
 
     public ArrayList<Transportes> getTransportes(){
-        ArrayList<Transportes> aux = new ArrayList<>();
-        for(Transportes t: this.transportes) aux.add(t);
-        return  aux;
+        return this.transportes.stream().map(Transportes::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Encomenda> getRegistos() {
-        ArrayList<Encomenda> aux = new ArrayList<>();
-        for(Encomenda e: this.registos) aux.add(e);
-        return aux;
+        return this.registos.stream().map(Encomenda::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public int getNumeroMinimoEncomenda() {
@@ -94,12 +91,12 @@ public class EmpresaTransportes {
 
     public void setTransportes(ArrayList<Transportes> transportes) {
         this.transportes = new ArrayList<>();
-        for(Transportes t: transportes) this.transportes.add(t);
+        for(Transportes t: transportes) this.transportes.add(t.clone());
     }
 
     public void setRegistos(ArrayList<Encomenda> registos) {
         this.registos = new ArrayList<>();
-        for(Encomenda e: registos) this.registos.add(e);
+        for(Encomenda e: registos) this.registos.add(e.clone());
     }
 
     public EmpresaTransportes clone(){
@@ -138,6 +135,8 @@ public class EmpresaTransportes {
 
         return sb.toString();
     }
+
+
 
 
 }
