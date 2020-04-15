@@ -1,24 +1,24 @@
-public class Produto{
+public class LinhaEncomenda{
     private String descricao;
     private double preco;
     private int quantidade;
     private boolean produtoMedico;
 
-    public Produto(){
+    public LinhaEncomenda(){
         this.descricao = "";
         this.preco = 0;
         this.quantidade = 0;
         this.produtoMedico = false;
     }
 
-    public Produto(String descricao, double preco, int  quantidade, boolean produtoMedico){
+    public LinhaEncomenda(String descricao, double preco, int  quantidade, boolean produtoMedico){
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
         this.produtoMedico = produtoMedico;
     }
 
-    public Produto(Produto a){
+    public LinhaEncomenda(LinhaEncomenda a){
         this.descricao = a.getDescricao();
         this.preco = a.getPreco();
         this.quantidade = a.getQuantidade();
@@ -57,16 +57,16 @@ public class Produto{
         this.produtoMedico = produtoMedico;
     }
 
-    public Produto clone(){
+    public LinhaEncomenda clone(){
 
-        return (new Produto(this));
+        return (new LinhaEncomenda(this));
     }
 
 
     public boolean equals(Object obj){
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
-        Produto o = (Produto) obj;
+        LinhaEncomenda o = (LinhaEncomenda) obj;
 
         return this.descricao.equals(o.getDescricao()) &&
                 this.preco == o.getPreco() &&

@@ -6,7 +6,7 @@ public class Encomenda {
     private double peso;
     private String comprador;
     private String vendedor;
-    private Map<String, Produto> produtos;
+    private Map<String, LinhaEncomenda> produtos;
     private boolean encomendaMedica;
 
 
@@ -18,7 +18,7 @@ public class Encomenda {
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(double peso, String comprador, String vendedor, HashMap<String, Produto> produtos, boolean encomendaMedica){
+    public  Encomenda(double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
         this.peso = peso;
         this.comprador = comprador;
         this.vendedor = vendedor;
@@ -46,7 +46,7 @@ public class Encomenda {
         return this.vendedor;
     }
 
-    public Map<String, Produto> getProdutos(){
+    public Map<String, LinhaEncomenda> getProdutos(){
         return this.produtos.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
@@ -66,7 +66,7 @@ public class Encomenda {
         this.vendedor = vendedor;
     }
 
-    public void setProdutos(Map<String, Produto> produtos) {
+    public void setProdutos(Map<String, LinhaEncomenda> produtos) {
         this.produtos = new HashMap<>();
         produtos.entrySet().forEach(p -> this.produtos.put(p.getKey(), p.getValue().clone()));
     }
