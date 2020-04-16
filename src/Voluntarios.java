@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Voluntarios {
     private String nome;
-    private int codigo;
+    private String codigo;
     private boolean disponivel;
     private float latitude;
     private float longitude;
@@ -16,7 +16,7 @@ public class Voluntarios {
     //Construtor de classe por omissão
     public Voluntarios(){
         this.nome = " ";
-        this.codigo = 0;
+        this.codigo = " ";
         this.disponivel = false;
         this.latitude = 0;
         this.longitude = 0;
@@ -39,7 +39,7 @@ public class Voluntarios {
     }
 
     //Construtor parametrizado
-    public Voluntarios(String a, int b, boolean c, float d, float e, LocalDate f, float g, ArrayList<Encomenda> h, float i){
+    public Voluntarios(String a, String b, boolean c, float d, float e, LocalDate f, float g, ArrayList<Encomenda> h, float i){
         this.nome = a;
         this.codigo = b;
         this.disponivel = c;
@@ -56,7 +56,7 @@ public class Voluntarios {
       return this.nome;
     }
 
-    public int getCodigo(){
+    public String getCodigo(){
       return this.codigo;
     }
 
@@ -95,7 +95,7 @@ public class Voluntarios {
       this.nome = a;
     }
 
-    public void setCodigo(int a){
+    public void setCodigo(String a){
       this.codigo = a;
     }
 
@@ -138,7 +138,7 @@ public class Voluntarios {
         if (o == null || getClass() != o.getClass()) return false;
         Voluntarios v = (Voluntarios) o;
         return this.nome.equals(o.getNome())
-        && this.codigo == o.getCodigo()
+        && this.codigo.equals(v.getCodigo())
         && this.disponivel ==  v.getDisponibilidade()
         && this.latitude == v.getLatitude()
         && this.longitude == v.getLongitude()

@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Encomenda {
-    private int codigo;
+    private String codigo;
     private int codigo_user;
     private int codigo_loja;
     private double peso;
@@ -14,7 +14,7 @@ public class Encomenda {
 
 
     public Encomenda(){
-        this.codigo = 0;
+        this.codigo = " ";
         this.codigo_user = 0;
         this.codigo_loja = 0;
         this.peso = 0.0;
@@ -24,7 +24,7 @@ public class Encomenda {
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(int codigo, int codigo_user, int codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+    public  Encomenda(String codigo, int codigo_user, int codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;
@@ -46,7 +46,7 @@ public class Encomenda {
         this.encomendaMedica = e.isEncomendaMedica();
     }
 
-    public int getCodigo(){
+    public String getCodigo(){
       return this.codigo;
     }
 
@@ -78,7 +78,7 @@ public class Encomenda {
         return this.encomendaMedica;
     }
 
-    public void setCodigo(int codigo){
+    public void setCodigo(String codigo){
       this.codigo = codigo;
     }
 
@@ -119,7 +119,7 @@ public class Encomenda {
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
         Encomenda e = (Encomenda) obj;
-        return  this.codigo == e.getCodigo() &&
+        return  this.codigo.equals(e.getCodigo()) &&
                 this.codigo_user == e.getCodigo_user() &&
                 this.codigo_loja == e.getCodigo_loja() &&
                 e.getPeso() == this.getPeso() &&

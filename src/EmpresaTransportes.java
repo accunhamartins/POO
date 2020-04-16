@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class EmpresaTransportes {
-    private int codigo;
+    private String codigo;
     private String nome;
     private int nif;
     private double custo_km;
@@ -17,7 +17,7 @@ public class EmpresaTransportes {
 
 
     public EmpresaTransportes(){
-        this.codigo = 0;
+        this.codigo = " ";
         this.nome = " ";
         this.nif = 0;
         this.custo_km = 0;
@@ -31,7 +31,7 @@ public class EmpresaTransportes {
         this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(int codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+    public EmpresaTransportes(String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
         this.codigo = codigo;
         this.nome = nome;
         this.nif = nif;
@@ -61,7 +61,7 @@ public class EmpresaTransportes {
         this.transporteMedico = a.isTransporteMedico();
     }
 
-    public int getCodigo(){
+    public String getCodigo(){
       return this.codigo;
     }
 
@@ -109,7 +109,7 @@ public class EmpresaTransportes {
         return this.transporteMedico;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -173,7 +173,7 @@ public class EmpresaTransportes {
         if (obj == this )return true;
         if(obj == null || this.getClass() != obj.getClass()) return false;
         EmpresaTransportes e = (EmpresaTransportes) obj;
-        return  this.codigo == e.getCodigo() &&
+        return  this.codigo.equals(e.getCodigo()) &&
                 this.nome.equals(e.getNome()) &&
                 this.nif == e.getNif() &&
                 this.custo_km == e.getCusto_km() &&

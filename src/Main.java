@@ -7,5 +7,7 @@ public class Main{
         Voluntarios v = new Voluntarios();
         Lojas l = new Lojas();
         LinhaEncomenda le = new LinhaEncomenda();
+        Utilizador user = new Utilizador();
+        EncomendasAceites ea = new EncomendasAceites();
     }
 }
