@@ -127,6 +127,7 @@ public class Voluntarios {
     public void setCusto(float a){
         this.custo = a;
     }
+
     //Método de clonar um objeto
     public Voluntarios clone(){
         return new Voluntarios(this);
@@ -137,7 +138,7 @@ public class Voluntarios {
         if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Voluntarios v = (Voluntarios) o;
-        return this.nome.equals(o.getNome())
+        return this.nome.equals(v.getNome())
         && this.codigo.equals(v.getCodigo())
         && this.disponivel ==  v.getDisponibilidade()
         && this.latitude == v.getLatitude()
