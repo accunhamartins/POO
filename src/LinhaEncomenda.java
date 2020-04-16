@@ -1,17 +1,21 @@
+
 public class LinhaEncomenda{
+    private int codigo;
     private String descricao;
-    private double preco;
+    private double preco; //valor unitário
     private int quantidade;
     private boolean produtoMedico;
 
     public LinhaEncomenda(){
+        this.codigo = 0;
         this.descricao = "";
         this.preco = 0;
         this.quantidade = 0;
         this.produtoMedico = false;
     }
 
-    public LinhaEncomenda(String descricao, double preco, int  quantidade, boolean produtoMedico){
+    public LinhaEncomenda(int codigo, String descricao, double preco, int  quantidade, boolean produtoMedico){
+        this.codigo = codigo;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
@@ -19,10 +23,15 @@ public class LinhaEncomenda{
     }
 
     public LinhaEncomenda(LinhaEncomenda a){
+        this.codigo = a.getCodigo();
         this.descricao = a.getDescricao();
         this.preco = a.getPreco();
         this.quantidade = a.getQuantidade();
         this.produtoMedico = a.isProdutoMedico();
+    }
+
+    public int getCodigo(){
+        return this.codigo;
     }
 
     public boolean isProdutoMedico() {
@@ -39,6 +48,10 @@ public class LinhaEncomenda{
 
     public String getDescricao() {
         return this.descricao;
+    }
+
+    public void setCodigo(int codigo){
+        this.codigo = codigo;
     }
 
     public void setDescricao(String descricao) {
@@ -68,7 +81,8 @@ public class LinhaEncomenda{
         if(obj == null || obj.getClass() != this.getClass()) return false;
         LinhaEncomenda o = (LinhaEncomenda) obj;
 
-        return this.descricao.equals(o.getDescricao()) &&
+        return  this.codigo == o.getCodigo() &&
+                this.descricao.equals(o.getDescricao()) &&
                 this.preco == o.getPreco() &&
                 this.quantidade == o.getQuantidade() &&
                 this.produtoMedico == o.isProdutoMedico();
@@ -77,6 +91,8 @@ public class LinhaEncomenda{
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Código de produto: ");
+        sb.append(this.codigo + "\n");
         sb.append("Produto: ");
         sb.append(this.descricao + "\n");
         sb.append("Preço: ");

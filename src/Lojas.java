@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lojas {
-
-    private String iD_loja;
+    private int codigo;
+    private String nome;
     private boolean tempo_espera;
     private double distancia_loja;
     private double velocidade_deslocacao;
@@ -12,7 +12,8 @@ public class Lojas {
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Lojas (){
-        this.iD_loja = " ";
+        this.codigo = 0;
+        this.nome = " ";
         this.tempo_espera = false;
         this.distancia_loja = 0;
         this.velocidade_deslocacao = 0;
@@ -21,8 +22,9 @@ public class Lojas {
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Lojas (String iD_loja, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio, ArrayList<Encomenda> encomendas_recebidas){
-        this.iD_loja = iD_loja;
+    public Lojas (int codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio, ArrayList<Encomenda> encomendas_recebidas){
+        this.codigo = codigo;
+        this.nome = nome;
         this.tempo_espera = tempo_espera;
         this.distancia_loja = distancia_loja;
         this.velocidade_deslocacao = velocidade_deslocacao;
@@ -32,7 +34,8 @@ public class Lojas {
     }
 
     public Lojas (Lojas loja){
-        this.iD_loja = loja.getID_loja();
+        this.codigo = loja.getCodigo();
+        this.nome = loja.getNome();
         this.tempo_espera = loja.getTempo_espera();
         this.distancia_loja = loja.getDistancia_loja();
         this.velocidade_deslocacao = loja.getVelocidade_deslocacao();
@@ -41,8 +44,12 @@ public class Lojas {
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
-    public String getID_loja() {
-        return iD_loja;
+    public int getCodigo(){
+        return this.codigo;
+    }
+
+    public String getNome() {
+        return this.nome;
     }
 
     public boolean getTempo_espera() {
@@ -73,8 +80,12 @@ public class Lojas {
         return aux;
     }
 
-    public void setID_loja(String iD_loja) {
-        this.iD_loja = iD_loja;
+    public void setCodigo(int codigo){
+      this.codigo = codigo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setTempo_espera(boolean tempo_espera) {
@@ -112,18 +123,20 @@ public class Lojas {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lojas lojas = (Lojas) o;
-        return tempo_espera == lojas.getTempo_espera() &&
+        return  this.codigo == lojas.getCodigo() &&
+                this.tempo_espera == lojas.getTempo_espera() &&
                 lojas.getDistancia_loja() == this.distancia_loja &&
                 lojas.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
                 lojas.getTempo_espera_fila() == this.tempo_espera_fila &&
                 lojas.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
-                this.iD_loja.equals(lojas.iD_loja) &&
+                this.nome.equals(lojas.nome) &&
                 this.encomendas_recebidas.equals(lojas.encomendas_recebidas);
     }
 
     public String toString() {
         final StringBuffer sb = new StringBuffer("Lojas: ");
-        sb.append("ID da loja: ").append(this.iD_loja).append('\n');
+        sb.append("Código da loja: ").append(this.codigo).append('\n');
+        sb.append("Nome da loja: ").append(this.nome).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');
         sb.append("Distância há loja: ").append(this.distancia_loja).append('\n');
         sb.append("Velocidade de deslocacao: ").append(this.velocidade_deslocacao).append('\n');

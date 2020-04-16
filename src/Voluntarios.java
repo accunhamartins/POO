@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Voluntarios {
+    private String nome;
+    private int codigo;
     private boolean disponivel;
     private float latitude;
     private float longitude;
@@ -13,6 +15,8 @@ public class Voluntarios {
     //Construtores de classe
     //Construtor de classe por omissão
     public Voluntarios(){
+        this.nome = " ";
+        this.codigo = 0;
         this.disponivel = false;
         this.latitude = 0;
         this.longitude = 0;
@@ -23,6 +27,8 @@ public class Voluntarios {
     }
     //Construtor de classe por clone
     public Voluntarios(Voluntarios a){
+        this.nome = a.getNome();
+        this.codigo = a.getCodigo();
         this.disponivel = a.getDisponibilidade();
         this.latitude = a.getLatitude();
         this.longitude = a.getLongitude();
@@ -33,17 +39,27 @@ public class Voluntarios {
     }
 
     //Construtor parametrizado
-    public Voluntarios(boolean a, float b, float c, LocalDate d, float e, ArrayList<Encomenda> f, float g){
-        this.disponivel = a;
-        this.latitude = b;
-        this.longitude = c;
-        this.inicio_transporte = d;
-        this.raio_acao = e;
-        this.setHistorico(f);
-        this.custo = g;
+    public Voluntarios(String a, int b, boolean c, float d, float e, LocalDate f, float g, ArrayList<Encomenda> h, float i){
+        this.nome = a;
+        this.codigo = b;
+        this.disponivel = c;
+        this.latitude =  d;
+        this.longitude = e;
+        this.inicio_transporte = f;
+        this.raio_acao = g;
+        this.setHistorico(h);
+        this.custo = i;
     }
 
     //Métodos de obtenção de variáveis
+    public String getNome(){
+      return this.nome;
+    }
+
+    public int getCodigo(){
+      return this.codigo;
+    }
+
     public boolean getDisponibilidade(){
         return this.disponivel;
     }
@@ -75,6 +91,14 @@ public class Voluntarios {
     }
 
     //Método de definição de variáveis
+    public void setNome(String a){
+      this.nome = a;
+    }
+
+    public void setCodigo(int a){
+      this.codigo = a;
+    }
+
     public void setDisponibilidade(boolean a){
         this.disponivel = a;
     }
@@ -113,7 +137,9 @@ public class Voluntarios {
         if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Voluntarios v = (Voluntarios) o;
-        return this.disponivel ==  v.getDisponibilidade()
+        return this.nome.equals(o.getNome())
+        && this.codigo == o.getCodigo()
+        && this.disponivel ==  v.getDisponibilidade()
         && this.latitude == v.getLatitude()
         && this.longitude == v.getLongitude()
         && this.inicio_transporte.equals(v.getInicio_transporte())
@@ -124,6 +150,10 @@ public class Voluntarios {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Nome: ");
+        sb.append(this.nome + "\n");
+        sb.append("Código de voluntário: ");
+        sb.append(this.codigo + "\n");
         sb.append("Disponível: ");
         sb.append(this.disponivel + "\n");
         sb.append("Latitude: ");

@@ -3,6 +3,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Encomenda {
+    private int codigo;
+    private int codigo_user;
+    private int codigo_loja;
     private double peso;
     private String comprador;
     private String vendedor;
@@ -11,6 +14,9 @@ public class Encomenda {
 
 
     public Encomenda(){
+        this.codigo = 0;
+        this.codigo_user = 0;
+        this.codigo_loja = 0;
         this.peso = 0.0;
         this.comprador = "";
         this.vendedor = "";
@@ -18,7 +24,10 @@ public class Encomenda {
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+    public  Encomenda(int codigo, int codigo_user, int codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+        this.codigo = codigo;
+        this.codigo_user = codigo_user;
+        this.codigo_loja = codigo_loja;
         this.peso = peso;
         this.comprador = comprador;
         this.vendedor = vendedor;
@@ -27,11 +36,26 @@ public class Encomenda {
     }
 
     public  Encomenda(Encomenda e){
+        this.codigo = e.getCodigo();
+        this.codigo_user = e.getCodigo_user();
+        this.codigo_loja = e.getCodigo_loja();
         this.peso = e.getPeso();
         this.comprador = e.getComprador();
         this.vendedor =  e.getVendedor();
         this.setProdutos(e.getProdutos());
         this.encomendaMedica = e.isEncomendaMedica();
+    }
+
+    public int getCodigo(){
+      return this.codigo;
+    }
+
+    public int getCodigo_user(){
+      return this.codigo_user;
+    }
+
+    public int getCodigo_loja(){
+      return this.codigo_loja;
     }
 
     public double getPeso() {
@@ -52,6 +76,18 @@ public class Encomenda {
 
     public boolean isEncomendaMedica() {
         return this.encomendaMedica;
+    }
+
+    public void setCodigo(int codigo){
+      this.codigo = codigo;
+    }
+
+    public void setCodigo_user(int codigo_user){
+      this.codigo_user = codigo_user;
+    }
+
+    public void setCodigo_loja(int codigo_loja){
+      this.codigo_loja = codigo_loja;
     }
 
     public void setPeso(double peso) {
@@ -83,7 +119,10 @@ public class Encomenda {
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
         Encomenda e = (Encomenda) obj;
-        return e.getPeso() == this.getPeso() &&
+        return  this.codigo == e.getCodigo() &&
+                this.codigo_user == e.getCodigo_user() &&
+                this.codigo_loja == e.getCodigo_loja() &&
+                e.getPeso() == this.getPeso() &&
                 this.comprador.equals(e.getComprador()) &&
                 this.vendedor.equals(e.getVendedor()) &&
                 this.produtos.equals(e.getProdutos()) &&
@@ -92,6 +131,12 @@ public class Encomenda {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Código: ");
+        sb.append(this.codigo + "\n");
+        sb.append("Código do utilizador: ");
+        sb.append(this.codigo_user + "\n");
+        sb.append("Código da loja: ");
+        sb.append(this.codigo_loja + "\n");
         sb.append("Peso: ");
         sb.append(this.peso + "\n");
         sb.append("Comprador: ");
