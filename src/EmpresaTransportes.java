@@ -129,14 +129,6 @@ public class EmpresaTransportes {
         this.local = local;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public void setNumeroMinimoEncomenda(int numeroMinimoEncomenda) {
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
     }

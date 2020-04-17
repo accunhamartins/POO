@@ -9,6 +9,8 @@ public class Lojas {
     private double velocidade_deslocacao;
     private double tempo_espera_fila;
     private double tempo_atendimento_medio;
+    private double latitude;
+    private double longitude;
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Lojas (){
@@ -19,10 +21,12 @@ public class Lojas {
         this.velocidade_deslocacao = 0;
         this.tempo_espera_fila = 0;
         this.tempo_atendimento_medio = 0;
+        this.latitude = 0;
+        this.longitude = 0;
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Lojas (int codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio, ArrayList<Encomenda> encomendas_recebidas){
+    public Lojas (int codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
         this.codigo = codigo;
         this.nome = nome;
         this.tempo_espera = tempo_espera;
@@ -30,6 +34,8 @@ public class Lojas {
         this.velocidade_deslocacao = velocidade_deslocacao;
         this.tempo_espera_fila = tempo_espera_fila;
         this.tempo_atendimento_medio = tempo_atendimento_medio;
+        this.latitude = latitude;
+        this.longitude = longitude;
         setEncomendas_recebidas(encomendas_recebidas);
     }
 
@@ -41,6 +47,8 @@ public class Lojas {
         this.velocidade_deslocacao = loja.getVelocidade_deslocacao();
         this.tempo_espera_fila = loja.getTempo_espera_fila();
         this.tempo_atendimento_medio = loja.getTempo_atendimento_medio();
+        this.latitude = a.getLatitude();
+        this.longitude = a.getLongitude();
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
@@ -70,6 +78,14 @@ public class Lojas {
 
     public double getTempo_atendimento_medio() {
         return tempo_atendimento_medio;
+    }
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
     }
 
     public ArrayList<Encomenda> getEncomendas_recebidas(){
@@ -108,6 +124,14 @@ public class Lojas {
         this.tempo_atendimento_medio = tempo_atendimento_medio;
     }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public void setEncomendas_recebidas(ArrayList<Encomenda> encomendas_recebidas) {
         this.encomendas_recebidas = new ArrayList<>();
         for(Encomenda s: encomendas_recebidas){
@@ -129,6 +153,8 @@ public class Lojas {
                 lojas.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
                 lojas.getTempo_espera_fila() == this.tempo_espera_fila &&
                 lojas.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
+                lojas.getLatitude() == this.latitude &&
+                lojas.getLongitude() == this.longitude &&
                 this.nome.equals(lojas.nome) &&
                 this.encomendas_recebidas.equals(lojas.encomendas_recebidas);
     }
@@ -142,6 +168,8 @@ public class Lojas {
         sb.append("Velocidade de deslocacao: ").append(this.velocidade_deslocacao).append('\n');
         sb.append("Tempo de espera na fila: ").append(this.tempo_espera_fila).append('\n');
         sb.append("Tempo médio de atendimento: ").append(this.tempo_atendimento_medio).append('\n');
+        sb.append("Latitude: ").append(this.latitude).append('\n');
+        sb.append("Longitude: ").append(this.longitude).append('\n');
         sb.append("Lista de encomendas recebidas: ");
         this.encomendas_recebidas.forEach(e -> sb.append(e.toString() + "\n"));
         return sb.toString();
