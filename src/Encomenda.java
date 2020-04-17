@@ -1,22 +1,33 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Encomenda {
+    private String codigo;
+    private int codigo_user;
+    private int codigo_loja;
     private double peso;
     private String comprador;
     private String vendedor;
-    private ArrayList<String> produtos;
+    private Map<String, LinhaEncomenda> produtos;
     private boolean encomendaMedica;
 
 
     public Encomenda(){
+        this.codigo = " ";
+        this.codigo_user = 0;
+        this.codigo_loja = 0;
         this.peso = 0.0;
         this.comprador = "";
         this.vendedor = "";
-        this.produtos = new ArrayList<>();
+        this.produtos = new HashMap<>();
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(double peso, String comprador, String vendedor, ArrayList<String> produtos, boolean encomendaMedica){
+    public  Encomenda(String codigo, int codigo_user, int codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+        this.codigo = codigo;
+        this.codigo_user = codigo_user;
+        this.codigo_loja = codigo_loja;
         this.peso = peso;
         this.comprador = comprador;
         this.vendedor = vendedor;
@@ -25,11 +36,26 @@ public class Encomenda {
     }
 
     public  Encomenda(Encomenda e){
+        this.codigo = e.getCodigo();
+        this.codigo_user = e.getCodigo_user();
+        this.codigo_loja = e.getCodigo_loja();
         this.peso = e.getPeso();
         this.comprador = e.getComprador();
         this.vendedor =  e.getVendedor();
         this.setProdutos(e.getProdutos());
         this.encomendaMedica = e.isEncomendaMedica();
+    }
+
+    public String getCodigo(){
+      return this.codigo;
+    }
+
+    public int getCodigo_user(){
+      return this.codigo_user;
+    }
+
+    public int getCodigo_loja(){
+      return this.codigo_loja;
     }
 
     public double getPeso() {
@@ -44,14 +70,24 @@ public class Encomenda {
         return this.vendedor;
     }
 
-    public ArrayList<String> getProdutos(){
-        ArrayList<String> aux = new ArrayList<>();
-        for(String s: this.produtos) aux.add(s);
-        return aux;
+    public Map<String, LinhaEncomenda> getProdutos(){
+        return this.produtos.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
     public boolean isEncomendaMedica() {
         return this.encomendaMedica;
+    }
+
+    public void setCodigo(String codigo){
+      this.codigo = codigo;
+    }
+
+    public void setCodigo_user(int codigo_user){
+      this.codigo_user = codigo_user;
+    }
+
+    public void setCodigo_loja(int codigo_loja){
+      this.codigo_loja = codigo_loja;
     }
 
     public void setPeso(double peso) {
@@ -66,9 +102,9 @@ public class Encomenda {
         this.vendedor = vendedor;
     }
 
-    public void setProdutos(ArrayList<String> produtos) {
-        this.produtos = new ArrayList<>();
-        for(String s: produtos) this.produtos.add(s);
+    public void setProdutos(Map<String, LinhaEncomenda> produtos) {
+        this.produtos = new HashMap<>();
+        produtos.entrySet().forEach(p -> this.produtos.put(p.getKey(), p.getValue().clone()));
     }
 
     public void setEncomendaMedica(boolean encomendaMedica) {
@@ -83,7 +119,10 @@ public class Encomenda {
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
         Encomenda e = (Encomenda) obj;
-        return e.getPeso() == this.getPeso() &&
+        return  this.codigo.equals(e.getCodigo()) &&
+                this.codigo_user == e.getCodigo_user() &&
+                this.codigo_loja == e.getCodigo_loja() &&
+                e.getPeso() == this.getPeso() &&
                 this.comprador.equals(e.getComprador()) &&
                 this.vendedor.equals(e.getVendedor()) &&
                 this.produtos.equals(e.getProdutos()) &&
@@ -92,14 +131,20 @@ public class Encomenda {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Código: ");
+        sb.append(this.codigo + "\n");
+        sb.append("Código do utilizador: ");
+        sb.append(this.codigo_user + "\n");
+        sb.append("Código da loja: ");
+        sb.append(this.codigo_loja + "\n");
         sb.append("Peso: ");
         sb.append(this.peso + "\n");
         sb.append("Comprador: ");
         sb.append(this.comprador + "\n");
         sb.append("Vendedor: ");
-        sb.append(this.vendedor);
+        sb.append(this.vendedor+"\n");
         sb.append("Produtos: ");
-        this.produtos.forEach(s -> sb.append(s.toString()+"\n"));
+        sb.append(this.produtos);
         sb.append("Encomenda médica: ");
         sb.append(this.encomendaMedica+"\n");
 

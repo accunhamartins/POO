@@ -3,7 +3,7 @@ import java.util.Objects;
 
 public class Transportes {
     private boolean disponivel;
-    private LocalDate partida;
+    private LocalDate  partida;
     private LocalDate chegada;
     private double precoTransporte;
     private double distancia;
@@ -11,7 +11,6 @@ public class Transportes {
     private double velocidade;
     private double custo;
     private boolean aceitaEncomendaMedica;
-
 
     public Transportes(){
         this.disponivel = true;
@@ -49,9 +48,7 @@ public class Transportes {
         this.aceitaEncomendaMedica = a.isAceitaEncomendaMedica();
     }
 
-    public boolean isDisponivel() {
-        return this.disponivel;
-    }
+    public boolean isDisponivel() {return this.disponivel; }
 
     public LocalDate getPartida() {
         return this.partida;

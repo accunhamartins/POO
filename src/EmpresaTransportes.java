@@ -1,16 +1,26 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class EmpresaTransportes {
+    private String codigo;
+    private String nome;
+    private int nif;
+    private double custo_km;
     private String local;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private double raioDeAcao;
     private ArrayList<Transportes> transportes;
     private ArrayList<Encomenda> registos;
     private int numeroMinimoEncomenda;
+    private boolean transporteMedico;
 
 
     public EmpresaTransportes(){
+        this.codigo = " ";
+        this.nome = " ";
+        this.nif = 0;
+        this.custo_km = 0;
         this.local = "";
         this.latitude = 0;
         this.longitude = 0;
@@ -18,9 +28,14 @@ public class EmpresaTransportes {
         this.transportes = new ArrayList<>();
         this.registos = new ArrayList<>();
         this.numeroMinimoEncomenda = 0;
+        this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String local,float latitude, float longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda){
+    public EmpresaTransportes(String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.nif = nif;
+        this.custo_km = custo_km;
         this.local = local;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -28,9 +43,14 @@ public class EmpresaTransportes {
         this.setTransportes(transportes);
         this.setRegistos(registos);
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
+        this.transporteMedico = transporteMedico;
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
+        this.codigo = a.getCodigo();
+        this.nome = a.getNome();
+        this.nif = a.getNif();
+        this.custo_km = a.getCusto_km();
         this.local = a.getLocal();
         this.latitude = a.getLatitude();
         this.longitude = a.getLongitude();
@@ -38,17 +58,34 @@ public class EmpresaTransportes {
         this.setTransportes(a.getTransportes());
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
+        this.transporteMedico = a.isTransporteMedico();
+    }
+
+    public String getCodigo(){
+      return this.codigo;
+    }
+
+    public String getNome(){
+      return this.nome;
+    }
+
+    public int getNif(){
+      return this.nif;
+    }
+
+    public double getCusto_km(){
+      return this.custo_km;
     }
 
     public String getLocal() {
         return local;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return this.latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return this.longitude;
     }
 
@@ -57,31 +94,39 @@ public class EmpresaTransportes {
     }
 
     public ArrayList<Transportes> getTransportes(){
-        ArrayList<Transportes> aux = new ArrayList<>();
-        for(Transportes t: this.transportes) aux.add(t);
-        return  aux;
+        return this.transportes.stream().map(Transportes::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Encomenda> getRegistos() {
-        ArrayList<Encomenda> aux = new ArrayList<>();
-        for(Encomenda e: this.registos) aux.add(e);
-        return aux;
+        return this.registos.stream().map(Encomenda::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public int getNumeroMinimoEncomenda() {
         return numeroMinimoEncomenda;
     }
 
+    public boolean isTransporteMedico() {
+        return this.transporteMedico;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
+
+    public void setCusto_km(double custo_km) {
+        this.custo_km = custo_km;
+    }
+
     public void setLocal(String local) {
         this.local = local;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
     }
 
     public void setNumeroMinimoEncomenda(int numeroMinimoEncomenda) {
@@ -94,12 +139,22 @@ public class EmpresaTransportes {
 
     public void setTransportes(ArrayList<Transportes> transportes) {
         this.transportes = new ArrayList<>();
-        for(Transportes t: transportes) this.transportes.add(t);
+        ArrayList<Transportes> aux = new ArrayList<Transportes>();
+        for(Transportes t: transportes){
+            this.transportes.add(t.clone());
+        }
     }
 
     public void setRegistos(ArrayList<Encomenda> registos) {
         this.registos = new ArrayList<>();
-        for(Encomenda e: registos) this.registos.add(e);
+        ArrayList<Encomenda> aux = new ArrayList<Encomenda>();
+        for(Encomenda e: registos){
+            this.registos.add(e.clone());
+        }
+    }
+
+    public void setTransporteMedico(boolean transporteMedico) {
+        this.transporteMedico = transporteMedico;
     }
 
     public EmpresaTransportes clone(){
@@ -110,17 +165,30 @@ public class EmpresaTransportes {
         if (obj == this )return true;
         if(obj == null || this.getClass() != obj.getClass()) return false;
         EmpresaTransportes e = (EmpresaTransportes) obj;
-        return this.local.equals(e.getLocal()) &&
+        return  this.codigo.equals(e.getCodigo()) &&
+                this.nome.equals(e.getNome()) &&
+                this.nif == e.getNif() &&
+                this.custo_km == e.getCusto_km() &&
+                this.local.equals(e.getLocal()) &&
                 this.latitude == e.getLatitude() &&
                 this.longitude == e.getLongitude() &&
                 this.raioDeAcao == e.getRaioDeAcao() &&
                 this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
                 this.transportes.equals((e.getTransportes())) &&
-                this.registos.equals(e.getRegistos());
+                this.registos.equals(e.getRegistos()) &&
+                this.transporteMedico == e.isTransporteMedico();
     }
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Código de empresa: ");
+        sb.append(this.codigo + "\n");
+        sb.append("Nome: ");
+        sb.append(this.nome + "\n");
+        sb.append("Nif: ");
+        sb.append(this.nif + "\n");
+        sb.append("Custo por km: ");
+        sb.append(this.custo_km + "\n");
         sb.append("Local: ");
         sb.append(this.local + "\n");
         sb.append("Latitude: ");
@@ -135,9 +203,13 @@ public class EmpresaTransportes {
         sb.append(this.registos.toString());
         sb.append("Número mínimo de encomendas: ");
         sb.append(this.numeroMinimoEncomenda+"\n");
+        sb.append("Apta para transportes médicos: ");
+        sb.append(this.transporteMedico+"\n");
 
         return sb.toString();
     }
+
+
 
 
 }
