@@ -47,8 +47,8 @@ public class Lojas {
         this.velocidade_deslocacao = loja.getVelocidade_deslocacao();
         this.tempo_espera_fila = loja.getTempo_espera_fila();
         this.tempo_atendimento_medio = loja.getTempo_atendimento_medio();
-        this.latitude = a.getLatitude();
-        this.longitude = a.getLongitude();
+        this.latitude = loja.getLatitude();
+        this.longitude = loja.getLongitude();
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
