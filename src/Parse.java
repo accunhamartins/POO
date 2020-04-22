@@ -9,6 +9,7 @@ public class Parse {
 
     public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
+        EncomendasAceites ea = new EncomendasAceites();
         String[] linhaPartida;
         for (String linha : ler) {
             linhaPartida = linha.split(":", 2);
@@ -21,9 +22,17 @@ public class Parse {
                     Lojas l = parseLoja(linhaPartida[1]);
                     System.out.println(l.toString());
                     break;
-                //...
+                case "Transportadora":
+                    break;
+                case "Voluntario":
+                    break;
+                case "Encomenda":
+                    break;
+                case "Aceite":
+                    ea = parseEncomendasAceites(linhaPartida[1], ea);
+                    System.out.println(ea.toString());
                 default:
-                    System.out.println("Linha invÃ¡lida.");
+                    System.out.println("Linha inválida.");
                     break;
             }
 
@@ -36,6 +45,13 @@ public class Parse {
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
         catch(IOException exc) { System.out.println("Erro ao dar load dos logs."); }
         return lines;
+    }
+
+    public EncomendasAceites parseEncomendasAceites(String linha, EncomendasAceites ea){
+        List<String> aux = ea.getAceites();
+        aux.add(linha);
+        ea.setAceites(aux);
+        return ea;
     }
 
 

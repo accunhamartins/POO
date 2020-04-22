@@ -9,5 +9,8 @@ public class TrazAqui{
         LinhaEncomenda le = new LinhaEncomenda();
         Utilizador user = new Utilizador();
         EncomendasAceites ea = new EncomendasAceites();
+
+        Parse ler = new Parse();
+        ler.parse();
     }
 }

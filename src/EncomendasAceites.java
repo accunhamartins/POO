@@ -1,27 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class EncomendasAceites{
-    private String codigo;
+    private List<String> aceites;
 
     //Construtores
     public EncomendasAceites(){
-      this.codigo = " ";
+
+        this.aceites = new ArrayList<>();
     }
 
-    public EncomendasAceites(String codigo){
-      this.codigo = codigo;
+    public EncomendasAceites(List<String> encomendas){
+
+        setAceites(encomendas);
     }
 
     public EncomendasAceites(EncomendasAceites ea){
-      this.codigo = ea.getCodigo();
+        setAceites(ea.getAceites());
     }
 
     //Getters
-    public String getCodigo(){
-        return this.codigo;
+    public List<String> getAceites(){
+        return this.aceites.stream().collect(Collectors.toList());
     }
 
     //Setters
-    public void setCodigo(String codigo){
-        this.codigo = codigo;
+    public void setAceites(List<String> aceites){
+        this.aceites = new ArrayList<>();
+        for(String l: aceites) this.aceites.add(l);
     }
 
     //clone
@@ -34,12 +41,14 @@ public class EncomendasAceites{
       if (o == null || this.getClass() != o.getClass()) return false;
       if (this == o) return true;
       EncomendasAceites ea = (EncomendasAceites) o;
-      return this.codigo.equals(ea.getCodigo());
+      return this.aceites.equals(ea.getAceites());
     }
 
     public String toString(){
       StringBuilder sb = new StringBuilder();
-      sb.append("Código: ").append(this.codigo + "\n");
+      sb.append("Código: ");
+      this.aceites.forEach(s -> s.toString());
+      sb.append("\n");
 
       return sb.toString();
     }
