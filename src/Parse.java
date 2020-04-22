@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +13,21 @@ public class Parse {
         EncomendasAceites ea = new EncomendasAceites();
         String[] linhaPartida;
         for (String linha : ler) {
-            linhaPartida = linha.split(":", 2);
+            linhaPartida = linha.split(":", -1);
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
                     System.out.println(u.toString());
                     break;
                 case "Loja":
-                    Lojas l = parseLoja(linhaPartida[1]);
+                    Lojas l = parseLojas(linhaPartida[1]);
                     System.out.println(l.toString());
                     break;
                 case "Transportadora":
                     break;
                 case "Voluntario":
+                    Voluntarios v = parseVoluntarios(linhaPartida[1]);
+                    System.out.println(v.toString());
                     break;
                 case "Encomenda":
                     break;
@@ -58,9 +61,8 @@ public class Parse {
       String campos[] = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
-      String latitude = Double.parseDouble(campos[2]);
-      String longitude = Double.parseDouble(campos[3]);
-      boolean tempo_espera = false;
+      double latitude = Double.parseDouble(campos[2]);
+      double longitude = Double.parseDouble(campos[3]);
       return new Lojas(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
     }
 
