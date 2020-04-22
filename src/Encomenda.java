@@ -24,7 +24,7 @@ public class Encomenda {
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos, boolean encomendaMedica){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;

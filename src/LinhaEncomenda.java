@@ -2,7 +2,7 @@
 public class LinhaEncomenda{
     private String codigo;
     private String descricao;
-    private double preco; //valor unitário
+    private double preco;
     private int quantidade;
     private boolean produtoMedico;
 

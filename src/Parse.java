@@ -4,7 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Parse {
 
@@ -18,22 +21,39 @@ public class Parse {
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
                     System.out.println(u.toString());
+                    System.out.println();
+                    System.out.println();
                     break;
                 case "Loja":
                     Lojas l = parseLojas(linhaPartida[1]);
                     System.out.println(l.toString());
+                    System.out.println();
+                    System.out.println();
                     break;
                 case "Transportadora":
+                    EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
+                    System.out.println(t.toString());
+                    System.out.println();
+                    System.out.println();
                     break;
                 case "Voluntario":
                     Voluntarios v = parseVoluntarios(linhaPartida[1]);
                     System.out.println(v.toString());
+                    System.out.println();
+                    System.out.println();
                     break;
                 case "Encomenda":
+                    Encomenda e = parseEncomenda(linhaPartida[1]);
+                    System.out.println(e.toString());
+                    System.out.println();
+                    System.out.println();
                     break;
                 case "Aceite":
                     ea = parseEncomendasAceites(linhaPartida[1], ea);
                     System.out.println(ea.toString());
+                    System.out.println();
+                    System.out.println();
+                    break;
                 default:
                     System.out.println("Linha inválida.");
                     break;
@@ -85,5 +105,39 @@ public class Parse {
       return new Voluntarios(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
+    public EmpresaTransportes parseEmpresaTransportes(String input){
+        String campos[] = input.split(",");
+        String codigo = campos[0];
+        String nome = campos[1];
+        double latitude = Double.parseDouble(campos[2]);
+        double longitude = Double.parseDouble(campos[3]);
+        int nif = Integer.parseInt(campos[4]);
+        double raioDeAcao = Double.parseDouble(campos[5]);
+        double custo_km = Double.parseDouble(campos[6]);
+        return new EmpresaTransportes(codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
+    }
+
+    public Encomenda parseEncomenda(String input){
+        Map<String, LinhaEncomenda> produtos = new HashMap<>();
+        int j = 0;
+        String campos[] = input.split(",");
+        String codigo = campos[0];
+        String codigo_user = campos[1];
+        String codigo_loja = campos[2];
+        String aux[] = new String[10];
+        double peso = Double.parseDouble(campos[3]);
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ",produtos,false);
+    }
+
+
+    public LinhaEncomenda parseLinhaEncomenda(String input){
+        String campos[] = input.split(",");
+        String codigo = campos[0];
+        String descricao = campos[1];
+        double preco = Double.parseDouble(campos[2]);
+        int quantidade = Integer.parseInt(campos[3]);
+
+        return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
+    }
 
 }
