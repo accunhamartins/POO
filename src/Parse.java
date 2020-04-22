@@ -54,5 +54,24 @@ public class Parse {
         return ea;
     }
 
+    public Lojas parseLojas(String input){
+      String campos[] = input.split(",");
+      String codigo = campos[0];
+      String nome = campos[1];
+      String latitude = Double.parseDouble(campos[2]);
+      String longitude = Double.parseDouble(campos[3]);
+      boolean tempo_espera = false;
+      return new Lojas(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
+    }
+
+    public Utilizador parseUtilizador(String input){
+      String campos[] = input.split(",");
+      String codigo = campos[0];
+      String nome = campos[1];
+      double latitude = Double.parseDouble(campos[2]);
+      double longitude = Double.parseDouble(campos[3]);
+      return new Utilizador(codigo, nome, latitude, longitude);
+    }
+
 
 }
