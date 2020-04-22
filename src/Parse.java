@@ -83,5 +83,26 @@ public class Parse {
       return new Voluntarios(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
+    public EmpresaTransportes parseEmpresaTransportes(String input){
+        String campos[] = input.split(",");
+        String codigo = campos[0];
+        String nome = campos[1];
+        double latitude = Double.parseDouble(campos[2]);
+        double longitude = Double.parseDouble(campos[3]);
+        int nif = Int.parseInt(campos[4]);
+        double raioDeAcao = Double.parseDouble(campos[5]);
+        double custo_km = Double.parseDouble(campos[6]);
+        return new EmpresaTransportes(codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
+    }
+
+    public Encomenda parseEncomenda(String input){
+        String campos[] = input.split(",");
+        String codigo = campos[0];
+        String codigo_user = campos[1];
+        String codigo_loja = campos[2];
+        double peso = Double.parseDouble(campos[3]);
+        Map<String, LinhaEncomenda> produtos = new HashMap<>();
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ", ,false);
+    }
 
 }

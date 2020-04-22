@@ -22,6 +22,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="q" />
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -36,6 +41,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="451" y="270" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587595648825">
+      <screen x="67" y="27" width="1853" height="1173" />
+    </state>
+    <state x="451" y="270" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1587595648825" />
     <state x="834" y="504" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587592298273">
       <screen x="67" y="27" width="1853" height="1173" />
     </state>
@@ -44,5 +53,9 @@
       <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state x="649" y="440" key="com.intellij.ide.util.TipDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1587592201530" />
+    <state x="657" y="283" key="run.anything.popup" timestamp="1587595660146">
+      <screen x="67" y="27" width="1853" height="1173" />
+    </state>
+    <state x="657" y="283" key="run.anything.popup/67.27.1853.1173@67.27.1853.1173" timestamp="1587595660146" />
   </component>
 </project>
