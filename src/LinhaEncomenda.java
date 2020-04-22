@@ -1,20 +1,20 @@
 
 public class LinhaEncomenda{
-    private int codigo;
+    private String codigo;
     private String descricao;
     private double preco; //valor unitário
     private int quantidade;
     private boolean produtoMedico;
 
     public LinhaEncomenda(){
-        this.codigo = 0;
-        this.descricao = "";
+        this.codigo = " ";
+        this.descricao = " ";
         this.preco = 0;
         this.quantidade = 0;
         this.produtoMedico = false;
     }
 
-    public LinhaEncomenda(int codigo, String descricao, double preco, int  quantidade, boolean produtoMedico){
+    public LinhaEncomenda(String codigo, String descricao, double preco, int  quantidade, boolean produtoMedico){
         this.codigo = codigo;
         this.descricao = descricao;
         this.preco = preco;
@@ -30,7 +30,7 @@ public class LinhaEncomenda{
         this.produtoMedico = a.isProdutoMedico();
     }
 
-    public int getCodigo(){
+    public String getCodigo(){
         return this.codigo;
     }
 
@@ -50,7 +50,7 @@ public class LinhaEncomenda{
         return this.descricao;
     }
 
-    public void setCodigo(int codigo){
+    public void setCodigo(String codigo){
         this.codigo = codigo;
     }
 

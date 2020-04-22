@@ -1,5 +1,5 @@
 public class Utilizador{
-      private int codigo;
+      private String codigo;
       private String nome;
       private double latitude;
       private double longitude;
@@ -7,13 +7,13 @@ public class Utilizador{
 
       //Construtores
       public Utilizador(){
-          this.codigo = 0;
+          this.codigo = " ";
           this.nome = " ";
           this.latitude = 0;
           this.longitude = 0;
       }
 
-      public Utilizador(int codigo, String nome, double latitude, double longitude){
+      public Utilizador(String codigo, String nome, double latitude, double longitude){
           this.codigo = codigo;
           this.nome = nome;
           this.latitude = latitude;
@@ -28,7 +28,7 @@ public class Utilizador{
       }
 
       //Getters
-      public int getCodigo(){
+      public String getCodigo(){
         return this.codigo;
       }
 
@@ -45,7 +45,7 @@ public class Utilizador{
       }
 
       //Setters
-      public void setCodigo(int codigo){
+      public void setCodigo(String codigo){
           this.codigo = codigo;
       }
 

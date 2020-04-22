@@ -4,8 +4,8 @@ import java.util.stream.Collectors;
 
 public class Encomenda {
     private String codigo;
-    private int codigo_user;
-    private int codigo_loja;
+    private String codigo_user;
+    private String codigo_loja;
     private double peso;
     private String comprador;
     private String vendedor;
@@ -15,16 +15,16 @@ public class Encomenda {
 
     public Encomenda(){
         this.codigo = " ";
-        this.codigo_user = 0;
-        this.codigo_loja = 0;
+        this.codigo_user = " ";
+        this.codigo_loja = " ";
         this.peso = 0.0;
-        this.comprador = "";
-        this.vendedor = "";
+        this.comprador = " ";
+        this.vendedor = " ";
         this.produtos = new HashMap<>();
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(String codigo, int codigo_user, int codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, HashMap<String, LinhaEncomenda> produtos, boolean encomendaMedica){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;
@@ -50,11 +50,11 @@ public class Encomenda {
       return this.codigo;
     }
 
-    public int getCodigo_user(){
+    public String getCodigo_user(){
       return this.codigo_user;
     }
 
-    public int getCodigo_loja(){
+    public String getCodigo_loja(){
       return this.codigo_loja;
     }
 
@@ -82,11 +82,11 @@ public class Encomenda {
       this.codigo = codigo;
     }
 
-    public void setCodigo_user(int codigo_user){
+    public void setCodigo_user(String codigo_user){
       this.codigo_user = codigo_user;
     }
 
-    public void setCodigo_loja(int codigo_loja){
+    public void setCodigo_loja(String codigo_loja){
       this.codigo_loja = codigo_loja;
     }
 

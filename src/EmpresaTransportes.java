@@ -21,7 +21,7 @@ public class EmpresaTransportes {
         this.nome = " ";
         this.nif = 0;
         this.custo_km = 0;
-        this.local = "";
+        this.local = " ";
         this.latitude = 0;
         this.longitude = 0;
         this.raioDeAcao = 0.0;

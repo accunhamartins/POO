@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lojas {
-    private int codigo;
+    private String codigo;
     private String nome;
     private boolean tempo_espera;
     private double distancia_loja;
@@ -14,7 +14,7 @@ public class Lojas {
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Lojas (){
-        this.codigo = 0;
+        this.codigo = " ";
         this.nome = " ";
         this.tempo_espera = false;
         this.distancia_loja = 0;
@@ -26,7 +26,7 @@ public class Lojas {
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Lojas (int codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+    public Lojas (String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
         this.codigo = codigo;
         this.nome = nome;
         this.tempo_espera = tempo_espera;
@@ -52,7 +52,7 @@ public class Lojas {
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
-    public int getCodigo(){
+    public String getCodigo(){
         return this.codigo;
     }
 
@@ -96,7 +96,7 @@ public class Lojas {
         return aux;
     }
 
-    public void setCodigo(int codigo){
+    public void setCodigo(String codigo){
       this.codigo = codigo;
     }
 
