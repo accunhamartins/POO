@@ -12,7 +12,7 @@ public class Parse {
         EncomendasAceites ea = new EncomendasAceites();
         String[] linhaPartida;
         for (String linha : ler) {
-            linhaPartida = linha.split(":", 6);
+            linhaPartida = linha.split(":", -1);
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
