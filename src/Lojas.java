@@ -164,7 +164,7 @@ public class Lojas {
         sb.append("Código da loja: ").append(this.codigo).append('\n');
         sb.append("Nome da loja: ").append(this.nome).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');
-        sb.append("Distância há loja: ").append(this.distancia_loja).append('\n');
+        sb.append("Distância à loja: ").append(this.distancia_loja).append('\n');
         sb.append("Velocidade de deslocacao: ").append(this.velocidade_deslocacao).append('\n');
         sb.append("Tempo de espera na fila: ").append(this.tempo_espera_fila).append('\n');
         sb.append("Tempo médio de atendimento: ").append(this.tempo_atendimento_medio).append('\n');
