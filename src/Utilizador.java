@@ -71,7 +71,7 @@ public class Utilizador{
           if (o == null || this.getClass() != o.getClass()) return false;
           if (this == o) return true;
           Utilizador user = (Utilizador) o;
-          return  this.codigo == user.getCodigo() &&
+          return  this.codigo.euals(user.getCodigo()) &&
                   this.nome.equals(user.getNome()) &&
                   this.latitude == user.getLatitude() &&
                   this.longitude == user.getLongitude();

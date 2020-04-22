@@ -120,8 +120,8 @@ public class Encomenda {
         if(obj == null || obj.getClass() != this.getClass()) return false;
         Encomenda e = (Encomenda) obj;
         return  this.codigo.equals(e.getCodigo()) &&
-                this.codigo_user == e.getCodigo_user() &&
-                this.codigo_loja == e.getCodigo_loja() &&
+                this.codigo_user.equals(e.getCodigo_user()) &&
+                this.codigo_loja.equals(e.getCodigo_loja()) &&
                 e.getPeso() == this.getPeso() &&
                 this.comprador.equals(e.getComprador()) &&
                 this.vendedor.equals(e.getVendedor()) &&

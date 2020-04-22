@@ -81,7 +81,7 @@ public class LinhaEncomenda{
         if(obj == null || obj.getClass() != this.getClass()) return false;
         LinhaEncomenda o = (LinhaEncomenda) obj;
 
-        return  this.codigo == o.getCodigo() &&
+        return  this.codigo.equals(o.getCodigo()) &&
                 this.descricao.equals(o.getDescricao()) &&
                 this.preco == o.getPreco() &&
                 this.quantidade == o.getQuantidade() &&

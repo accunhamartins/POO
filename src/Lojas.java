@@ -147,7 +147,7 @@ public class Lojas {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lojas lojas = (Lojas) o;
-        return  this.codigo == lojas.getCodigo() &&
+        return  this.codigo.equals(lojas.getCodigo()) &&
                 this.tempo_espera == lojas.getTempo_espera() &&
                 lojas.getDistancia_loja() == this.distancia_loja &&
                 lojas.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
