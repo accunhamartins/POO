@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Parse {
                     break;
                 case "Aceite":
                     ea = parseEncomendasAceites(linhaPartida[1], ea);
-                   System.out.println(ea.toString());
+                    System.out.println(ea.toString());
                 default:
                     System.out.println("Linha inválida.");
                     break;
@@ -70,6 +71,16 @@ public class Parse {
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
       return new Utilizador(codigo, nome, latitude, longitude);
+    }
+
+    public Voluntarios parseVoluntarios(String input){
+      String campos[] = input.split(",");
+      String codigo = campos[0];
+      String nome = campos[1];
+      double latitude = Double.parseDouble(campos[2]);
+      double longitude = Double.parseDouble(campos[3]);
+      double raio_acao = Double.parseDouble(campos[4]);
+      return new Voluntarios(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
 
