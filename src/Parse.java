@@ -26,6 +26,8 @@ public class Parse {
                 case "Transportadora":
                     break;
                 case "Voluntario":
+                    Voluntarios v = parseVoluntarios(linhaPartida[1]);
+                    System.out.println(v.toString());
                     break;
                 case "Encomenda":
                     break;
