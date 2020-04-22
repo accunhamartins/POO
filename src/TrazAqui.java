@@ -1,4 +1,4 @@
-public class Main{
+public class TrazAqui{
 
     public static void main(String[] args) {
         Transportes t = new Transportes();
