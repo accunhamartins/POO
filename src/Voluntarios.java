@@ -5,12 +5,12 @@ public class Voluntarios {
     private String nome;
     private String codigo;
     private boolean disponivel;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private LocalDate inicio_transporte;
-    private float raio_acao;
+    private double raio_acao;
     private ArrayList<Encomenda> historico;
-    float custo;
+    private double custo;
 
     //Construtores de classe
     //Construtor de classe por omissão
@@ -39,7 +39,7 @@ public class Voluntarios {
     }
 
     //Construtor parametrizado
-    public Voluntarios(String a, String b, boolean c, float d, float e, LocalDate f, float g, ArrayList<Encomenda> h, float i){
+    public Voluntarios(String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
         this.nome = a;
         this.codigo = b;
         this.disponivel = c;
@@ -64,15 +64,15 @@ public class Voluntarios {
         return this.disponivel;
     }
 
-    public float getLatitude(){
+    public double getLatitude(){
         return this.latitude;
     }
 
-    public float getLongitude(){
+    public double getLongitude(){
         return this.longitude;
     }
 
-    public float getRaio_acao(){
+    public double getRaio_acao(){
         return this.raio_acao;
     }
 
@@ -86,7 +86,7 @@ public class Voluntarios {
         return res;
     }
 
-    public float getCusto(){
+    public double getCusto(){
         return this.custo;
     }
 
@@ -103,11 +103,11 @@ public class Voluntarios {
         this.disponivel = a;
     }
 
-    public void setLatitude(float a){
+    public void setLatitude(double a){
         this.latitude = a;
     }
 
-    public void setLongitude(float a){
+    public void setLongitude(double a){
         this.longitude = a;
     }
 
@@ -115,7 +115,7 @@ public class Voluntarios {
         this.inicio_transporte = a;
     }
 
-    public void setRaio_acao(float a){
+    public void setRaio_acao(double a){
         this.raio_acao = a;
     }
 
@@ -124,7 +124,7 @@ public class Voluntarios {
         for(Encomenda s: a) this.historico.add(s);
     }
 
-    public void setCusto(float a){
+    public void setCusto(double a){
         this.custo = a;
     }
 

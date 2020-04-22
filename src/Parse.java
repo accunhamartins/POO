@@ -12,14 +12,14 @@ public class Parse {
         EncomendasAceites ea = new EncomendasAceites();
         String[] linhaPartida;
         for (String linha : ler) {
-            linhaPartida = linha.split(":", 6);
+            linhaPartida = linha.split(":", 2);
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
                     System.out.println(u.toString());
                     break;
                 case "Loja":
-                    Lojas l = parseLojas(linhaPartida[1]);
+                    Lojas l = parseLoja(linhaPartida[1]);
                     System.out.println(l.toString());
                     break;
                 case "Transportadora":
@@ -30,7 +30,7 @@ public class Parse {
                     break;
                 case "Aceite":
                     ea = parseEncomendasAceites(linhaPartida[1], ea);
-                   System.out.println(ea.toString());
+                    System.out.println(ea.toString());
                 default:
                     System.out.println("Linha inválida.");
                     break;
@@ -58,8 +58,9 @@ public class Parse {
       String campos[] = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
-      double latitude = Double.parseDouble(campos[2]);
-      double longitude = Double.parseDouble(campos[3]);
+      String latitude = Double.parseDouble(campos[2]);
+      String longitude = Double.parseDouble(campos[3]);
+      boolean tempo_espera = false;
       return new Lojas(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
     }
 
@@ -70,6 +71,16 @@ public class Parse {
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
       return new Utilizador(codigo, nome, latitude, longitude);
+    }
+
+    public Voluntarios parseVoluntarios(String input){
+      String campos[] = input.split(",");
+      String codigo = campos[0];
+      String nome = campos[1];
+      double latitude = Double.parseDouble(campos[2]);
+      double longitude = Double.parseDouble(campos[3]);
+      double raio_acao = Double.parseDouble(campos[4]);
+      return new Voluntarios(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
 
