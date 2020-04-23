@@ -119,12 +119,10 @@ public class Parse {
 
     public Encomenda parseEncomenda(String input){
         Map<String, LinhaEncomenda> produtos = new HashMap<>();
-        int j = 0;
-        String campos[] = input.split(",");
+        String campos[] = input.split("," );
         String codigo = campos[0];
         String codigo_user = campos[1];
         String codigo_loja = campos[2];
-        String aux[] = new String[10];
         double peso = Double.parseDouble(campos[3]);
         return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ",produtos,false);
     }

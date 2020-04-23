@@ -160,7 +160,7 @@ public class Lojas {
     }
 
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Lojas: ");
+        final StringBuffer sb = new StringBuffer("Lojas: ").append("\n");
         sb.append("Código da loja: ").append(this.codigo).append('\n');
         sb.append("Nome da loja: ").append(this.nome).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');
