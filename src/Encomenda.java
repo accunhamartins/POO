@@ -131,6 +131,7 @@ public class Encomenda {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Encomenda: ").append("\n");
         sb.append("Código: ");
         sb.append(this.codigo + "\n");
         sb.append("Código do utilizador: ");
@@ -143,8 +144,8 @@ public class Encomenda {
         sb.append(this.comprador + "\n");
         sb.append("Vendedor: ");
         sb.append(this.vendedor+"\n");
-        sb.append("Produtos: ");
-        sb.append(this.produtos);
+        sb.append("Produtos: ").append("\n");
+        sb.append(this.produtos).append("\n");
         sb.append("Encomenda médica: ");
         sb.append(this.encomendaMedica+"\n");
 

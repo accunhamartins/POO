@@ -124,7 +124,13 @@ public class Parse {
         String codigo_user = campos[1];
         String codigo_loja = campos[2];
         double peso = Double.parseDouble(campos[3]);
-        return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ",produtos,false);
+        for(int i = 4; i < campos.length; i += 4){
+            String aux = campos[i] + "," + campos[i+1] + "," + campos[i+2] + "," + campos[i+3];
+            LinhaEncomenda le = parseLinhaEncomenda(aux);
+            produtos.put(le.getCodigo(), le.clone());
+
+        }
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ", produtos,false);
     }
 
 
@@ -132,10 +138,9 @@ public class Parse {
         String campos[] = input.split(",");
         String codigo = campos[0];
         String descricao = campos[1];
-        double preco = Double.parseDouble(campos[2]);
-        int quantidade = Integer.parseInt(campos[3]);
+        double quantidade = Double.parseDouble(campos[2]);
+        double preco = Double.parseDouble(campos[3]);
 
         return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
     }
-
 }

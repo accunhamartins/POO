@@ -2,8 +2,8 @@
 public class LinhaEncomenda{
     private String codigo;
     private String descricao;
+    private double quantidade;
     private double preco;
-    private int quantidade;
     private boolean produtoMedico;
 
     public LinhaEncomenda(){
@@ -14,7 +14,7 @@ public class LinhaEncomenda{
         this.produtoMedico = false;
     }
 
-    public LinhaEncomenda(String codigo, String descricao, double preco, int  quantidade, boolean produtoMedico){
+    public LinhaEncomenda(String codigo, String descricao, double preco, double  quantidade, boolean produtoMedico){
         this.codigo = codigo;
         this.descricao = descricao;
         this.preco = preco;
@@ -42,7 +42,7 @@ public class LinhaEncomenda{
         return this.preco;
     }
 
-    public int getQuantidade() {
+    public double getQuantidade() {
         return this.quantidade;
     }
 
@@ -62,7 +62,7 @@ public class LinhaEncomenda{
         this.preco = preco;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -91,14 +91,15 @@ public class LinhaEncomenda{
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         sb.append("Código de produto: ");
         sb.append(this.codigo + "\n");
         sb.append("Produto: ");
         sb.append(this.descricao + "\n");
-        sb.append("Preço: ");
-        sb.append(this.preco + "\n");
         sb.append("Quantidade: ");
         sb.append(this.quantidade+"\n");
+        sb.append("Preço: ");
+        sb.append(this.preco + "\n");
         sb.append("É um produto médico: ");
         sb.append(this.produtoMedico +"\n");
 
