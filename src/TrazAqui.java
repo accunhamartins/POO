@@ -9,9 +9,13 @@ public class TrazAqui{
         LinhaEncomenda le = new LinhaEncomenda();
         Utilizador user = new Utilizador();
         EncomendasAceites ea = new EncomendasAceites();
+        RegistosUsers ru = new RegistosUsers();
+        RegistosLojas rl = new RegistosLojas();
+        RegistosTransportes rt = new RegistosTransportes();
+        RegistosVoluntarios rv = new RegistosVoluntarios();
 
         Parse ler = new Parse();
-        ler.parse();
+        ler.parse(ru, rl, rt, rv, ea);
 
     }
 }

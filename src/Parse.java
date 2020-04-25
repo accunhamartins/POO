@@ -11,13 +11,8 @@ import java.util.stream.Collectors;
 
 public class Parse {
 
-    public void parse(){
+    public void parse(RegistosUsers ru, RegistosLojas rl, RegistosTransportes rt, RegistosVoluntarios rv, EncomendasAceites ea){
         List<String> ler = lerFicheiro("logs.txt");
-        EncomendasAceites ea = new EncomendasAceites();
-        RegistosUsers ru = new RegistosUsers();
-        RegistosLojas rl = new RegistosLojas();
-        RegistosTransportes rt = new RegistosTransportes();
-        RegistosVoluntarios rv = new RegistosVoluntarios();
         String[] linhaPartida;
         for (String linha : ler) {
             linhaPartida = linha.split(":", -1);
@@ -25,37 +20,25 @@ public class Parse {
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
                     ru.add(u);
-                    System.out.println();
-                    System.out.println();
                     break;
                 case "Loja":
                     Loja l = parseLojas(linhaPartida[1]);
                     rl.add(l);
-                    System.out.println();
-                    System.out.println();
                     break;
                 case "Transportadora":
                     EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
                     rt.add(t);
-                    System.out.println();
-                    System.out.println();
                     break;
                 case "Voluntario":
                     Voluntario v = parseVoluntarios(linhaPartida[1]);
                     rv.add(v);
-                    System.out.println();
-                    System.out.println();
                     break;
                 case "Encomenda":
                     Encomenda e = parseEncomenda(linhaPartida[1]);
                     System.out.println(e.toString());
-                    System.out.println();
-                    System.out.println();
                     break;
                 case "Aceite":
                     ea = parseEncomendasAceites(linhaPartida[1], ea);
-                    System.out.println();
-                    System.out.println();
                     break;
                 default:
                     System.out.println("Linha inválida.");
