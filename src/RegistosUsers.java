@@ -7,15 +7,15 @@ public class RegistosUsers {
 
     private Map<String, Utilizador> users;
 
-    private RegistosUsers(){
+    public RegistosUsers() {
         this.users = new TreeMap<>();
     }
 
-    private RegistosUsers(Map<String, Utilizador> user){
+    public RegistosUsers(Map<String, Utilizador> user) {
         setUsers(user);
     }
 
-    private RegistosUsers(RegistosUsers r){
+    public RegistosUsers(RegistosUsers r) {
         setUsers(r.getUsers());
     }
 
@@ -29,11 +29,11 @@ public class RegistosUsers {
     }
 
 
-    public RegistosUsers clone(){
+    public RegistosUsers clone() {
         return (new RegistosUsers(this));
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Total de utilizadores: ").append("\n");
         sb.append(this.users);
@@ -41,11 +41,16 @@ public class RegistosUsers {
         return sb.toString();
     }
 
-    public boolean equals(Object obj){
-        if(obj == this) return true;
-        if(obj == null || obj.getClass() != this.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
         RegistosUsers r = (RegistosUsers) obj;
         return this.users.equals((r.getUsers()));
     }
 
+    public void adiciona(Utilizador u) {
+        this.users.put(u.getCodigo(), u.clone());
+    }
+
+    
 }

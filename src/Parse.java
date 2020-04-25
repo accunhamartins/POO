@@ -14,6 +14,7 @@ public class Parse {
     public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
         EncomendasAceites ea = new EncomendasAceites();
+        RegistosUsers ru = new RegistosUsers();
         String[] linhaPartida;
         for (String linha : ler) {
             linhaPartida = linha.split(":", -1);
@@ -92,7 +93,7 @@ public class Parse {
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      return new Utilizador(codigo, nome, latitude, longitude);
+      return new Utilizador(codigo, nome, latitude, longitude, " ", " ");
     }
 
     public Voluntarios parseVoluntarios(String input){
