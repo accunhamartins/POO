@@ -3,6 +3,8 @@ public class Utilizador{
       private String nome;
       private double latitude;
       private double longitude;
+      private String email;
+      private String password;
       //Encomendas 
 
       //Construtores
@@ -11,20 +13,26 @@ public class Utilizador{
           this.nome = " ";
           this.latitude = 0;
           this.longitude = 0;
+          this.email = "";
+          this.password = "";
       }
 
-      public Utilizador(String codigo, String nome, double latitude, double longitude){
+      public Utilizador(String codigo, String nome, double latitude, double longitude, String email, String password){
           this.codigo = codigo;
           this.nome = nome;
           this.latitude = latitude;
           this.longitude = longitude;
+          this.email = email;
+          this.password = password;
       }
 
       public Utilizador(Utilizador user){
-          this.codigo = getCodigo();
-          this.nome = getNome();
-          this.latitude = getLatitude();
-          this.longitude = getLongitude();
+          this.codigo = user.getCodigo();
+          this.nome = user.getNome();
+          this.latitude = user.getLatitude();
+          this.longitude = user.getLongitude();
+          this.email = user.getEmail();
+          this.password = user.getPassword();
       }
 
       //Getters
@@ -44,7 +52,15 @@ public class Utilizador{
           return this.longitude;
       }
 
-      //Setters
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    //Setters
       public void setCodigo(String codigo){
           this.codigo = codigo;
       }
@@ -61,7 +77,15 @@ public class Utilizador{
           this.longitude = longitude;
       }
 
-      //Clone
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    //Clone
       public Utilizador clone(){
         return new Utilizador(this);
       }
@@ -74,7 +98,9 @@ public class Utilizador{
           return  this.codigo.equals(user.getCodigo()) &&
                   this.nome.equals(user.getNome()) &&
                   this.latitude == user.getLatitude() &&
-                  this.longitude == user.getLongitude();
+                  this.longitude == user.getLongitude() &&
+                  this.email.equals(user.getEmail()) &&
+                  this.password.equals(user.getPassword());
       }
 
       public String toString(){
