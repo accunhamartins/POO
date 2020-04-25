@@ -52,5 +52,5 @@ public class RegistosUsers {
         this.users.put(u.getCodigo(), u.clone());
     }
 
-    
+
 }
