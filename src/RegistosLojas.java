@@ -45,7 +45,7 @@ public class RegistosLojas{
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
         RegistosLojas r = (RegistosLojas) obj;
-        return this.lojas.equals(obj.getLojas());
+        return this.lojas.equals(r.getLojas());
     }
 
 

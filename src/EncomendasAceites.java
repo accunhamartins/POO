@@ -46,7 +46,7 @@ public class EncomendasAceites{
 
     public String toString(){
       StringBuilder sb = new StringBuilder();
-      sb.append("Códigos: ").append("\n");
+      sb.append("Códigos de encomendas aceites: ").append("\n");
       this.aceites.forEach(s -> sb.append(s).append("\n"));
       sb.append("\n");
 

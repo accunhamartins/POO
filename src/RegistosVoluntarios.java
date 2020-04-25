@@ -7,11 +7,11 @@ public class RegistosVoluntarios {
 
     private Map<String, Voluntario> voluntarios;
 
-    private RegistosVoluntarios(){
+    public RegistosVoluntarios(){
         this.voluntarios = new TreeMap<>();
     }
 
-    private RegistosVoluntarios(Map<String, Voluntario> voluntario){
+    public RegistosVoluntarios(Map<String, Voluntario> voluntario){
         setVoluntarios(voluntario);
     }
 
@@ -44,7 +44,7 @@ public class RegistosVoluntarios {
     public boolean equals(Object obj){
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
-        RegistosVoluntario r = (RegistosVoluntario) obj;
+        RegistosVoluntarios r = (RegistosVoluntarios) obj;
         return this.voluntarios.equals(r.getVoluntarios());
     }
 

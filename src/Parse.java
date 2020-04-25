@@ -15,32 +15,34 @@ public class Parse {
         List<String> ler = lerFicheiro("logs.txt");
         EncomendasAceites ea = new EncomendasAceites();
         RegistosUsers ru = new RegistosUsers();
+        RegistosLojas rl = new RegistosLojas();
+        RegistosTransportes rt = new RegistosTransportes();
+        RegistosVoluntarios rv = new RegistosVoluntarios();
         String[] linhaPartida;
         for (String linha : ler) {
             linhaPartida = linha.split(":", -1);
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
-                    ru.adiciona(u);
+                    ru.add(u);
                     System.out.println();
                     System.out.println();
-                    ru.adiciona(u);
                     break;
                 case "Loja":
-                    Lojas l = parseLojas(linhaPartida[1]);
-                    System.out.println(l.toString());
+                    Loja l = parseLojas(linhaPartida[1]);
+                    rl.add(l);
                     System.out.println();
                     System.out.println();
                     break;
                 case "Transportadora":
                     EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
-                    System.out.println(t.toString());
+                    rt.add(t);
                     System.out.println();
                     System.out.println();
                     break;
                 case "Voluntario":
-                    Voluntarios v = parseVoluntarios(linhaPartida[1]);
-                    System.out.println(v.toString());
+                    Voluntario v = parseVoluntarios(linhaPartida[1]);
+                    rv.add(v);
                     System.out.println();
                     System.out.println();
                     break;
@@ -62,7 +64,15 @@ public class Parse {
 
         }
         System.out.println(ru.toString());
+        System.out.println("\n");
+        System.out.println(rv.toString());
+        System.out.println("\n");
+        System.out.println(rl.toString());
+        System.out.println("\n");
+        System.out.println(rt.toString());
+        System.out.println("\n");
         System.out.println(ea.toString());
+        System.out.println("\n");
         System.out.println("done!");
     }
 
@@ -80,13 +90,13 @@ public class Parse {
         return ea;
     }
 
-    public Lojas parseLojas(String input){
+    public Loja parseLojas(String input){
       String campos[] = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      return new Lojas(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
+      return new Loja(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
     }
 
     public Utilizador parseUtilizador(String input){
@@ -98,14 +108,14 @@ public class Parse {
       return new Utilizador(codigo, nome, latitude, longitude, " ", " ");
     }
 
-    public Voluntarios parseVoluntarios(String input){
+    public Voluntario parseVoluntarios(String input){
       String campos[] = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
       double raio_acao = Double.parseDouble(campos[4]);
-      return new Voluntarios(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
+      return new Voluntario(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){

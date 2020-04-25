@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 
 public class RegistosTransportes {
 
-    private Map<String, Transporte> transportes;
+    private Map<String, EmpresaTransportes> transportes;
 
-    private RegistosTransportes(){
+    public RegistosTransportes(){
         this.transportes = new TreeMap<>();
     }
 
-    private RegistosTransportes(Map<String, Transporte> transporte){
+    public RegistosTransportes(Map<String, EmpresaTransportes> transporte){
         setTransportes(transporte);
     }
 
@@ -19,11 +19,11 @@ public class RegistosTransportes {
         setTransportes(r.getTransportes());
     }
 
-    public Map<String, Voluntario> getTransportes() {
+    public Map<String, EmpresaTransportes> getTransportes() {
         return this.transportes.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
     }
 
-    public void setTransportes(Map<String, Voluntario> transportes) {
+    public void setTransportes(Map<String, EmpresaTransportes> transportes) {
         this.transportes = new TreeMap<>();
         transportes.entrySet().forEach(e -> this.transportes.put(e.getKey(), e.getValue().clone()));
     }
@@ -35,7 +35,7 @@ public class RegistosTransportes {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Total de Transportes: ").append("\n");
+        sb.append("Total de Empresas de transporte: ").append("\n");
         sb.append(this.transportes);
 
         return sb.toString();
@@ -44,12 +44,12 @@ public class RegistosTransportes {
     public boolean equals(Object obj){
         if(obj == this) return true;
         if(obj == null || obj.getClass() != this.getClass()) return false;
-        RegistosVoluntario r = (RegistosVoluntario) obj;
+        RegistosTransportes r = (RegistosTransportes) obj;
         return this.transportes.equals(r.getTransportes());
     }
 
 
-    public void add(Transporte t){
+    public void add(EmpresaTransportes t){
       this.transportes.put(t.getCodigo(), t.clone());
     }
 }

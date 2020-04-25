@@ -4,8 +4,8 @@ public class TrazAqui{
         Transportes t = new Transportes();
         EmpresaTransportes e = new EmpresaTransportes();
         Encomenda enc = new Encomenda();
-        Voluntarios v = new Voluntarios();
-        Lojas l = new Lojas();
+        Voluntario v = new Voluntario();
+        Loja l = new Loja();
         LinhaEncomenda le = new LinhaEncomenda();
         Utilizador user = new Utilizador();
         EncomendasAceites ea = new EncomendasAceites();

@@ -48,7 +48,7 @@ public class RegistosUsers {
         return this.users.equals((r.getUsers()));
     }
 
-    public void adiciona(Utilizador u) {
+    public void add(Utilizador u) {
         this.users.put(u.getCodigo(), u.clone());
     }
 
