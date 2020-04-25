@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Lojas {
+public class Loja {
     private String codigo;
     private String nome;
     private boolean tempo_espera;
@@ -13,7 +13,7 @@ public class Lojas {
     private double longitude;
     private ArrayList<Encomenda> encomendas_recebidas;
 
-    public Lojas (){
+    public Loja (){
         this.codigo = " ";
         this.nome = " ";
         this.tempo_espera = false;
@@ -26,7 +26,7 @@ public class Lojas {
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Lojas (String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+    public Loja (String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
         this.codigo = codigo;
         this.nome = nome;
         this.tempo_espera = tempo_espera;
@@ -39,7 +39,7 @@ public class Lojas {
         setEncomendas_recebidas(encomendas_recebidas);
     }
 
-    public Lojas (Lojas loja){
+    public Loja (Loja loja){
         this.codigo = loja.getCodigo();
         this.nome = loja.getNome();
         this.tempo_espera = loja.getTempo_espera();
@@ -139,28 +139,28 @@ public class Lojas {
         }
     }
 
-    public Lojas clone(){
-        return new Lojas(this);
+    public Loja clone(){
+        return new Loja(this);
     }
 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Lojas lojas = (Lojas) o;
-        return  this.codigo.equals(lojas.getCodigo()) &&
-                this.tempo_espera == lojas.getTempo_espera() &&
-                lojas.getDistancia_loja() == this.distancia_loja &&
-                lojas.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
-                lojas.getTempo_espera_fila() == this.tempo_espera_fila &&
-                lojas.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
-                lojas.getLatitude() == this.latitude &&
-                lojas.getLongitude() == this.longitude &&
-                this.nome.equals(lojas.nome) &&
-                this.encomendas_recebidas.equals(lojas.encomendas_recebidas);
+        Loja Loja = (Loja) o;
+        return  this.codigo.equals(Loja.getCodigo()) &&
+                this.tempo_espera == Loja.getTempo_espera() &&
+                Loja.getDistancia_loja() == this.distancia_loja &&
+                Loja.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
+                Loja.getTempo_espera_fila() == this.tempo_espera_fila &&
+                Loja.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
+                Loja.getLatitude() == this.latitude &&
+                Loja.getLongitude() == this.longitude &&
+                this.nome.equals(Loja.nome) &&
+                this.encomendas_recebidas.equals(Loja.encomendas_recebidas);
     }
 
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Lojas: ").append("\n");
+        final StringBuffer sb = new StringBuffer("Loja: ").append("\n");
         sb.append("Código da loja: ").append(this.codigo).append('\n');
         sb.append("Nome da loja: ").append(this.nome).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');

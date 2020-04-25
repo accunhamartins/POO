@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Voluntarios {
+public class Voluntario {
     private String nome;
     private String codigo;
     private boolean disponivel;
@@ -14,7 +14,7 @@ public class Voluntarios {
 
     //Construtores de classe
     //Construtor de classe por omissão
-    public Voluntarios(){
+    public Voluntario(){
         this.nome = " ";
         this.codigo = " ";
         this.disponivel = false;
@@ -26,7 +26,7 @@ public class Voluntarios {
         this.custo = 0;
     }
     //Construtor de classe por clone
-    public Voluntarios(Voluntarios a){
+    public Voluntario(Voluntario a){
         this.nome = a.getNome();
         this.codigo = a.getCodigo();
         this.disponivel = a.getDisponibilidade();
@@ -39,7 +39,7 @@ public class Voluntarios {
     }
 
     //Construtor parametrizado
-    public Voluntarios(String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
+    public Voluntario(String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
         this.nome = a;
         this.codigo = b;
         this.disponivel = c;
@@ -129,15 +129,15 @@ public class Voluntarios {
     }
 
     //Método de clonar um objeto
-    public Voluntarios clone(){
-        return new Voluntarios(this);
+    public Voluntario clone(){
+        return new Voluntario(this);
     }
 
     //public equals
     public boolean equals(Object o){
         if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Voluntarios v = (Voluntarios) o;
+        Voluntario v = (Voluntario) o;
         return this.nome.equals(v.getNome())
         && this.codigo.equals(v.getCodigo())
         && this.disponivel ==  v.getDisponibilidade()
