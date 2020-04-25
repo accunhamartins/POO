@@ -12,5 +12,6 @@ public class TrazAqui{
 
         Parse ler = new Parse();
         ler.parse();
+
     }
 }

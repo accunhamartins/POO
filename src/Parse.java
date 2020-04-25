@@ -21,9 +21,10 @@ public class Parse {
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
-                    System.out.println(u.toString());
+                    ru.adiciona(u);
                     System.out.println();
                     System.out.println();
+                    ru.adiciona(u);
                     break;
                 case "Loja":
                     Lojas l = parseLojas(linhaPartida[1]);
@@ -51,7 +52,6 @@ public class Parse {
                     break;
                 case "Aceite":
                     ea = parseEncomendasAceites(linhaPartida[1], ea);
-                    System.out.println(ea.toString());
                     System.out.println();
                     System.out.println();
                     break;
@@ -61,6 +61,8 @@ public class Parse {
             }
 
         }
+        System.out.println(ru.toString());
+        System.out.println(ea.toString());
         System.out.println("done!");
     }
 
