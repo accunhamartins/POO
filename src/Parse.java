@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Parse {
     private RegistosUsers ru;
@@ -23,6 +22,22 @@ public class Parse {
         this.rt = new RegistosTransportes();
         this.rv = new RegistosVoluntarios();
         this.ea = new EncomendasAceites();
+    }
+
+    public Parse(RegistosUsers ru, RegistosLojas rl, RegistosTransportes rt, RegistosVoluntarios rv, EncomendasAceites ea){
+        setRu(ru);
+        setRl(rl);
+        setRt(rt);
+        setRv(rv);
+        setEa(ea);
+    }
+
+    public Parse (Parse a){
+        setRu(a.getRu());
+        setRl(a.getRl());
+        setRt(a.getRt());
+        setRv(a.getRv());
+        setEa(a.getEa());
     }
 
     public RegistosLojas getRl() {
