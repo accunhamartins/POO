@@ -10,8 +10,67 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Parse {
+    private RegistosUsers ru;
+    private RegistosLojas rl;
+    private RegistosTransportes rt;
+    private RegistosVoluntarios rv;
+    private EncomendasAceites ea;
 
-    public void parse(RegistosUsers ru, RegistosLojas rl, RegistosTransportes rt, RegistosVoluntarios rv, EncomendasAceites ea){
+
+    public Parse(){
+        this.ru = new RegistosUsers();
+        this.rl = new RegistosLojas();
+        this.rt = new RegistosTransportes();
+        this.rv = new RegistosVoluntarios();
+        this.ea = new EncomendasAceites();
+    }
+
+    public RegistosLojas getRl() {
+        return new RegistosLojas(this.rl.getLojas());
+    }
+
+    public EncomendasAceites getEa() {
+        return new EncomendasAceites(this.ea.getAceites());
+    }
+
+    public RegistosTransportes getRt() {
+        return new RegistosTransportes(this.rt.getTransportes());
+    }
+
+    public RegistosUsers getRu() {
+        return new RegistosUsers(this.ru.getUsers());
+    }
+
+    public RegistosVoluntarios getRv() {
+        return new RegistosVoluntarios(this.rv.getVoluntarios());
+    }
+
+    public void setRl(RegistosLojas rl) {
+        this.rl = new RegistosLojas();
+        this.rl.setLojas(rl.getLojas());
+    }
+
+    public void setEa(EncomendasAceites ea) {
+        this.ea = new EncomendasAceites();
+        this.ea.setAceites(ea.getAceites());
+    }
+
+    public void setRt(RegistosTransportes rt) {
+        this.rt = new RegistosTransportes();
+        this.rt.setTransportes(rt.getTransportes());
+    }
+
+    public void setRu(RegistosUsers ru) {
+        this.ru = new RegistosUsers();
+        this.ru.setUsers(ru.getUsers());
+    }
+
+    public void setRv(RegistosVoluntarios rv) {
+        this.rv = new RegistosVoluntarios();
+        this.rv.setVoluntarios(rv.getVoluntarios());
+    }
+
+    public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
         String[] linhaPartida;
         for (String linha : ler) {
@@ -19,26 +78,26 @@ public class Parse {
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
-                    ru.add(u);
+                    this.ru.add(u);
                     break;
                 case "Loja":
                     Loja l = parseLojas(linhaPartida[1]);
-                    rl.add(l);
+                    this.rl.add(l);
                     break;
                 case "Transportadora":
                     EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
-                    rt.add(t);
+                    this.rt.add(t);
                     break;
                 case "Voluntario":
                     Voluntario v = parseVoluntarios(linhaPartida[1]);
-                    rv.add(v);
+                    this.rv.add(v);
                     break;
                 case "Encomenda":
                     Encomenda e = parseEncomenda(linhaPartida[1]);
                     System.out.println(e.toString());
                     break;
                 case "Aceite":
-                    ea = parseEncomendasAceites(linhaPartida[1], ea);
+                    this.ea = parseEncomendasAceites(linhaPartida[1], ea);
                     break;
                 default:
                     System.out.println("Linha inválida.");
@@ -46,17 +105,7 @@ public class Parse {
             }
 
         }
-        System.out.println(ru.toString());
-        System.out.println("\n");
-        System.out.println(rv.toString());
-        System.out.println("\n");
-        System.out.println(rl.toString());
-        System.out.println("\n");
-        System.out.println(rt.toString());
-        System.out.println("\n");
-        System.out.println(ea.toString());
-        System.out.println("\n");
-        System.out.println("done!");
+
     }
 
     public List<String> lerFicheiro(String nomeFich) {

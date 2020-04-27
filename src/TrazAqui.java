@@ -15,7 +15,26 @@ public class TrazAqui{
         RegistosVoluntarios rv = new RegistosVoluntarios();
 
         Parse ler = new Parse();
-        ler.parse(ru, rl, rt, rv, ea);
+        ler.parse();
+
+
+        ru.setUsers(ler.getRu().getUsers());
+        rv.setVoluntarios(ler.getRv().getVoluntarios());
+        rl.setLojas(ler.getRl().getLojas());
+        rt.setTransportes(ler.getRt().getTransportes());
+        ea.setAceites(ler.getEa().getAceites());
+
+        System.out.println(ru.toString());
+        System.out.println("\n");
+        System.out.println(rv.toString());
+        System.out.println("\n");
+        System.out.println(rl.toString());
+        System.out.println("\n");
+        System.out.println(rt.toString());
+        System.out.println("\n");
+        System.out.println(ea.toString());
+        System.out.println("\n");
+        System.out.println("done!");
 
     }
 }

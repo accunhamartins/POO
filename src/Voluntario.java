@@ -163,7 +163,7 @@ public class Voluntario {
         sb.append(this.longitude + "\n");
         sb.append("Data de início de entrega: ");
         sb.append(this.inicio_transporte + "\n");
-        sb.append("Raio de ação");
+        sb.append("Raio de ação: ");
         sb.append(this.raio_acao + "\n");
         sb.append("Registos de encomendas: ");
         sb.append(this.historico.toString());
