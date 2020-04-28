@@ -2,8 +2,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Transportes {
+    private String matricula;
     private boolean disponivel;
-    private LocalDate  partida;
+    private LocalDate partida;
     private LocalDate chegada;
     private double precoTransporte;
     private double distancia;
@@ -13,6 +14,7 @@ public class Transportes {
     private boolean aceitaEncomendaMedica;
 
     public Transportes(){
+        this.matricula = " ";
         this.disponivel = true;
         this.partida = LocalDate.now();
         this.chegada = LocalDate.now();
@@ -24,7 +26,8 @@ public class Transportes {
         this.aceitaEncomendaMedica = true;
     }
 
-    public Transportes(boolean disponivel, double precoTransporte, double distancia, double tempoEspera, double velocidade, double custo, boolean aceitaEncomendaMedica){
+    public Transportes(String matricula, boolean disponivel, double precoTransporte, double distancia, double tempoEspera, double velocidade, double custo, boolean aceitaEncomendaMedica){
+        this.matricula = matricula;
         this.disponivel = disponivel;
         this.partida = LocalDate.now();
         this.chegada = LocalDate.now();
@@ -37,6 +40,7 @@ public class Transportes {
     }
 
     public Transportes(Transportes a){
+        this.matricula = a.getMatricula();
         this.disponivel = a.isDisponivel();
         this.partida = a.getPartida();
         this.chegada = a.getChegada();
@@ -47,6 +51,8 @@ public class Transportes {
         this.custo = a.getCusto();
         this.aceitaEncomendaMedica = a.isAceitaEncomendaMedica();
     }
+
+    public String getMatricula() {return matricula; }
 
     public boolean isDisponivel() {return this.disponivel; }
 
@@ -81,6 +87,8 @@ public class Transportes {
     public boolean isAceitaEncomendaMedica() {
         return this.aceitaEncomendaMedica;
     }
+
+    public void setMatricula(String matricula) {this.matricula = matricula; }
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
@@ -122,7 +130,8 @@ public class Transportes {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transportes t = (Transportes) o;
-        return isDisponivel() == t.isDisponivel() &&
+        return  this.matricula.equals(t.getMatricula()) &&
+                isDisponivel() == t.isDisponivel() &&
                 t.getCusto() == this.getCusto() &&
                 t.getDistancia() == this.getDistancia() &&
                 t.getPrecoTransporte() == this.precoTransporte &&
@@ -141,6 +150,8 @@ public class Transportes {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        sb.append("Matrícula: ");
+        sb.append(this.matricula+"\n");
         sb.append("Disponibilidade: ");
         sb.append(this.disponivel+"\n");
         sb.append("Hora Partida: ");
