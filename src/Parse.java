@@ -138,7 +138,7 @@ public class Parse {
     }
 
     public Loja parseLojas(String input){
-      String campos[] = input.split(",");
+      String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
@@ -147,7 +147,7 @@ public class Parse {
     }
 
     public Utilizador parseUtilizador(String input){
-      String campos[] = input.split(",");
+      String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
@@ -156,7 +156,7 @@ public class Parse {
     }
 
     public Voluntario parseVoluntarios(String input){
-      String campos[] = input.split(",");
+      String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
@@ -166,7 +166,7 @@ public class Parse {
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){
-        String campos[] = input.split(",");
+        String []campos = input.split(",");
         String codigo = campos[0];
         String nome = campos[1];
         double latitude = Double.parseDouble(campos[2]);
@@ -179,7 +179,7 @@ public class Parse {
 
     public Encomenda parseEncomenda(String input){
         Map<String, LinhaEncomenda> produtos = new HashMap<>();
-        String campos[] = input.split("," );
+        String []campos = input.split("," );
         String codigo = campos[0];
         String codigo_user = campos[1];
         String codigo_loja = campos[2];
@@ -195,7 +195,7 @@ public class Parse {
 
 
     public LinhaEncomenda parseLinhaEncomenda(String input){
-        String campos[] = input.split(",");
+        String []campos = input.split(",");
         String codigo = campos[0];
         String descricao = campos[1];
         double quantidade = Double.parseDouble(campos[2]);
