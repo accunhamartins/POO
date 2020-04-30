@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class EmpresaTransportes {
+public class EmpresaTransportes extends UtilizadorSistema {
     private String codigo;
     private String nome;
     private int nif;
@@ -17,6 +17,7 @@ public class EmpresaTransportes {
 
 
     public EmpresaTransportes(){
+        super();
         this.codigo = " ";
         this.nome = " ";
         this.nif = 0;
@@ -31,7 +32,8 @@ public class EmpresaTransportes {
         this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+        super(email, password, "Transportadora");
         this.codigo = codigo;
         this.nome = nome;
         this.nif = nif;
@@ -47,6 +49,7 @@ public class EmpresaTransportes {
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
+        super(a);
         this.codigo = a.getCodigo();
         this.nome = a.getNome();
         this.nif = a.getNif();
@@ -181,6 +184,7 @@ public class EmpresaTransportes {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
         sb.append("Código de empresa: ");
         sb.append(this.codigo + "\n");
         sb.append("Nome: ");

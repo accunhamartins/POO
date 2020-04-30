@@ -1,38 +1,34 @@
-public class Utilizador{
+public class Utilizador extends UtilizadorSistema{
       private String codigo;
       private String nome;
       private double latitude;
       private double longitude;
-      private String email;
-      private String password;
       //Encomendas 
 
       //Construtores
       public Utilizador(){
+          super();
           this.codigo = " ";
           this.nome = " ";
           this.latitude = 0;
           this.longitude = 0;
-          this.email = "";
-          this.password = "";
+
       }
 
-      public Utilizador(String codigo, String nome, double latitude, double longitude, String email, String password){
+      public Utilizador(String email, String password, String codigo, String nome, double latitude, double longitude){
+          super(email,password,"Utilizador");
           this.codigo = codigo;
           this.nome = nome;
           this.latitude = latitude;
           this.longitude = longitude;
-          this.email = email;
-          this.password = password;
       }
 
       public Utilizador(Utilizador user){
+          super(user);
           this.codigo = user.getCodigo();
           this.nome = user.getNome();
           this.latitude = user.getLatitude();
           this.longitude = user.getLongitude();
-          this.email = user.getEmail();
-          this.password = user.getPassword();
       }
 
       //Getters
@@ -52,13 +48,6 @@ public class Utilizador{
           return this.longitude;
       }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
     //Setters
       public void setCodigo(String codigo){
@@ -77,14 +66,6 @@ public class Utilizador{
           this.longitude = longitude;
       }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     //Clone
       public Utilizador clone(){
         return new Utilizador(this);
@@ -98,18 +79,19 @@ public class Utilizador{
           return  this.codigo.equals(user.getCodigo()) &&
                   this.nome.equals(user.getNome()) &&
                   this.latitude == user.getLatitude() &&
-                  this.longitude == user.getLongitude() &&
-                  this.email.equals(user.getEmail()) &&
-                  this.password.equals(user.getPassword());
+                  this.longitude == user.getLongitude();
+
       }
 
       public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        sb.append(super.toString());
         sb.append("Código: ").append(this.codigo + "\n");
         sb.append("Nome: ").append(this.nome + "\n");
         sb.append("Latitude: ").append(this.latitude + "\n");
         sb.append("Longitude: ").append(this.longitude + "\n");
+
 
         return sb.toString();
       }

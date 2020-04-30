@@ -3,10 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Parse {
     private RegistosUsers ru;
@@ -138,34 +135,47 @@ public class Parse {
     }
 
     public Loja parseLojas(String input){
+      Random rand = new Random();
       String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      return new Loja(codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
+      String email = nome + "@gmail.com";
+      int random = rand.nextInt(10000);
+      String password = String.valueOf(random);
+      return new Loja(email, password, codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
     }
 
     public Utilizador parseUtilizador(String input){
+      Random rand = new Random();
       String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      return new Utilizador(codigo, nome, latitude, longitude, " ", " ");
+      String email = nome + "@gmail.com";
+      int random = rand.nextInt(10000);
+      String password = String.valueOf(random);
+      return new Utilizador(email, password, codigo, nome, latitude, longitude);
     }
 
     public Voluntario parseVoluntarios(String input){
+      Random rand = new Random();
       String []campos = input.split(",");
       String codigo = campos[0];
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
       double raio_acao = Double.parseDouble(campos[4]);
-      return new Voluntario(nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
+      String email = nome + "@gmail.com";
+      int random = rand.nextInt(10000);
+      String password = String.valueOf(random);
+      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){
+        Random rand = new Random();
         String []campos = input.split(",");
         String codigo = campos[0];
         String nome = campos[1];
@@ -174,7 +184,10 @@ public class Parse {
         int nif = Integer.parseInt(campos[4]);
         double raioDeAcao = Double.parseDouble(campos[5]);
         double custo_km = Double.parseDouble(campos[6]);
-        return new EmpresaTransportes(codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
+        String email = nome + "@gmail.com";
+        int random = rand.nextInt(10000);
+        String password = String.valueOf(random);
+        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
     }
 
     public Encomenda parseEncomenda(String input){

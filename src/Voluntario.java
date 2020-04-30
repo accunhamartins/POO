@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Voluntario {
+public class Voluntario extends UtilizadorSistema {
     private String nome;
     private String codigo;
     private boolean disponivel;
@@ -15,6 +15,7 @@ public class Voluntario {
     //Construtores de classe
     //Construtor de classe por omissão
     public Voluntario(){
+        super();
         this.nome = " ";
         this.codigo = " ";
         this.disponivel = false;
@@ -27,6 +28,7 @@ public class Voluntario {
     }
     //Construtor de classe por clone
     public Voluntario(Voluntario a){
+        super(a);
         this.nome = a.getNome();
         this.codigo = a.getCodigo();
         this.disponivel = a.getDisponibilidade();
@@ -39,7 +41,8 @@ public class Voluntario {
     }
 
     //Construtor parametrizado
-    public Voluntario(String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
+    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
+        super(email, password, "Voluntario");
         this.nome = a;
         this.codigo = b;
         this.disponivel = c;
@@ -151,6 +154,7 @@ public class Voluntario {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
         sb.append("Nome: ");
         sb.append(this.nome + "\n");
         sb.append("Código de voluntário: ");

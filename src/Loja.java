@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Loja {
+public class Loja extends UtilizadorSistema{
     private String codigo;
     private String nome;
     private boolean tempo_espera;
@@ -14,6 +14,7 @@ public class Loja {
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Loja (){
+        super();
         this.codigo = " ";
         this.nome = " ";
         this.tempo_espera = false;
@@ -26,7 +27,8 @@ public class Loja {
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Loja (String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+    public Loja (String email, String password, String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+        super(email, password, "Loja");
         this.codigo = codigo;
         this.nome = nome;
         this.tempo_espera = tempo_espera;
@@ -40,6 +42,7 @@ public class Loja {
     }
 
     public Loja (Loja loja){
+        super(loja);
         this.codigo = loja.getCodigo();
         this.nome = loja.getNome();
         this.tempo_espera = loja.getTempo_espera();
@@ -172,6 +175,7 @@ public class Loja {
         sb.append("Longitude: ").append(this.longitude).append('\n');
         sb.append("Lista de encomendas recebidas: ");
         this.encomendas_recebidas.forEach(e -> sb.append(e.toString() + "\n"));
+        sb.append(super.toString());
         return sb.toString();
     }
 
