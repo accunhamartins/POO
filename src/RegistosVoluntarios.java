@@ -15,7 +15,7 @@ public class RegistosVoluntarios {
         setVoluntarios(voluntario);
     }
 
-    private RegistosVoluntarios(RegistosVoluntarios r){
+    public RegistosVoluntarios(RegistosVoluntarios r){
         setVoluntarios(r.getVoluntarios());
     }
 

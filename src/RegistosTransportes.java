@@ -15,7 +15,7 @@ public class RegistosTransportes {
         setTransportes(transporte);
     }
 
-    private RegistosTransportes(RegistosTransportes r){
+    public RegistosTransportes(RegistosTransportes r){
         setTransportes(r.getTransportes());
     }
 

@@ -8,21 +8,16 @@ public class TrazAqui{
         Loja l = new Loja();
         LinhaEncomenda le = new LinhaEncomenda();
         Utilizador user = new Utilizador();
-        EncomendasAceites ea = new EncomendasAceites();
-        RegistosUsers ru = new RegistosUsers();
-        RegistosLojas rl = new RegistosLojas();
-        RegistosTransportes rt = new RegistosTransportes();
-        RegistosVoluntarios rv = new RegistosVoluntarios();
 
         Parse ler = new Parse();
         ler.parse();
 
 
-        ru.setUsers(ler.getRu().getUsers());
-        rv.setVoluntarios(ler.getRv().getVoluntarios());
-        rl.setLojas(ler.getRl().getLojas());
-        rt.setTransportes(ler.getRt().getTransportes());
-        ea.setAceites(ler.getEa().getAceites());
+        RegistosUsers ru = new RegistosUsers(ler.getRu());
+        RegistosVoluntarios  rv = new RegistosVoluntarios(ler.getRv());
+        RegistosLojas rl = new RegistosLojas(ler.getRl());
+        RegistosTransportes rt = new RegistosTransportes(ler.getRt());
+        EncomendasAceites ea = new EncomendasAceites(ler.getEa());
 
         System.out.println(ru.toString());
         System.out.println("\n");
