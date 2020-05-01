@@ -106,7 +106,6 @@ public class Parse {
                     break;
                 case "Encomenda":
                     Encomenda e = parseEncomenda(linhaPartida[1]);
-                    System.out.println(e.toString());
                     break;
                 case "Aceite":
                     this.ea = parseEncomendasAceites(linhaPartida[1], ea);

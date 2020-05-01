@@ -8,10 +8,10 @@ public class TrazAqui{
         Loja l = new Loja();
         LinhaEncomenda le = new LinhaEncomenda();
         Utilizador user = new Utilizador();
+        MenuLogin menu = new MenuLogin();
 
         Parse ler = new Parse();
         ler.parse();
-
 
         RegistosUsers ru = new RegistosUsers(ler.getRu());
         RegistosVoluntarios  rv = new RegistosVoluntarios(ler.getRv());
@@ -19,17 +19,8 @@ public class TrazAqui{
         RegistosTransportes rt = new RegistosTransportes(ler.getRt());
         EncomendasAceites ea = new EncomendasAceites(ler.getEa());
 
-        System.out.println(ru.toString());
-        System.out.println("\n");
-        System.out.println(rv.toString());
-        System.out.println("\n");
-        System.out.println(rl.toString());
-        System.out.println("\n");
-        System.out.println(rt.toString());
-        System.out.println("\n");
-        System.out.println(ea.toString());
-        System.out.println("\n");
-        System.out.println("done!");
+        menu.showMenus();
+
 
     }
 }
