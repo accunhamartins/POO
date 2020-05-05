@@ -143,7 +143,7 @@ public class Parse {
       String email = nome + "@gmail.com";
       int random = rand.nextInt(10000);
       String password = String.valueOf(random);
-      return new Loja(email, password, codigo, nome, false, 0, 0, 0, 0, latitude, longitude, new ArrayList<>());
+      return new Loja(email, password, codigo, nome, false, 0.0, 0.0, 0.0, latitude, longitude, new ArrayList<>());
     }
 
     public Utilizador parseUtilizador(String input){
@@ -170,7 +170,7 @@ public class Parse {
       String email = nome + "@gmail.com";
       int random = rand.nextInt(10000);
       String password = String.valueOf(random);
-      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0);
+      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>());
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){

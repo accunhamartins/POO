@@ -142,7 +142,6 @@ public class EmpresaTransportes extends UtilizadorSistema {
 
     public void setTransportes(ArrayList<Transportes> transportes) {
         this.transportes = new ArrayList<>();
-        ArrayList<Transportes> aux = new ArrayList<Transportes>();
         for(Transportes t: transportes){
             this.transportes.add(t.clone());
         }

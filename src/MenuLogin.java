@@ -58,13 +58,13 @@ public class MenuLogin {
                     Utilizador u = new Utilizador(res.get(1),res.get(2),res.get(3),res.get(4),Double.parseDouble(res.get(5)),Double.parseDouble(res.get(6)));
                     break;
                 case "Voluntário":
-                    Voluntario v = new Voluntario(res.get(1),res.get(2),res.get(4),res.get(3),Boolean.parseBoolean(res.get(5)),Double.parseDouble(res.get(6)),Double.parseDouble(res.get(7)),null,Double.parseDouble(res.get(8)),null);
+                    Voluntario v = new Voluntario(res.get(1),res.get(2),res.get(4),res.get(3),Boolean.parseBoolean(res.get(5)),Double.parseDouble(res.get(6)),Double.parseDouble(res.get(7)),null,Double.parseDouble(res.get(8)),new ArrayList<>());
                     break;
                 case "Loja":
-                    Loja l = new Loja(res.get(1),res.get(2),res.get(3),res.get(4),Boolean.parseBoolean(res.get(5)),0,0,Double.parseDouble(res.get(8)),Double.parseDouble(res.get(6)),Double.parseDouble(res.get(7)),null);
+                    Loja l = new Loja(res.get(1),res.get(2),res.get(3),res.get(4),Boolean.parseBoolean(res.get(5)),0,0,Double.parseDouble(res.get(8)),Double.parseDouble(res.get(6)),Double.parseDouble(res.get(7)),new ArrayList<>());
                     break;
                 case "Empresa Transportadora":
-                    EmpresaTransportes t = new EmpresaTransportes(res.get(1),res.get(2),res.get(3),res.get(4), Integer.parseInt(res.get(5)),Double.parseDouble(res.get(6)),res.get(7),Double.parseDouble(res.get(8)),Double.parseDouble(res.get(9)),Double.parseDouble(res.get(10)),null,null,Integer.parseInt(res.get(11)),Boolean.parseBoolean(res.get(12)));
+                    EmpresaTransportes t = new EmpresaTransportes(res.get(1),res.get(2),res.get(3),res.get(4), Integer.parseInt(res.get(5)),Double.parseDouble(res.get(6)),res.get(7),Double.parseDouble(res.get(8)),Double.parseDouble(res.get(9)),Double.parseDouble(res.get(10)),new ArrayList<>(),new ArrayList<>(),Integer.parseInt(res.get(11)),Boolean.parseBoolean(res.get(12)));
                     break;
             }
         }
@@ -180,7 +180,7 @@ public class MenuLogin {
             System.out.println("Insira o seu nif: ");
             int nif = input.nextInt();
             res.add(String.valueOf(nif));
-            System.out.println("Insira o seu cuto por km: ");
+            System.out.println("Insira o seu custo por km: ");
             double custo_km = input.nextDouble();
             res.add(String.valueOf(custo_km));
             System.out.println("Insira o seu local: ");
@@ -204,10 +204,6 @@ public class MenuLogin {
         }
         return res;
     }
-
-
-
-
 
 
 
