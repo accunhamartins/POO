@@ -10,7 +10,6 @@ public class Voluntario extends UtilizadorSistema {
     private LocalDate inicio_transporte;
     private double raio_acao;
     private ArrayList<Encomenda> historico;
-    private double custo;
 
     //Construtores de classe
     //Construtor de classe por omissão
@@ -24,7 +23,6 @@ public class Voluntario extends UtilizadorSistema {
         this.inicio_transporte = LocalDate.now();
         this.raio_acao = 0;
         this.historico = new ArrayList<>();
-        this.custo = 0;
     }
     //Construtor de classe por clone
     public Voluntario(Voluntario a){
@@ -37,11 +35,10 @@ public class Voluntario extends UtilizadorSistema {
         this.inicio_transporte = a.getInicio_transporte();
         this.raio_acao = a.getRaio_acao();
         this.setHistorico(a.getHistorico());
-        this.custo = a.getCusto();
     }
 
     //Construtor parametrizado
-    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double i){
+    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h){
         super(email, password, "Voluntario");
         this.nome = a;
         this.codigo = b;
@@ -51,7 +48,6 @@ public class Voluntario extends UtilizadorSistema {
         this.inicio_transporte = f;
         this.raio_acao = g;
         this.setHistorico(h);
-        this.custo = i;
     }
 
     //Métodos de obtenção de variáveis
@@ -89,10 +85,6 @@ public class Voluntario extends UtilizadorSistema {
         return res;
     }
 
-    public double getCusto(){
-        return this.custo;
-    }
-
     //Método de definição de variáveis
     public void setNome(String a){
       this.nome = a;
@@ -127,10 +119,6 @@ public class Voluntario extends UtilizadorSistema {
         for(Encomenda s: a) this.historico.add(s);
     }
 
-    public void setCusto(double a){
-        this.custo = a;
-    }
-
     //Método de clonar um objeto
     public Voluntario clone(){
         return new Voluntario(this);
@@ -148,8 +136,7 @@ public class Voluntario extends UtilizadorSistema {
         && this.longitude == v.getLongitude()
         && this.inicio_transporte.equals(v.getInicio_transporte())
         && this.raio_acao == v.getRaio_acao()
-        && this.historico.equals(v.getHistorico())
-        && this.custo == v.getCusto();
+        && this.historico.equals(v.getHistorico());
     }
 
     public String toString(){
@@ -172,7 +159,6 @@ public class Voluntario extends UtilizadorSistema {
         sb.append("Registos de encomendas: ");
         sb.append(this.historico.toString());
         sb.append("Custo de transporte: ");
-        sb.append(this.custo + "\n");
 
         return sb.toString();
     }

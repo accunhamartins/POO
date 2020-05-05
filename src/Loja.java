@@ -5,7 +5,6 @@ public class Loja extends UtilizadorSistema{
     private String codigo;
     private String nome;
     private boolean tempo_espera;
-    private double distancia_loja;
     private double velocidade_deslocacao;
     private double tempo_espera_fila;
     private double tempo_atendimento_medio;
@@ -18,7 +17,6 @@ public class Loja extends UtilizadorSistema{
         this.codigo = " ";
         this.nome = " ";
         this.tempo_espera = false;
-        this.distancia_loja = 0;
         this.velocidade_deslocacao = 0;
         this.tempo_espera_fila = 0;
         this.tempo_atendimento_medio = 0;
@@ -27,12 +25,11 @@ public class Loja extends UtilizadorSistema{
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Loja (String email, String password, String codigo, String nome, boolean tempo_espera, double distancia_loja, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+    public Loja (String email, String password, String codigo, String nome, boolean tempo_espera, double velocidade_deslocacao, double tempo_espera_fila, double tempo_atendimento_medio,double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
         super(email, password, "Loja");
         this.codigo = codigo;
         this.nome = nome;
         this.tempo_espera = tempo_espera;
-        this.distancia_loja = distancia_loja;
         this.velocidade_deslocacao = velocidade_deslocacao;
         this.tempo_espera_fila = tempo_espera_fila;
         this.tempo_atendimento_medio = tempo_atendimento_medio;
@@ -46,7 +43,6 @@ public class Loja extends UtilizadorSistema{
         this.codigo = loja.getCodigo();
         this.nome = loja.getNome();
         this.tempo_espera = loja.getTempo_espera();
-        this.distancia_loja = loja.getDistancia_loja();
         this.velocidade_deslocacao = loja.getVelocidade_deslocacao();
         this.tempo_espera_fila = loja.getTempo_espera_fila();
         this.tempo_atendimento_medio = loja.getTempo_atendimento_medio();
@@ -65,10 +61,6 @@ public class Loja extends UtilizadorSistema{
 
     public boolean getTempo_espera() {
         return tempo_espera;
-    }
-
-    public double getDistancia_loja() {
-        return distancia_loja;
     }
 
     public double getVelocidade_deslocacao() {
@@ -111,10 +103,6 @@ public class Loja extends UtilizadorSistema{
         this.tempo_espera = tempo_espera;
     }
 
-    public void setDistancia_loja(double distancia_loja) {
-        this.distancia_loja = distancia_loja;
-    }
-
     public void setVelocidade_deslocacao(double velocidade_deslocacao) {
         this.velocidade_deslocacao = velocidade_deslocacao;
     }
@@ -152,7 +140,6 @@ public class Loja extends UtilizadorSistema{
         Loja Loja = (Loja) o;
         return  this.codigo.equals(Loja.getCodigo()) &&
                 this.tempo_espera == Loja.getTempo_espera() &&
-                Loja.getDistancia_loja() == this.distancia_loja &&
                 Loja.getVelocidade_deslocacao() == this.velocidade_deslocacao &&
                 Loja.getTempo_espera_fila() == this.tempo_espera_fila &&
                 Loja.getTempo_atendimento_medio() == this.tempo_atendimento_medio &&
@@ -167,7 +154,6 @@ public class Loja extends UtilizadorSistema{
         sb.append("Código da loja: ").append(this.codigo).append('\n');
         sb.append("Nome da loja: ").append(this.nome).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');
-        sb.append("Distância à loja: ").append(this.distancia_loja).append('\n');
         sb.append("Velocidade de deslocacao: ").append(this.velocidade_deslocacao).append('\n');
         sb.append("Tempo de espera na fila: ").append(this.tempo_espera_fila).append('\n');
         sb.append("Tempo médio de atendimento: ").append(this.tempo_atendimento_medio).append('\n');
@@ -177,9 +163,5 @@ public class Loja extends UtilizadorSistema{
         this.encomendas_recebidas.forEach(e -> sb.append(e.toString() + "\n"));
         sb.append(super.toString());
         return sb.toString();
-    }
-
-    public double tempo_recolha_encomenda (){
-        return (this.distancia_loja*this.velocidade_deslocacao + this.tempo_espera_fila);
     }
 }
