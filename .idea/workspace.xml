@@ -12,6 +12,13 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -24,11 +31,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -40,19 +57,57 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1587850654382</updated>
+      <workItem from="1588109003539" duration="79000" />
+      <workItem from="1588171285207" duration="368000" />
+      <workItem from="1588171861731" duration="141000" />
+      <workItem from="1588175658292" duration="118000" />
+      <workItem from="1588175786615" duration="104000" />
+      <workItem from="1588175902472" duration="104000" />
+      <workItem from="1588176017578" duration="21000" />
+      <workItem from="1588176051292" duration="45000" />
+      <workItem from="1588240617726" duration="891000" />
+      <workItem from="1588243641318" duration="6000" />
+      <workItem from="1588243839229" duration="10000" />
+      <workItem from="1588280802255" duration="3314000" />
+      <workItem from="1588344940233" duration="6039000" />
+      <workItem from="1588621175341" duration="145000" />
+      <workItem from="1588621347352" duration="88000" />
+      <workItem from="1588718045802" duration="721000" />
+      <workItem from="1588770716198" duration="32000" />
+      <workItem from="1588973662210" duration="278000" />
     </task>
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="95" y="27" width="1751" height="1173" key="SettingsEditor" timestamp="1588108745269">
-      <screen x="72" y="27" width="1848" height="1053" />
+    <state x="827" y="392" width="266" height="330" key="#Notifications" timestamp="1588171988252">
+      <screen x="0" y="27" width="1920" height="1053" />
     </state>
+    <state x="827" y="392" width="266" height="330" key="#Notifications/0.27.1920.1053@0.27.1920.1053" timestamp="1588171988252" />
+    <state x="768" y="260" width="374" height="594" key="#com.intellij.ide.util.MemberChooser" timestamp="1588281651096">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="768" y="260" width="374" height="594" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1588281651096" />
+    <state x="737" y="278" width="435" height="558" key="FileChooserDialogImpl" timestamp="1588621413698">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="737" y="278" width="435" height="558" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1588621413698" />
+    <state x="206" y="27" width="1219" height="1053" key="SettingsEditor" timestamp="1588345799923">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="206" y="27" width="1219" height="1053" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1588345799923" />
     <state x="90" y="27" width="1751" height="1173" key="SettingsEditor/67.27.1853.1173@67.27.1853.1173" timestamp="1587854435070" />
     <state x="95" y="27" key="SettingsEditor/72.27.1848.1053@72.27.1848.1053" timestamp="1588108745269" />
     <state x="649" y="440" key="com.intellij.ide.util.TipDialog" timestamp="1588100740093">
       <screen x="67" y="27" width="1853" height="1173" />
     </state>
     <state x="649" y="440" key="com.intellij.ide.util.TipDialog/67.27.1853.1173@67.27.1853.1173" timestamp="1588100740093" />
+    <state x="624" y="252" key="run.anything.popup" timestamp="1588283092271">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="624" y="252" key="run.anything.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1588283092271" />
     <state x="656" y="287" width="1173" height="678" key="search.everywhere.popup" timestamp="1587854391743">
       <screen x="67" y="27" width="1853" height="1173" />
     </state>
