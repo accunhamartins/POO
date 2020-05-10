@@ -50,6 +50,6 @@ public class RegistosVoluntarios {
 
 
     public void add(Voluntario v){
-      this.voluntarios.put(v.getCodigo(), v.clone());
+      this.voluntarios.put(v.getEmail(), v.clone());
     }
 }

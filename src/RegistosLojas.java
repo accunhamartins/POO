@@ -50,6 +50,6 @@ public class RegistosLojas{
 
 
     public void add(Loja l){
-      this.lojas.put(l.getCodigo(), l.clone());
+      this.lojas.put(l.getEmail(), l.clone());
     }
 }

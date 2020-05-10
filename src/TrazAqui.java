@@ -19,6 +19,8 @@ public class TrazAqui{
         RegistosTransportes rt = new RegistosTransportes(ler.getRt());
         EncomendasAceites ea = new EncomendasAceites(ler.getEa());
 
+        System.out.println(ru.toString());
+
         menu.showMenus();
 
 

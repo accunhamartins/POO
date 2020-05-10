@@ -50,6 +50,6 @@ public class RegistosTransportes {
 
 
     public void add(EmpresaTransportes t){
-      this.transportes.put(t.getCodigo(), t.clone());
+      this.transportes.put(t.getEmail(), t.clone());
     }
 }

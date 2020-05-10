@@ -49,7 +49,7 @@ public class RegistosUsers {
     }
 
     public void add(Utilizador u) {
-        this.users.put(u.getCodigo(), u.clone());
+        this.users.put(u.getEmail(), u.clone());
     }
 
 
