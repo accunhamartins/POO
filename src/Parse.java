@@ -117,7 +117,7 @@ public class Parse {
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      String email = nome + "@gmail.com";
+      String email = codigo + "@gmail.com";
       int random = rand.nextInt(10000);
       String password = String.valueOf(random);
       return new Loja(email, password, codigo, nome, false, 0.0, 0.0, 0.0, latitude, longitude, new ArrayList<>());
@@ -130,7 +130,7 @@ public class Parse {
       String nome = campos[1];
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
-      String email = nome + "@gmail.com";
+      String email = codigo + "@gmail.com";
       int random = rand.nextInt(10000);
       String password = String.valueOf(random);
       return new Utilizador(email, password, codigo, nome, latitude, longitude);
@@ -144,7 +144,7 @@ public class Parse {
       double latitude = Double.parseDouble(campos[2]);
       double longitude = Double.parseDouble(campos[3]);
       double raio_acao = Double.parseDouble(campos[4]);
-      String email = nome + "@gmail.com";
+      String email = codigo + "@gmail.com";
       int random = rand.nextInt(10000);
       String password = String.valueOf(random);
       return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>());
@@ -160,7 +160,7 @@ public class Parse {
         int nif = Integer.parseInt(campos[4]);
         double raioDeAcao = Double.parseDouble(campos[5]);
         double custo_km = Double.parseDouble(campos[6]);
-        String email = nome + "@gmail.com";
+        String email = codigo + "@gmail.com";
         int random = rand.nextInt(10000);
         String password = String.valueOf(random);
         return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
