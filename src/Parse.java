@@ -4,62 +4,39 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Parse {
-    private RegistosUsers ru;
-    private RegistosLojas rl;
-    private RegistosTransportes rt;
-    private RegistosVoluntarios rv;
+    private Map<String, UtilizadorSistema> users;
     private EncomendasAceites ea;
+    private Map<String, String> passwords;
 
 
     public Parse(){
-        this.ru = new RegistosUsers();
-        this.rl = new RegistosLojas();
-        this.rt = new RegistosTransportes();
-        this.rv = new RegistosVoluntarios();
-        this.ea = new EncomendasAceites();
+       this.users = new HashMap<>();
+       this.passwords = new HashMap<>();
+       this.ea = new EncomendasAceites();
     }
 
-    public Parse(RegistosUsers ru, RegistosLojas rl, RegistosTransportes rt, RegistosVoluntarios rv, EncomendasAceites ea){
-        setRu(ru);
-        setRl(rl);
-        setRt(rt);
-        setRv(rv);
-        setEa(ea);
+    public Parse(Map<String, UtilizadorSistema> users, Map<String, String> passwords, EncomendasAceites ea){
+        setUsers(users);
+        setPasswords(passwords);
+        this.ea.setAceites(ea.getAceites());
+
     }
 
     public Parse (Parse a){
-        setRu(a.getRu());
-        setRl(a.getRl());
-        setRt(a.getRt());
-        setRv(a.getRv());
+        setUsers(a.getUsers());
+        setPasswords(a.getPasswords());
         setEa(a.getEa());
     }
 
-    public RegistosLojas getRl() {
-        return new RegistosLojas(this.rl.getLojas());
+    public Map<String, UtilizadorSistema> getUsers() {
+        return this.users.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
     }
 
     public EncomendasAceites getEa() {
         return new EncomendasAceites(this.ea.getAceites());
-    }
-
-    public RegistosTransportes getRt() {
-        return new RegistosTransportes(this.rt.getTransportes());
-    }
-
-    public RegistosUsers getRu() {
-        return new RegistosUsers(this.ru.getUsers());
-    }
-
-    public RegistosVoluntarios getRv() {
-        return new RegistosVoluntarios(this.rv.getVoluntarios());
-    }
-
-    public void setRl(RegistosLojas rl) {
-        this.rl = new RegistosLojas();
-        this.rl.setLojas(rl.getLojas());
     }
 
     public void setEa(EncomendasAceites ea) {
@@ -67,20 +44,20 @@ public class Parse {
         this.ea.setAceites(ea.getAceites());
     }
 
-    public void setRt(RegistosTransportes rt) {
-        this.rt = new RegistosTransportes();
-        this.rt.setTransportes(rt.getTransportes());
+    public void setUsers(Map<String, UtilizadorSistema> users) {
+        this.users = new TreeMap<>();
+        users.entrySet().forEach(e -> this.users.put(e.getKey(), e.getValue().clone()));
     }
 
-    public void setRu(RegistosUsers ru) {
-        this.ru = new RegistosUsers();
-        this.ru.setUsers(ru.getUsers());
+    public Map<String, String> getPasswords() {
+        return this.passwords.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue()));
     }
 
-    public void setRv(RegistosVoluntarios rv) {
-        this.rv = new RegistosVoluntarios();
-        this.rv.setVoluntarios(rv.getVoluntarios());
+    public void setPasswords(Map<String, String> passwords) {
+        this.passwords = new TreeMap<>();
+        passwords.entrySet().forEach(e -> this.passwords.put(e.getKey(), e.getValue()));
     }
+
 
     public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
@@ -90,19 +67,19 @@ public class Parse {
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
-                    this.ru.add(u);
+                    this.add(u);
                     break;
                 case "Loja":
                     Loja l = parseLojas(linhaPartida[1]);
-                    this.rl.add(l);
+                    this.add(l);
                     break;
                 case "Transportadora":
                     EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
-                    this.rt.add(t);
+                    this.add(t);
                     break;
                 case "Voluntario":
                     Voluntario v = parseVoluntarios(linhaPartida[1]);
-                    this.rv.add(v);
+                    this.add(v);
                     break;
                 case "Encomenda":
                     Encomenda e = parseEncomenda(linhaPartida[1]);
@@ -214,5 +191,10 @@ public class Parse {
         double preco = Double.parseDouble(campos[3]);
 
         return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
+    }
+
+    public void add(UtilizadorSistema u){
+        this.users.put(u.getEmail(), u.clone());
+        this.passwords.put((u.getEmail()), u.getPassword());
     }
 }
