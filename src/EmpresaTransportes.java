@@ -10,7 +10,7 @@ public class EmpresaTransportes extends UtilizadorSistema {
     private double latitude;
     private double longitude;
     private double raioDeAcao;
-    private ArrayList<Transportes> transportes;
+    private ArrayList<Veiculos> veiculos;
     private ArrayList<Encomenda> registos;
     private int numeroMinimoEncomenda;
     private boolean transporteMedico;
@@ -26,13 +26,13 @@ public class EmpresaTransportes extends UtilizadorSistema {
         this.latitude = 0;
         this.longitude = 0;
         this.raioDeAcao = 0.0;
-        this.transportes = new ArrayList<>();
+        this.veiculos = new ArrayList<>();
         this.registos = new ArrayList<>();
         this.numeroMinimoEncomenda = 0;
         this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Transportes> transportes, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Veiculos> veiculos, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
         super(email, password, "Transportadora");
         this.codigo = codigo;
         this.nome = nome;
@@ -42,7 +42,7 @@ public class EmpresaTransportes extends UtilizadorSistema {
         this.latitude = latitude;
         this.longitude = longitude;
         this.raioDeAcao = raioDeAcao;
-        this.setTransportes(transportes);
+        this.setVeiculos(veiculos);
         this.setRegistos(registos);
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
         this.transporteMedico = transporteMedico;
@@ -58,7 +58,7 @@ public class EmpresaTransportes extends UtilizadorSistema {
         this.latitude = a.getLatitude();
         this.longitude = a.getLongitude();
         this.raioDeAcao = a.getRaioDeAcao();
-        this.setTransportes(a.getTransportes());
+        this.setVeiculos(a.getVeiculos());
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
         this.transporteMedico = a.isTransporteMedico();
@@ -96,8 +96,8 @@ public class EmpresaTransportes extends UtilizadorSistema {
         return raioDeAcao;
     }
 
-    public ArrayList<Transportes> getTransportes(){
-        return this.transportes.stream().map(Transportes::clone).collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Veiculos> getVeiculos(){
+        return this.veiculos.stream().map(Veiculos::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Encomenda> getRegistos() {
@@ -140,10 +140,10 @@ public class EmpresaTransportes extends UtilizadorSistema {
         this.raioDeAcao = raioDeAcao;
     }
 
-    public void setTransportes(ArrayList<Transportes> transportes) {
-        this.transportes = new ArrayList<>();
-        for(Transportes t: transportes){
-            this.transportes.add(t.clone());
+    public void setVeiculos(ArrayList<Veiculos> veiculos) {
+        this.veiculos = new ArrayList<>();
+        for(Veiculos t: veiculos){
+            this.veiculos.add(t.clone());
         }
     }
 
@@ -176,7 +176,7 @@ public class EmpresaTransportes extends UtilizadorSistema {
                 this.longitude == e.getLongitude() &&
                 this.raioDeAcao == e.getRaioDeAcao() &&
                 this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
-                this.transportes.equals((e.getTransportes())) &&
+                this.veiculos.equals((e.getVeiculos())) &&
                 this.registos.equals(e.getRegistos()) &&
                 this.transporteMedico == e.isTransporteMedico();
     }
@@ -201,7 +201,7 @@ public class EmpresaTransportes extends UtilizadorSistema {
         sb.append("Raio de ação: ");
         sb.append(this.raioDeAcao + "\n");
         sb.append("Transportes: ");
-        sb.append(this.transportes.toString());
+        sb.append(this.veiculos.toString());
         sb.append("Registos de encomendas: ");
         sb.append(this.registos.toString());
         sb.append("Número mínimo de encomendas: ");

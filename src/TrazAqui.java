@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class TrazAqui{
 
     public static void main(String[] args) {
@@ -13,13 +15,13 @@ public class TrazAqui{
         Parse ler = new Parse();
         ler.parse();
 
-        RegistosUsers ru = new RegistosUsers(ler.getRu());
-        RegistosVoluntarios  rv = new RegistosVoluntarios(ler.getRv());
-        RegistosLojas rl = new RegistosLojas(ler.getRl());
-        RegistosTransportes rt = new RegistosTransportes(ler.getRt());
-        EncomendasAceites ea = new EncomendasAceites(ler.getEa());
+        HashMap<String,UtilizadorSistema> users = new HashMap<>(ler.getUsers());
+        HashMap<String,String> passwords = new HashMap<>(ler.getPasswords());
 
-        menu.showMenus();
+        System.out.println(users.toString());
+        System.out.println(passwords.toString());
+
+        //menu.showMenus();
 
 
     }
