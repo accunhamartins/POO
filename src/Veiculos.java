@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class Transportes {
+public class Veiculos {
     private String matricula;
     private boolean disponivel;
     private LocalDate partida;
@@ -12,7 +12,7 @@ public class Transportes {
     private double custo;
     private boolean aceitaEncomendaMedica;
 
-    public Transportes(){
+    public Veiculos(){
         this.matricula = " ";
         this.disponivel = true;
         this.partida = LocalDate.now();
@@ -25,7 +25,7 @@ public class Transportes {
         this.aceitaEncomendaMedica = true;
     }
 
-    public Transportes(String matricula, boolean disponivel, double precoTransporte, double distancia, double tempoEspera, double velocidade, double custo, boolean aceitaEncomendaMedica){
+    public Veiculos(String matricula, boolean disponivel, double precoTransporte, double distancia, double tempoEspera, double velocidade, double custo, boolean aceitaEncomendaMedica){
         this.matricula = matricula;
         this.disponivel = disponivel;
         this.partida = LocalDate.now();
@@ -38,7 +38,7 @@ public class Transportes {
         this.aceitaEncomendaMedica = aceitaEncomendaMedica;
     }
 
-    public Transportes(Transportes a){
+    public Veiculos(Veiculos a){
         this.matricula = a.getMatricula();
         this.disponivel = a.isDisponivel();
         this.partida = a.getPartida();
@@ -128,7 +128,7 @@ public class Transportes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Transportes t = (Transportes) o;
+        Veiculos t = (Veiculos) o;
         return  this.matricula.equals(t.getMatricula()) &&
                 isDisponivel() == t.isDisponivel() &&
                 t.getCusto() == this.getCusto() &&
@@ -141,8 +141,8 @@ public class Transportes {
                 getChegada().equals(t.getChegada());
     }
 
-    public Transportes clone(){
-        return new Transportes(this);
+    public Veiculos clone(){
+        return new Veiculos(this);
     }
 
 
