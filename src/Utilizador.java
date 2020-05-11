@@ -1,4 +1,6 @@
-public class Utilizador extends UtilizadorSistema{
+import java.io.Serializable;
+
+public class Utilizador extends UtilizadorSistema implements Serializable {
       private String codigo;
       private String nome;
       private double latitude;

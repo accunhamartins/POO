@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EncomendasAceites{
+public class EncomendasAceites implements Serializable {
     private List<String> aceites;
 
     //Construtores

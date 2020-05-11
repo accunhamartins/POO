@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class LinhaEncomenda{
+public class LinhaEncomenda implements Serializable {
     private String codigo;
     private String descricao;
     private double quantidade;

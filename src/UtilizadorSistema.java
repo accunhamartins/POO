@@ -1,4 +1,6 @@
-public abstract class  UtilizadorSistema {
+import java.io.Serializable;
+
+public abstract class  UtilizadorSistema implements Serializable {
     private String email;
     private String password;
     private String typeUser;

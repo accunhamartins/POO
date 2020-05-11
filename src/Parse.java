@@ -7,33 +7,45 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Parse {
-    private Map<String, UtilizadorSistema> users;
+    private BDGeral baseGeral;
     private EncomendasAceites ea;
-    private Map<String, String> passwords;
+    private List<Encomenda> encomendas;
 
 
     public Parse(){
-       this.users = new HashMap<>();
-       this.passwords = new HashMap<>();
+       this.baseGeral = new BDGeral();
+       this.encomendas = new ArrayList<>();
        this.ea = new EncomendasAceites();
     }
 
-    public Parse(Map<String, UtilizadorSistema> users, Map<String, String> passwords, EncomendasAceites ea){
-        setUsers(users);
-        setPasswords(passwords);
-        this.ea.setAceites(ea.getAceites());
+    public Parse(BDGeral bd, List<Encomenda> encomendas, EncomendasAceites ea){
+        this.baseGeral = bd.clone();
+        this.ea = ea.clone();
+        setEncomendas(encomendas);
 
     }
 
     public Parse (Parse a){
-        setUsers(a.getUsers());
-        setPasswords(a.getPasswords());
-        setEa(a.getEa());
+        this.baseGeral = a.getBaseGeral();
+        this.ea = a.getEa();
+        setEncomendas(a.getEncomendas());
     }
 
-    public Map<String, UtilizadorSistema> getUsers() {
-        return this.users.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
+    public BDGeral getBaseGeral() {
+        return baseGeral.clone();
     }
+
+
+    public List<Encomenda> getEncomendas() {
+        return this.encomendas.stream().map(Encomenda::clone).collect(Collectors.toList());
+    }
+
+    public void setEncomendas(List<Encomenda> encomendas) {
+        this.encomendas = new ArrayList<>();
+        for(Encomenda e: encomendas) this.encomendas.add(e.clone());
+    }
+
+
 
     public EncomendasAceites getEa() {
         return new EncomendasAceites(this.ea.getAceites());
@@ -44,21 +56,6 @@ public class Parse {
         this.ea.setAceites(ea.getAceites());
     }
 
-    public void setUsers(Map<String, UtilizadorSistema> users) {
-        this.users = new TreeMap<>();
-        users.entrySet().forEach(e -> this.users.put(e.getKey(), e.getValue().clone()));
-    }
-
-    public Map<String, String> getPasswords() {
-        return this.passwords.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue()));
-    }
-
-    public void setPasswords(Map<String, String> passwords) {
-        this.passwords = new TreeMap<>();
-        passwords.entrySet().forEach(e -> this.passwords.put(e.getKey(), e.getValue()));
-    }
-
-
     public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
         String[] linhaPartida;
@@ -67,22 +64,23 @@ public class Parse {
             switch(linhaPartida[0]){
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
-                    this.add(u);
+                    this.baseGeral.addUser(u);
                     break;
                 case "Loja":
                     Loja l = parseLojas(linhaPartida[1]);
-                    this.add(l);
+                    this.baseGeral.addLoja(l);
                     break;
                 case "Transportadora":
                     EmpresaTransportes t = parseEmpresaTransportes(linhaPartida[1]);
-                    this.add(t);
+                    this.baseGeral.addTransporte(t);
                     break;
                 case "Voluntario":
                     Voluntario v = parseVoluntarios(linhaPartida[1]);
-                    this.add(v);
+                    this.baseGeral.addVoluntario(v);
                     break;
                 case "Encomenda":
                     Encomenda e = parseEncomenda(linhaPartida[1]);
+                    this.encomendas.add(e.clone());
                     break;
                 case "Aceite":
                     this.ea = parseEncomendasAceites(linhaPartida[1], ea);
@@ -91,9 +89,8 @@ public class Parse {
                     System.out.println("Linha inválida.");
                     break;
             }
-
         }
-
+        addEncomendas(this.encomendas);
     }
 
     public List<String> lerFicheiro(String nomeFich) {
@@ -118,7 +115,7 @@ public class Parse {
       double longitude = Double.parseDouble(campos[3]);
       String email = codigo + "@gmail.com";
       String password = "12345";
-      return new Loja(email, password, codigo, nome, false, 0.0, 0.0, 0.0, latitude, longitude, new ArrayList<>());
+      return new Loja(email, password, codigo, nome, 20.0, latitude, longitude, new ArrayList<>());
     }
 
     public Utilizador parseUtilizador(String input){
@@ -156,7 +153,7 @@ public class Parse {
         double custo_km = Double.parseDouble(campos[6]);
         String email = codigo + "@gmail.com";
         String password = "12345";
-        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), new ArrayList<>(), 0, false);
+        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true);
     }
 
     public Encomenda parseEncomenda(String input){
@@ -186,8 +183,15 @@ public class Parse {
         return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
     }
 
-    public void add(UtilizadorSistema u){
-        this.users.put(u.getEmail(), u.clone());
-        this.passwords.put((u.getEmail()), u.getPassword());
+    public void addEncomendas(List<Encomenda> encomendas){
+        for(Encomenda e: encomendas){
+            for(Loja j: this.baseGeral.getLojas().getLojas().values()){
+                if(e.getCodigo_loja().equals(j.getCodigo())){
+                    j.addEncomenda(e);
+                    this.baseGeral.updateLoja(e, j);
+                }
+            }
+        }
     }
+
 }
