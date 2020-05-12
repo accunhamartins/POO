@@ -16,10 +16,6 @@ public class Main{
         BDGeral base = new BDGeral(ler.getBaseGeral());
 
         TrazAqui trazAqui = new TrazAqui();
-        trazAqui.insereTransporte(base);
-
-        System.out.println(base.transporteString());
-
-
+        
     }
 }

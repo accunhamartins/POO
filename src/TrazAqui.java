@@ -13,7 +13,15 @@ public class TrazAqui {
        System.out.println("0.Sair da aplicação");
    }
    public void showMenuRegisto(){
-       System.out.println("Tipo de utilizador: ");
+       System.out.println("   Tipo de utilizador: ");
+       System.out.println("1. Utilizador doméstico");
+       System.out.println("2. Voluntário");
+       System.out.println("3. Loja");
+       System.out.println("4. Empresa de Transportes");
+   }
+
+   public void showMenuLogin(){
+       System.out.println("----------------LOGIN----------------");
        System.out.println("1. Utilizador doméstico");
        System.out.println("2. Voluntário");
        System.out.println("3. Loja");
@@ -150,5 +158,42 @@ public class TrazAqui {
         }
         bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), nrMinimo, medico));
     }
+
+
+    public Utilizador loginUser(BDGeral bd, String email, String password){
+       Utilizador aux;
+       aux = bd.getUtilizadores().tryLogin(email, password);
+       return aux;
+    }
+
+    public Voluntario loginVoluntario(BDGeral bd, String email, String password){
+       Voluntario aux;
+       aux = bd.getVoluntarios().tryLogin(email,password);
+       return aux;
+    }
+
+    public EmpresaTransportes loginTransportes(BDGeral bd, String email, String password){
+        EmpresaTransportes aux;
+        aux = bd.getTransportes().tryLogin(email,password);
+        return aux;
+    }
+
+    public Loja loginLoja(BDGeral bd, String email, String password){
+        Loja aux;
+        aux = bd.getLojas().tryLogin(email, password);
+        return aux;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -74,4 +74,17 @@ public class BDUtilizador implements Serializable {
     public boolean existeCodigo(String s){
         return this.codigos.contains(s);
     }
+
+    public Utilizador tryLogin(String email, String password){
+        Utilizador aux = this.users.get(email);
+        if(aux == null) System.out.println("Não existe esse user");
+        else{
+            if(aux.getPassword().equals(password)){
+                System.out.println("Login feito com sucesso");
+                return aux;
+            }
+            else System.out.println("Password incorreta");
+        }
+        return aux;
+    }
 }

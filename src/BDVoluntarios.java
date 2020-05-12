@@ -72,4 +72,17 @@ public class BDVoluntarios implements Serializable {
     public void add(Voluntario v){
         this.voluntarios.put(v.getEmail(), v.clone());
     }
+
+    public Voluntario tryLogin(String email, String password){
+        Voluntario aux = this.voluntarios.get(email);
+        if(aux == null) System.out.println("Não existe esse voluntário");
+        else{
+            if(aux.getPassword().equals(password)){
+                System.out.println("Login feito com sucesso");
+                return aux;
+            }
+            else System.out.println("Password incorreta");
+        }
+        return aux;
+    }
 }

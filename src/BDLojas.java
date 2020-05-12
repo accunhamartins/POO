@@ -78,4 +78,17 @@ public class BDLojas implements Serializable {
     public void add(Loja l){
         this.lojas.put(l.getEmail(), l.clone());
     }
+
+    public Loja tryLogin(String email, String password){
+        Loja aux = this.lojas.get(email);
+        if(aux == null) System.out.println("Não existe essa loja");
+        else{
+            if(aux.getPassword().equals(password)){
+                System.out.println("Login feito com sucesso");
+                return aux;
+            }
+            else System.out.println("Password incorreta");
+        }
+        return aux;
+    }
 }

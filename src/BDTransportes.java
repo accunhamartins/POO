@@ -75,5 +75,17 @@ public class BDTransportes implements Serializable {
         this.transportes.put(t.getEmail(), t.clone());
     }
 
+    public EmpresaTransportes tryLogin(String email, String password){
+        EmpresaTransportes aux = this.transportes.get(email);
+        if(aux == null) System.out.println("Não existe essa empresa de transportes");
+        else{
+            if(aux.getPassword().equals(password)){
+                System.out.println("Login feito com sucesso");
+                return aux;
+            }
+            else System.out.println("Password incorreta");
+        }
+        return aux;
+    }
 
 }
