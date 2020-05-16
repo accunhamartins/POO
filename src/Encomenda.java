@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Encomenda {
+public class Encomenda implements Serializable{
     private String codigo;
     private String codigo_user;
     private String codigo_loja;
@@ -131,7 +132,7 @@ public class Encomenda {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Encomenda: ").append("\n");
+        sb.append("\n").append("Encomenda: ").append("\n");
         sb.append("Código: ");
         sb.append(this.codigo + "\n");
         sb.append("Código do utilizador: ");

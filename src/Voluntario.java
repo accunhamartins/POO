@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Voluntario extends UtilizadorSistema {
+public class Voluntario extends UtilizadorSistema implements Serializable {
     private String nome;
     private String codigo;
     private boolean disponivel;
@@ -158,7 +159,7 @@ public class Voluntario extends UtilizadorSistema {
         sb.append(this.raio_acao + "\n");
         sb.append("Registos de encomendas: ");
         sb.append(this.historico.toString());
-        sb.append("Custo de transporte: ");
+
 
         return sb.toString();
     }
