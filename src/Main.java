@@ -1,8 +1,8 @@
 
 public class Main{
 
-    public static void main(String[] args) {
-        EmpresaTransportes e = new EmpresaTransportes();
+    public static void main(String[] args) throws InterruptedException {
+       /* EmpresaTransportes e = new EmpresaTransportes();
         Encomenda enc = new Encomenda();
         Voluntario v = new Voluntario();
         Loja l = new Loja();
@@ -13,9 +13,10 @@ public class Main{
         Parse ler = new Parse();
         ler.parse();
 
-        BDGeral base = new BDGeral(ler.getBaseGeral());
+        BDGeral base = new BDGeral(ler.getBaseGeral());*/
 
         TrazAqui trazAqui = new TrazAqui();
+        trazAqui.menu();
         
     }
 }

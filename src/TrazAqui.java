@@ -3,16 +3,117 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class TrazAqui {
 
-   public void showMenuInicial(){
+
+    public void menu() throws InterruptedException {
+        int f=1;
+        int k=0;
+        Scanner scanner = new Scanner(System.in);
+
+        while (f != 0) {
+            clearScreen();
+            showMenuInicial();
+            try{
+                k = scanner.nextInt();
+            }
+            catch (InputMismatchException e){
+                System.out.println("Insira um dígito\n");
+                scanner.next();
+            }
+
+
+            switch (k){
+                case 1:
+                    clearScreen();
+                    Registo();
+                    break;
+                case 2:
+                    clearScreen();
+                    Login();
+                    break;
+                case 0:
+                    f = 0;
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+                    break;
+
+            }
+        }
+        System.out.println("Obrigado por ter usado a nossa aplicação");
+    }
+
+    private void Registo(){
+        int k=0;
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        showMenuRegisto();
+        try{
+            k = scan.nextInt();
+        }
+        catch (InputMismatchException e){
+            System.out.println("Insira um dígito\n");
+            scan.next();
+        }
+        switch (k){
+            case 1:
+                insereUser(bd);
+                break;
+            case 2:
+                insereVoluntario(bd);
+                break;
+            case 3:
+                insereLoja(bd);
+                break;
+            case 4:
+                insereTransporte(bd);
+                break;
+            default:
+                System.out.println("Opção inválida");
+        }
+    }
+
+    private static void Login() throws InterruptedException {
+        int k=0;
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        showMenuLogin();
+        String email = "", password = "";
+        try{
+            k = scan.nextInt();
+        }
+        catch (InputMismatchException e){
+            System.out.println("Insira um dígito\n");
+            scan.next();
+        }
+        switch (k){
+            case 1:
+                LogUser();
+                break;
+            case 2:
+                LogVoluntario();
+                break;
+            case 3:
+                LogLoja();
+                break;
+            case 4:
+                LogEmpresa();
+                break;
+            default:
+                System.out.println("Opção inválida");
+        }
+    }
+   private static void showMenuInicial(){
        System.out.println("«««««««««««««««««««««TRAZ-AQUI»»»»»»»»»»»»»»»»»»»»»»»»");
        System.out.println("1.Registar");
        System.out.println("2.Login");
        System.out.println("0.Sair da aplicação");
    }
-   public void showMenuRegisto(){
+   private static void showMenuRegisto(){
+       System.out.println("----------------REGISTO----------------");
        System.out.println("   Tipo de utilizador: ");
        System.out.println("1. Utilizador doméstico");
        System.out.println("2. Voluntário");
@@ -20,7 +121,7 @@ public class TrazAqui {
        System.out.println("4. Empresa de Transportes");
    }
 
-   public void showMenuLogin(){
+   private static void showMenuLogin(){
        System.out.println("----------------LOGIN----------------");
        System.out.println("1. Utilizador doméstico");
        System.out.println("2. Voluntário");
@@ -28,13 +129,15 @@ public class TrazAqui {
        System.out.println("4. Empresa de Transportes");
    }
 
-   public void insereUser(BDGeral bd){
+   public static void insereUser(BDGeral bd){
        Random random = new Random();
        Scanner input = new Scanner(System.in);
        String password = "", nome = "", email = "";
        Double latitude = 0.0, longitude = 0.0;
        String codigo = "";
        try {
+           clearScreen();
+           System.out.println("----------------REGISTO USER----------------");
            System.out.println("Os seguintes campos são de preenchimento obrigatório: ");
            System.out.println("Insira o seu email: ");
            email = input.next();
@@ -56,13 +159,15 @@ public class TrazAqui {
        bd.addUser(new Utilizador(email, password, codigo, nome, latitude, longitude));
    }
 
-    public void insereVoluntario(BDGeral bd){
+    public static void insereVoluntario(BDGeral bd){
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         String password = "", nome = "", email = "";
         Double latitude = 0.0, longitude = 0.0, raio = 0.0;
         String codigo = "";
         try {
+            clearScreen();
+            System.out.println("----------------REGISTO VOLUNTÁRIO----------------");
             System.out.println("Os seguintes campos são de preenchimento obrigatório: ");
             System.out.println("Insira o seu email: ");
             email = input.next();
@@ -87,13 +192,15 @@ public class TrazAqui {
     }
 
 
-    public void insereLoja(BDGeral bd){
+    public static void insereLoja(BDGeral bd){
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         String password = "", nome = "", email = "";
         Double latitude = 0.0, longitude = 0.0, tempo_espera = 0.0;
         String codigo = "";
         try {
+            clearScreen();
+            System.out.println("----------------REGISTO LOJA----------------");
             System.out.println("Os seguintes campos são de preenchimento obrigatório: ");
             System.out.println("Insira o seu email: ");
             email = input.next();
@@ -117,7 +224,7 @@ public class TrazAqui {
         bd.addLoja(new Loja(email, password, codigo, nome, tempo_espera, latitude, longitude, new ArrayList<>()));
     }
 
-    public void insereTransporte(BDGeral bd){
+    public static void insereTransporte(BDGeral bd){
         Random random = new Random();
         Scanner input = new Scanner(System.in);
         String password = "", nome = "", email = "", local = "";
@@ -126,6 +233,8 @@ public class TrazAqui {
         boolean medico = false;
         String codigo = "";
         try {
+            clearScreen();
+            System.out.println("----------------REGISTO EMPRESA TRANSPORTES----------------");
             System.out.println("Os seguintes campos são de preenchimento obrigatório: ");
             System.out.println("Insira o seu email: ");
             email = input.next();
@@ -160,40 +269,88 @@ public class TrazAqui {
     }
 
 
-    public Utilizador loginUser(BDGeral bd, String email, String password){
+    public static Utilizador loginUser(BDGeral bd, String email, String password){
        Utilizador aux;
        aux = bd.getUtilizadores().tryLogin(email, password);
        return aux;
     }
 
-    public Voluntario loginVoluntario(BDGeral bd, String email, String password){
+    public static Voluntario loginVoluntario(BDGeral bd, String email, String password){
        Voluntario aux;
        aux = bd.getVoluntarios().tryLogin(email,password);
        return aux;
     }
 
-    public EmpresaTransportes loginTransportes(BDGeral bd, String email, String password){
+    public static EmpresaTransportes loginTransportes(BDGeral bd, String email, String password){
         EmpresaTransportes aux;
         aux = bd.getTransportes().tryLogin(email,password);
         return aux;
     }
 
-    public Loja loginLoja(BDGeral bd, String email, String password){
+    public static Loja loginLoja(BDGeral bd, String email, String password){
         Loja aux;
         aux = bd.getLojas().tryLogin(email, password);
         return aux;
     }
 
+    private static void LogUser() throws InterruptedException {
+        clearScreen();
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        String email = "", password = "";
+        System.out.println("----------------LOGIN USER----------------");
+        System.out.println("Insira o seu email: ");
+        email = scan.next();
+        System.out.println("Insira a sua password: ");
+        password = scan.next();
+        Utilizador u = loginUser(bd, email, password);
+        TimeUnit.SECONDS.sleep(2);
+    }
 
+    private static void LogVoluntario() throws InterruptedException {
+        clearScreen();
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        String email = "", password = "";
+        System.out.println("----------------LOGIN VOLUNTÁRIO----------------");
+        System.out.println("Insira o seu email: ");
+        email = scan.next();
+        System.out.println("Insira a sua password: ");
+        password = scan.next();
+        Voluntario u = loginVoluntario(bd, email, password);
+        TimeUnit.SECONDS.sleep(2);
+    }
 
+    private static void LogLoja() throws InterruptedException {
+        clearScreen();
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        String email = "", password = "";
+        System.out.println("----------------LOGIN LOJA----------------");
+        System.out.println("Insira o seu email: ");
+        email = scan.next();
+        System.out.println("Insira a sua password: ");
+        password = scan.next();
+        Loja u = loginLoja(bd, email, password);
+        TimeUnit.SECONDS.sleep(2);
+    }
 
+    private static void LogEmpresa() throws InterruptedException {
+        clearScreen();
+        BDGeral bd = new BDGeral();
+        Scanner scan = new Scanner(System.in);
+        String email = "", password = "";
+        System.out.println("----------------LOGIN EMPRESA TRANSPORTES----------------");
+        System.out.println("Insira o seu email: ");
+        email = scan.next();
+        System.out.println("Insira a sua password: ");
+        password = scan.next();
+        EmpresaTransportes u = loginTransportes(bd, email, password);
+        TimeUnit.SECONDS.sleep(2);
+    }
 
-
-
-
-
-
-
-
-
+    private static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
