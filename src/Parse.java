@@ -126,7 +126,7 @@ public class Parse {
       double longitude = Double.parseDouble(campos[3]);
       String email = codigo + "@gmail.com";
       String password = "12345";
-      return new Utilizador(email, password, codigo, nome, latitude, longitude);
+      return new Utilizador(email, password, codigo, nome, latitude, longitude, new ArrayList<>());
     }
 
     public Voluntario parseVoluntarios(String input){
@@ -166,6 +166,7 @@ public class Parse {
         for(int i = 4; i < campos.length; i += 4){
             String aux = campos[i] + "," + campos[i+1] + "," + campos[i+2] + "," + campos[i+3];
             LinhaEncomenda le = parseLinhaEncomenda(aux);
+            Produto p = parseProduto(aux);
             produtos.put(le.getCodigo(), le.clone());
 
         }
@@ -182,6 +183,17 @@ public class Parse {
 
         return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
     }
+
+    public Produto parseProduto(String input){
+        String []campos = input.split(",");
+        String codigo = campos[0];
+        String descricao = campos[1];
+        double quantidade = Double.parseDouble(campos[2]);
+        double preco = Double.parseDouble(campos[3])/quantidade;
+
+        return new Produto(codigo, descricao, preco, false);
+    }
+
 
     public void addEncomendas(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){

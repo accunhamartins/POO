@@ -1,28 +1,31 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utilizador extends UtilizadorSistema implements Serializable {
       private String codigo;
       private String nome;
       private double latitude;
       private double longitude;
-      //Encomendas 
+     private List<Encomenda> encomendas_realizadas;
 
-      //Construtores
+    //Construtores
       public Utilizador(){
           super();
           this.codigo = " ";
           this.nome = " ";
           this.latitude = 0;
           this.longitude = 0;
-
+          this.encomendas_realizadas = new ArrayList<>();
       }
 
-      public Utilizador(String email, String password, String codigo, String nome, double latitude, double longitude){
+      public Utilizador(String email, String password, String codigo, String nome, double latitude, double longitude, ArrayList<Encomenda> encomendas_realizadas){
           super(email,password,"Utilizador");
           this.codigo = codigo;
           this.nome = nome;
           this.latitude = latitude;
           this.longitude = longitude;
+          setEncomendas(encomendas_realizadas);
       }
 
       public Utilizador(Utilizador user){
@@ -31,6 +34,7 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
           this.nome = user.getNome();
           this.latitude = user.getLatitude();
           this.longitude = user.getLongitude();
+          setEncomendas(user.getEncomendas());
       }
 
       //Getters
@@ -50,6 +54,12 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
           return this.longitude;
       }
 
+      public ArrayList<Encomenda> getEncomendas(){
+          ArrayList<Encomenda> res = new ArrayList<>();
+          for(Encomenda e: this.encomendas_realizadas)
+              res.add(e);
+          return res;
+      }
 
     //Setters
       public void setCodigo(String codigo){
@@ -66,6 +76,12 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
 
       public void setLongitude(double longitude){
           this.longitude = longitude;
+      }
+
+      public void setEncomendas(ArrayList<Encomenda> enc){
+          this.encomendas_realizadas = new ArrayList<>();
+          for(Encomenda e: enc)
+              this.encomendas_realizadas.add(e);
       }
 
     //Clone
@@ -97,4 +113,9 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
 
         return sb.toString();
       }
+
+      public void addEncomenda(Encomenda e){
+          this.encomendas_realizadas.add(e.clone());
+      }
+
 }

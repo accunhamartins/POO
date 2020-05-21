@@ -5,6 +5,7 @@ public class BDGeral implements Serializable {
     private BDUtilizador utilizadores;
     private BDLojas lojas;
     private BDTransportes transportes;
+    private BDProdutos produtos;
 
 
     public BDGeral(){
@@ -12,13 +13,15 @@ public class BDGeral implements Serializable {
         this.utilizadores = new BDUtilizador();
         this.lojas = new BDLojas();
         this.transportes = new BDTransportes();
+        this.produtos = new BDProdutos();
     }
 
-    public BDGeral(BDVoluntarios v, BDUtilizador u, BDLojas l, BDTransportes t){
+    public BDGeral(BDVoluntarios v, BDUtilizador u, BDLojas l, BDTransportes t, BDProdutos p){
         this.voluntarios = v.clone();
         this.utilizadores = u.clone();
         this.lojas = l.clone();
         this.transportes = t.clone();
+        this.produtos = p.clone();
     }
 
     public BDGeral(BDGeral b){
@@ -26,6 +29,7 @@ public class BDGeral implements Serializable {
         this.utilizadores = b.getUtilizadores();
         this.lojas = b.getLojas();
         this.transportes = b.getTransportes();
+        this.produtos = b.getProdutos();
     }
 
 
@@ -44,6 +48,8 @@ public class BDGeral implements Serializable {
     public BDVoluntarios getVoluntarios() {
         return this.voluntarios.clone();
     }
+
+    public BDProdutos getProdutos() { return this.produtos.clone();}
 
     public void addVoluntario(Voluntario v){
         if(this.voluntarios.existe(v)){
@@ -73,6 +79,11 @@ public class BDGeral implements Serializable {
         else this.lojas.add(l);
     }
 
+    public void addProduto(Produto p){
+        if (this.produtos.existe(p.getDescricao())) System.out.println("Já existe esse produto");
+        else this.produtos.add(p);
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("=================== TOTAL DE UTILIZADORES RGISTADOS NO SISTEMA ===================");
@@ -84,6 +95,8 @@ public class BDGeral implements Serializable {
         sb.append(this.voluntarios.toString() + "\n");
         sb.append("-------------Lojas------------------------------\n");
         sb.append(this.lojas.toString() + "\n");
+        sb.append("-------------Produtos------------------------------\n");
+        sb.append(this.produtos.toString() + "\n");
 
         return sb.toString();
     }
@@ -116,6 +129,14 @@ public class BDGeral implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("-------------Lojas------------------------------\n");
         sb.append(this.lojas.toString() + "\n");
+
+        return sb.toString();
+    }
+
+    public String produtoString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("-------------Produtos------------------------------\n");
+        sb.append(this.produtos.toString() + "\n");
 
         return sb.toString();
     }

@@ -10,21 +10,23 @@ public class TrazAqui {
 
     public void menu() throws InterruptedException {
         int f=1;
-        int k=0;
+        int k = -1;
         Scanner scanner = new Scanner(System.in);
 
         while (f != 0) {
             clearScreen();
             showMenuInicial();
+
             try{
                 k = scanner.nextInt();
             }
             catch (InputMismatchException e){
                 System.out.println("Insira um dígito\n");
+                TimeUnit.SECONDS.sleep(1);
                 scanner.next();
             }
 
-
+            //Dando uma string como input continua a dizer opção inválida
             switch (k){
                 case 1:
                     clearScreen();
@@ -39,6 +41,7 @@ public class TrazAqui {
                     break;
                 default:
                     System.out.println("Opção inválida");
+                    TimeUnit.SECONDS.sleep(1);
                     break;
 
             }
@@ -91,7 +94,7 @@ public class TrazAqui {
         }
         switch (k){
             case 1:
-                LogUser();
+                MenuUser(bd);
                 break;
             case 2:
                 LogVoluntario();
@@ -129,6 +132,13 @@ public class TrazAqui {
        System.out.println("4. Empresa de Transportes");
    }
 
+   private static void showMenuUser(){
+        clearScreen();
+        System.out.println("----------------USER----------------");
+        System.out.println("1. Nova encomenda");
+        System.out.println("2. Histórico de encomendas");
+   }
+
    public static void insereUser(BDGeral bd){
        Random random = new Random();
        Scanner input = new Scanner(System.in);
@@ -156,7 +166,7 @@ public class TrazAqui {
            input.next();
            System.out.println("Input inválido");
        }
-       bd.addUser(new Utilizador(email, password, codigo, nome, latitude, longitude));
+       bd.addUser(new Utilizador(email, password, codigo, nome, latitude, longitude, new ArrayList<>()));
    }
 
     public static void insereVoluntario(BDGeral bd){
@@ -293,9 +303,8 @@ public class TrazAqui {
         return aux;
     }
 
-    private static void LogUser() throws InterruptedException {
+    private static Utilizador LogUser(BDGeral bd) throws InterruptedException {
         clearScreen();
-        BDGeral bd = new BDGeral();
         Scanner scan = new Scanner(System.in);
         String email = "", password = "";
         System.out.println("----------------LOGIN USER----------------");
@@ -304,7 +313,8 @@ public class TrazAqui {
         System.out.println("Insira a sua password: ");
         password = scan.next();
         Utilizador u = loginUser(bd, email, password);
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
+        return u;
     }
 
     private static void LogVoluntario() throws InterruptedException {
@@ -318,7 +328,7 @@ public class TrazAqui {
         System.out.println("Insira a sua password: ");
         password = scan.next();
         Voluntario u = loginVoluntario(bd, email, password);
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
     }
 
     private static void LogLoja() throws InterruptedException {
@@ -346,7 +356,66 @@ public class TrazAqui {
         System.out.println("Insira a sua password: ");
         password = scan.next();
         EmpresaTransportes u = loginTransportes(bd, email, password);
-        TimeUnit.SECONDS.sleep(2);
+
+    }
+
+    private static void MenuUser(BDGeral bd) throws InterruptedException {
+        int k = -1;
+        Scanner scan = new Scanner(System.in);
+
+        Utilizador u = new Utilizador();
+        u = LogUser(bd);
+       if (u != null) {
+            try {
+                k = scan.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Insira um dígito\n");
+                scan.next();
+            }
+            switch (k) {
+                case 1:
+                    novaEncomenda(u, bd);
+                    break;
+                case 2:
+
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+            }
+
+        }
+    }
+
+
+    private static void novaEncomenda(Utilizador u, BDGeral bd){
+        Random random = new Random();
+        Scanner input = new Scanner(System.in);
+        String enc_med = "", nome = "", produto = "", local = "";
+        Double latitude = 0.0, longitude = 0.0, raio = 0.0, custo = 0.0;
+        int quantidade = 0;
+        int nif = 0, nrMinimo = 0;
+        boolean medico = false;
+        String codigo = "";
+        try {
+            clearScreen();
+            System.out.println("----------------NOVA ENCOMENDA----------------");
+            System.out.println("Os seguintes campos são de preenchimento obrigatório: ");
+            System.out.println("Insira o produto a comprar: ");
+            produto = input.next();
+            if (bd.getProdutos().existe(produto)) {
+                System.out.println("Insira a quantidade a comprar");
+                quantidade = input.nextInt();
+                System.out.println("Escreva verdadeiro se se trata de uma encomenda médica ou falso caso contrário");
+                enc_med = input.next();
+                if (enc_med.equals("verdadeiro")) medico = true;
+                LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(produto).getCodigo(), produto, quantidade,bd.getProdutos().getProdutos().get(produto).getPreco() * quantidade, medico);
+
+            }
+        }
+        catch(InputMismatchException e){
+            input.next();
+            System.out.println("Input inválido");
+        }
     }
 
     private static void clearScreen() {
