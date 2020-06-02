@@ -86,7 +86,7 @@ public class BDGeral implements Serializable {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("=================== TOTAL DE UTILIZADORES RGISTADOS NO SISTEMA ===================");
+        sb.append("=================== TOTAL DE UTILIZADORES REGISTADOS NO SISTEMA ===================");
         sb.append("-------------Utilizadores----------------------- \n");
         sb.append(this.utilizadores.toString() + "\n");
         sb.append("-------------Empresas de transportes------------ \n");
@@ -149,6 +149,12 @@ public class BDGeral implements Serializable {
 
     public BDGeral clone(){
         return new BDGeral(this);
+    }
+
+    public Utilizador loginUser(String email, String password){
+        Utilizador aux;
+        aux = this.utilizadores.tryLogin(email, password);
+        return aux;
     }
 
 }
