@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
     public class BDProdutos implements Serializable {
-        private Map<String, Produto> produtos;
+        private Map<String, LinhaEncomenda> produtos;
         private Set<String> codigos;
 
         public BDProdutos() {
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
             this.codigos = new TreeSet<>();
         }
 
-        public BDProdutos(Map<String, Produto> produtos, Set<String> codigos) {
+        public BDProdutos(Map<String, LinhaEncomenda> produtos, Set<String> codigos) {
             setProdutos(produtos);
             setCodigos(codigos);
         }
@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
             setCodigos(r.getCodigos());
         }
 
-        public Map<String, Produto> getProdutos() {
+        public Map<String, LinhaEncomenda> getProdutos() {
             return this.produtos.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
         }
 
-        public void setProdutos(Map<String, Produto> produtos
+        public void setProdutos(Map<String, LinhaEncomenda> produtos
         ) {
             this.produtos = new HashMap<>();
             produtos.entrySet().forEach(e -> this.produtos.put(e.getKey(), e.getValue().clone()));
@@ -71,7 +71,22 @@ import java.util.stream.Collectors;
             return this.codigos.contains(s);
         }
 
-        public void add(Produto v) {
+        public void add(LinhaEncomenda v) {
             this.produtos.put(v.getDescricao(), v.clone());
         }
+
+        public String listProdutos(){
+            StringBuilder sb = new StringBuilder();
+            sb.append("LISTA DE PRODUTOS\n");
+            for(String s: this.produtos.keySet()){
+                sb.append("--> " + s + "\n");
+            }
+            return sb.toString();
+        }
+
+        public boolean existeProd(String cod) throws ProductNotFoundException{
+            if(!this.produtos.containsKey(cod)) throw new ProductNotFoundException();
+            else return true;
+        }
+
     }

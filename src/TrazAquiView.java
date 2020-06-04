@@ -4,32 +4,42 @@ public class TrazAquiView implements Serializable {
     public TrazAquiView(){}
 
 
-    public static void showMenuInicial(){
+    public void showMenuInicial(){
         System.out.println("«««««««««««««««««««««TRAZ-AQUI»»»»»»»»»»»»»»»»»»»»»»»»");
         System.out.println("1.Registar");
         System.out.println("2.Login");
+        System.out.println("3.Gravar estado");
+        System.out.println("4.Carregar estado");
         System.out.println("0.Sair da aplicação");
     }
 
-    public static void printHeader(){
+    public void loadMenu(){
+        System.out.println("ESCOLHA O TIPO DE LOAD QUE PRETENDE REALIZAR");
+        System.out.println("1. LER FICHEIRO LOGS.TXT");
+        System.out.println("2. LER OUTRO FICHEIRO .DAT");
+    }
+
+    public void printHeader(){
         System.out.println("Bem vindo à nossa aplicação Traz-Aqui");
     }
 
-    public static void showMenuRegisto(){
+    public void showMenuRegisto(){
         System.out.println("----------------REGISTO----------------");
         System.out.println("   Tipo de utilizador: ");
         System.out.println("1. Utilizador doméstico");
         System.out.println("2. Voluntário");
         System.out.println("3. Loja");
         System.out.println("4. Empresa de Transportes");
+        System.out.println("0. Retroceder");
     }
 
-    public static void showMenuLogin(){
+    public void showMenuLogin(){
         System.out.println("----------------LOGIN----------------");
         System.out.println("1. Utilizador doméstico");
         System.out.println("2. Voluntário");
         System.out.println("3. Loja");
         System.out.println("4. Empresa de Transportes");
+        System.out.println("0. Retroceder");
     }
 
     public void headRegistoUser() {
@@ -51,6 +61,9 @@ public class TrazAquiView implements Serializable {
         System.out.println("----------------USER----------------");
         System.out.println("1. Nova encomenda");
         System.out.println("2. Histórico de encomendas");
+        System.out.println("3. Avaliar um voluntário");
+        System.out.println("4. Avaliar uma transportadora");
+        System.out.println("0. Retroceder");
     }
 
     public void preenchimentoObrg() {

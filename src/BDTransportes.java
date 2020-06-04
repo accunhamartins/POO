@@ -88,4 +88,24 @@ public class BDTransportes implements Serializable {
         return aux;
     }
 
+    public String printTransportes(){
+        StringBuilder sb = new StringBuilder();
+        for(String s: this.transportes.keySet()){
+            sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" RATE --> "+ this.transportes.get(s).getClassificao() + "\n" );
+        }
+        return sb.toString();
+    }
+
+    public String getEmail(String cod) throws TransporteNotFoundException{
+        for(String s: this.transportes.keySet()){
+            if(this.transportes.get(s).getCodigo().equals(cod)) return this.transportes.get(s).getEmail();
+        }
+        throw new TransporteNotFoundException();
+    }
+
+    public void updateTransporte(EmpresaTransportes e, double classificao){
+        e.updateRate(classificao);
+        this.transportes.put(e.getEmail(), e);
+    }
+
 }

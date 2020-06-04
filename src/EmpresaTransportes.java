@@ -11,6 +11,8 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     private double latitude;
     private double longitude;
     private double raioDeAcao;
+    private double classificao;
+    private int avaliacoes;
     private ArrayList<Encomenda> registos;
     private int numeroMinimoEncomenda;
     private boolean transporteMedico;
@@ -28,10 +30,13 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.raioDeAcao = 0.0;
         this.registos = new ArrayList<>();
         this.numeroMinimoEncomenda = 0;
+        this.avaliacoes = 0;
+        this.classificao = 0;
         this.transporteMedico = false;
     }
 
-    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda, boolean transporteMedico){
+    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda,
+                              boolean transporteMedico, double classificao, int avaliacoes){
         super(email, password, "Transportadora");
         this.codigo = codigo;
         this.nome = nome;
@@ -44,6 +49,8 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.setRegistos(registos);
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
         this.transporteMedico = transporteMedico;
+        this.classificao = classificao;
+        this.avaliacoes = avaliacoes;
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
@@ -59,10 +66,20 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
         this.transporteMedico = a.isTransporteMedico();
+        this.avaliacoes = a.getAvaliacoes();
+        this.classificao = a.getClassificao();
     }
 
     public String getCodigo(){
       return this.codigo;
+    }
+
+    public int getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public double getClassificao() {
+        return classificao;
     }
 
     public String getNome(){
@@ -108,6 +125,14 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public void setAvaliacoes(int avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public void setClassificao(double classificao) {
+        this.classificao = classificao;
     }
 
     public void setNome(String nome) {
@@ -196,6 +221,11 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+    public void updateRate(Double classificacao){
+        double total = this.classificao* this.avaliacoes + classificacao;
+        this.avaliacoes++;
+        this.classificao = total / this.avaliacoes;
+    }
 
 
 

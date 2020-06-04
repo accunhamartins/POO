@@ -91,6 +91,7 @@ public class Parse {
             }
         }
         addEncomendas(this.encomendas);
+        addEncomendasCliente(this.encomendas);
     }
 
     public List<String> lerFicheiro(String nomeFich) {
@@ -139,7 +140,7 @@ public class Parse {
       double raio_acao = Double.parseDouble(campos[4]);
       String email = codigo + "@gmail.com";
       String password = "12345";
-      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>());
+      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0);
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){
@@ -153,7 +154,7 @@ public class Parse {
         double custo_km = Double.parseDouble(campos[6]);
         String email = codigo + "@gmail.com";
         String password = "12345";
-        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true);
+        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0);
     }
 
     public Encomenda parseEncomenda(String input){
@@ -166,9 +167,8 @@ public class Parse {
         for(int i = 4; i < campos.length; i += 4){
             String aux = campos[i] + "," + campos[i+1] + "," + campos[i+2] + "," + campos[i+3];
             LinhaEncomenda le = parseLinhaEncomenda(aux);
-            Produto p = parseProduto(aux);
             produtos.put(le.getCodigo(), le.clone());
-
+            baseGeral.addProduto(le);
         }
         return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ", produtos,false);
     }
@@ -184,23 +184,23 @@ public class Parse {
         return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
     }
 
-    public Produto parseProduto(String input){
-        String []campos = input.split(",");
-        String codigo = campos[0];
-        String descricao = campos[1];
-        double quantidade = Double.parseDouble(campos[2]);
-        double preco = Double.parseDouble(campos[3])/quantidade;
-
-        return new Produto(codigo, descricao, preco, false);
-    }
-
-
     public void addEncomendas(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){
             for(Loja j: this.baseGeral.getLojas().getLojas().values()){
                 if(e.getCodigo_loja().equals(j.getCodigo())){
                     j.addEncomenda(e);
                     this.baseGeral.updateLoja(e, j);
+                }
+            }
+        }
+    }
+
+    public void addEncomendasCliente(List<Encomenda> encomendas){
+        for(Encomenda e: encomendas){
+            for(Utilizador u: this.baseGeral.getUtilizadores().getUsers().values()){
+                if(e.getCodigo_user().equals(u.getCodigo())){
+                    u.addEncomenda(e);
+                    this.baseGeral.updateUser(e, u);
                 }
             }
         }

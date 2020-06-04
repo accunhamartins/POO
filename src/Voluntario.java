@@ -10,6 +10,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     private double longitude;
     private LocalDate inicio_transporte;
     private double raio_acao;
+    private double classificacao;
+    private int avaliacoes;
     private ArrayList<Encomenda> historico;
 
     //Construtores de classe
@@ -23,6 +25,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.longitude = 0;
         this.inicio_transporte = LocalDate.now();
         this.raio_acao = 0;
+        this.classificacao = 0;
+        this.avaliacoes = 0;
         this.historico = new ArrayList<>();
     }
     //Construtor de classe por clone
@@ -35,11 +39,13 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.longitude = a.getLongitude();
         this.inicio_transporte = a.getInicio_transporte();
         this.raio_acao = a.getRaio_acao();
+        this.classificacao = a.getClassificacao();
+        this.avaliacoes = a.getAvaliacoes();
         this.setHistorico(a.getHistorico());
     }
 
     //Construtor parametrizado
-    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h){
+    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double classificacao, int avaliacoes){
         super(email, password, "Voluntario");
         this.nome = a;
         this.codigo = b;
@@ -48,6 +54,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.longitude = e;
         this.inicio_transporte = f;
         this.raio_acao = g;
+        this.classificacao = classificacao;
+        this.avaliacoes = avaliacoes;
         this.setHistorico(h);
     }
 
@@ -56,6 +64,9 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
       return this.nome;
     }
 
+    public double getClassificacao() {
+        return classificacao;
+    }
     public String getCodigo(){
       return this.codigo;
     }
@@ -80,6 +91,10 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return this.inicio_transporte;
     }
 
+    public int getAvaliacoes() {
+        return avaliacoes;
+    }
+
     public ArrayList<Encomenda> getHistorico(){
         ArrayList<Encomenda> res = new ArrayList<>();
         for(Encomenda s: this.historico) res.add(s);
@@ -89,6 +104,14 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     //Método de definição de variáveis
     public void setNome(String a){
       this.nome = a;
+    }
+
+    public void setAvaliacoes(int avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public void setClassificacao(double classificacao) {
+        this.classificacao = classificacao;
     }
 
     public void setCodigo(String a){
@@ -163,4 +186,11 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
         return sb.toString();
     }
+
+    public void updateRate(Double classificacao){
+        double total = this.classificacao * this.avaliacoes + classificacao;
+        this.avaliacoes++;
+        this.classificacao = total / this.avaliacoes;
+    }
+
 }

@@ -75,16 +75,23 @@ public class BDUtilizador implements Serializable {
         return this.codigos.contains(s);
     }
 
+    public void updateUser(Encomenda e, Utilizador u){
+        u.addEncomenda(e);
+        this.users.put(u.getEmail(), u);
+    }
+
     public Utilizador tryLogin(String email, String password){
-        Utilizador aux = this.users.get(email);
-        if(aux == null) System.out.println("Não existe esse user");
+        if(!this.users.containsKey(email)) return null;
         else{
+            Utilizador aux = this.users.get(email);
             if(aux.getPassword().equals(password)){
                 System.out.println("Login feito com sucesso");
                 return aux;
             }
-            else System.out.println("Password incorreta");
+            else{
+                System.out.println("Password incorreta");
+                return null;
+            }
         }
-        return aux;
     }
 }

@@ -91,4 +91,22 @@ public class BDLojas implements Serializable {
         }
         return aux;
     }
+
+    public String listLojas(Utilizador u){
+        StringBuilder sb = new StringBuilder();
+        sb.append("LISTA DE LOJAS\n");
+        for(String s: this.lojas.keySet()){
+            Loja j = this.lojas.get(s);
+            double dist = DistanceCalculator.distance(u.getLatitude(), u.getLongitude(), j.getLatitude(), j.getLongitude());
+            sb.append(this.lojas.get(s).getCodigo() + " --> " + this.lojas.get(s).getNome() + " ----> DIST:  " + dist +" KMS" +"\n");
+        }
+        return sb.toString();
+    }
+
+    public String getEmail(String cod) throws LojaNotFoundException{
+        for(String s: this.lojas.keySet()){
+            if(this.lojas.get(s).getCodigo().equals(cod)) return this.lojas.get(s).getEmail();
+        }
+        throw new LojaNotFoundException();
+    }
 }

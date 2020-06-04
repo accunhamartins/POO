@@ -1,22 +1,15 @@
+import java.io.IOException;
 
 public class Main{
 
-    public static void main(String[] args) throws InterruptedException {
-       /* EmpresaTransportes e = new EmpresaTransportes();
-        Encomenda enc = new Encomenda();
-        Voluntario v = new Voluntario();
-        Loja l = new Loja();
-        LinhaEncomenda le = new LinhaEncomenda();
-        Utilizador user = new Utilizador();
-
-
-        Parse ler = new Parse();
-        ler.parse();
-
-        BDGeral base = new BDGeral(ler.getBaseGeral());*/
-
-        TrazAqui trazAqui = new TrazAqui();
-        trazAqui.menu();
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException{
+        TrazAquiView view = new TrazAquiView();
+        TrazAquiController controller = new TrazAquiController();
+        controller.setView(view);
+        BDGeral base = controller.readFlow();
+        controller.setBd(base);
+        controller.mainFlow();
+        base.gravarFicheiro("update");
         
     }
 }

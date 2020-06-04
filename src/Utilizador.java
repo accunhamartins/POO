@@ -7,7 +7,7 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
       private String nome;
       private double latitude;
       private double longitude;
-     private List<Encomenda> encomendas_realizadas;
+      private List<Encomenda> encomendas_realizadas;
 
     //Construtores
       public Utilizador(){
@@ -112,6 +112,16 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
 
 
         return sb.toString();
+      }
+
+      public String printEncomendas(){
+          StringBuilder sb = new StringBuilder();
+          if(this.encomendas_realizadas.size() == 0) sb.append("Não existem encomendas realizadas\n");
+          else {
+              System.out.println("ENCOMENDAS REALIZADAS PELO USER: ");
+              this.encomendas_realizadas.forEach(e -> sb.append(e.toString()));
+          }
+          return sb.toString();
       }
 
       public void addEncomenda(Encomenda e){

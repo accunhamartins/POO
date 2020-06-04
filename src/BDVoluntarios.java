@@ -85,4 +85,26 @@ public class BDVoluntarios implements Serializable {
         }
         return aux;
     }
+
+    public String printVoluntario(){
+        StringBuilder sb = new StringBuilder();
+        for(String s: this.voluntarios.keySet()){
+            sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() +" RATE --> "+ this.voluntarios.get(s).getClassificacao() + "\n" );
+        }
+        return sb.toString();
+    }
+
+    public String getEmail(String cod) throws VoluntarioNotFoundException{
+        for(String s: this.voluntarios.keySet()){
+            if(this.voluntarios.get(s).getCodigo().equals(cod)) return this.voluntarios.get(s).getEmail();
+        }
+        throw new VoluntarioNotFoundException();
+    }
+
+    public void updateVoluntario(Voluntario v, double classificao){
+        v.updateRate(classificao);
+        this.voluntarios.put(v.getEmail(), v);
+    }
+
+
 }

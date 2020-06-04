@@ -1,4 +1,4 @@
-import java.io.Serializable;
+import java.io.*;
 
 public class BDGeral implements Serializable {
     private BDVoluntarios voluntarios;
@@ -79,9 +79,8 @@ public class BDGeral implements Serializable {
         else this.lojas.add(l);
     }
 
-    public void addProduto(Produto p){
-        if (this.produtos.existe(p.getDescricao())) System.out.println("Já existe esse produto");
-        else this.produtos.add(p);
+    public void addProduto(LinhaEncomenda p){
+        if (!this.produtos.existe(p.getDescricao())) this.produtos.add(p);
     }
 
     public String toString(){
@@ -142,19 +141,48 @@ public class BDGeral implements Serializable {
     }
 
 
+
     public void updateLoja(Encomenda e, Loja j){
         this.lojas.updateLoja(e, j);
     }
 
+    public void updateUser(Encomenda e, Utilizador j){
+        this.utilizadores.updateUser(e, j);
+    }
+
+    public void updateVoluntario(Double classificacao, Voluntario v){
+        this.voluntarios.updateVoluntario(v, classificacao);
+    }
+
+    public void updateTransportes(Double classificacao, EmpresaTransportes e){
+        this.transportes.updateTransporte(e, classificacao);
+    }
 
     public BDGeral clone(){
         return new BDGeral(this);
     }
 
-    public Utilizador loginUser(String email, String password){
+    public Utilizador loginUser(String email, String password) throws UserNotFoundException{
         Utilizador aux;
         aux = this.utilizadores.tryLogin(email, password);
-        return aux;
+        if(aux == null) throw new UserNotFoundException();
+        else return aux;
+    }
+
+    public void gravarFicheiro(String filename) throws IOException, FileNotFoundException, IOException {
+        FileOutputStream fos = new FileOutputStream(filename);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this);
+        oos.flush();
+        oos.close();
+    }
+
+    public BDGeral lerFicheiro(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(filename);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        BDGeral d = (BDGeral) ois.readObject();
+        ois.close();
+        return d;
     }
 
 }
