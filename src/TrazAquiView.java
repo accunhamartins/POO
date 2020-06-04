@@ -54,6 +54,10 @@ public class TrazAquiView implements Serializable {
 
     public void headLoginUser() { System.out.println("----------------LOGIN USER----------------");}
 
+    public void headLoginVoluntario() { System.out.println("----------------LOGIN VOLUNTÁRIO----------------");}
+
+    public void headLoginLoja() { System.out.println("----------------LOGIN LOJA----------------");}
+
     public void headNovaEncomenda() {  System.out.println("----------------NOVA ENCOMENDA----------------");}
 
 
@@ -63,6 +67,21 @@ public class TrazAquiView implements Serializable {
         System.out.println("2. Histórico de encomendas");
         System.out.println("3. Avaliar um voluntário");
         System.out.println("4. Avaliar uma transportadora");
+        System.out.println("0. Retroceder");
+    }
+
+    public static void showMenuVoluntario(){
+        System.out.println("----------------VOLUNTÁRIO----------------");
+        System.out.println("1. Declarar-se disponível para ir buscar encomenda");
+        System.out.println("2. Selecionar levantamento de encomenda");
+        System.out.println("3. Indicar tempo até entrega de encomenda");
+        System.out.println("0. Retroceder");
+    }
+
+    public static void showMenuLoja(){
+        System.out.println("----------------LOJA----------------");
+        System.out.println("1. Chamar voluntário para levantar encomenda");
+        System.out.println("2. Ver encomendas em stock");
         System.out.println("0. Retroceder");
     }
 

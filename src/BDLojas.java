@@ -71,6 +71,11 @@ public class BDLojas implements Serializable {
         this.lojas.put(j.getEmail(), j);
     }
 
+    public void updateLoja2(Encomenda e ,Loja j){
+        j.removeEncomenda(e);
+        this.lojas.put(j.getEmail(), j);
+    }
+
     public boolean existeCodigo(String s){
         return this.codigos.contains(s);
     }
@@ -87,19 +92,38 @@ public class BDLojas implements Serializable {
                 System.out.println("Login feito com sucesso");
                 return aux;
             }
-            else System.out.println("Password incorreta");
+            else{
+                System.out.println("Password incorreta");
+                return null;
+            }
         }
         return aux;
     }
 
-    public String listLojas(Utilizador u){
+    public String listLojasUser(Utilizador u){
         StringBuilder sb = new StringBuilder();
         sb.append("LISTA DE LOJAS\n");
         for(String s: this.lojas.keySet()){
             Loja j = this.lojas.get(s);
-            double dist = DistanceCalculator.distance(u.getLatitude(), u.getLongitude(), j.getLatitude(), j.getLongitude());
+            double dist = DistanceCalculator.distance(u.getLatitude(), j.getLatitude(), u.getLongitude(), j.getLongitude());
             sb.append(this.lojas.get(s).getCodigo() + " --> " + this.lojas.get(s).getNome() + " ----> DIST:  " + dist +" KMS" +"\n");
         }
+        return sb.toString();
+    }
+
+    public String listLojasVol(Voluntario u){
+        StringBuilder sb = new StringBuilder();
+        sb.append("LISTA DE LOJAS\n");
+        int count = 0;
+        for(String s: this.lojas.keySet()) {
+            Loja j = this.lojas.get(s);
+            double dist = DistanceCalculator.distance(u.getLatitude(), j.getLatitude(), u.getLongitude(), j.getLongitude());
+            if (dist <= u.getRaio_acao()) {
+                sb.append(this.lojas.get(s).getCodigo() + " --> " + this.lojas.get(s).getNome() + " ----> DIST: " + dist + " KMS" + "\n");
+                count++;
+            }
+        }
+        if(count == 0) sb.append("Não existem lojas no seu raio de ação");
         return sb.toString();
     }
 

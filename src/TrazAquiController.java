@@ -124,6 +124,8 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Input inválido");
                     }
                     bd.addUser(new Utilizador(email, password, codigo, nome, latitude, longitude, new ArrayList<>()));
+                    System.out.println("REGISTO EFETUADO COM SUCESSO");
+                    System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
                 case 2:
                     try {
@@ -149,6 +151,8 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Input inválido");
                     }
                     bd.addVoluntario(new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio, new ArrayList<>(), 0, 0));
+                    System.out.println("REGISTO EFETUADO COM SUCESSO");
+                    System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
                 case 3:
                     try {
@@ -174,6 +178,8 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Input inválido");
                     }
                     bd.addLoja(new Loja(email, password, codigo, nome, tempo_espera, latitude, longitude, new ArrayList<>()));
+                    System.out.println("REGISTO EFETUADO COM SUCESSO");
+                    System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
                 case 4:
                     try {
@@ -210,6 +216,8 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Input inválido");
                     }
                     bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), nrMinimo, medico, 0, 0));
+                    System.out.println("REGISTO EFETUADO COM SUCESSO");
+                    System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
                 default:
                     System.out.println("Opcao inválida");
@@ -238,7 +246,7 @@ public class TrazAquiController implements Serializable {
                     voluntarioFlow();
                     break;
                 case 3:
-                   // lojaFlow();
+                    lojaFlow();
                     break;
                 case 4:
                    // empresaFlow();
@@ -252,9 +260,99 @@ public class TrazAquiController implements Serializable {
     }
 
     private void voluntarioFlow(){
+        int op;
+        Input input = new Input();
+        clearScreen();
+        this.view.headLoginVoluntario();
+        this.view.email();
+        String email = input.lerString();
+        this.view.password();
+        String password = input.lerString();
+        try{
+            Voluntario v = bd.loginVoluntario(email, password);
+            clearScreen();
+            this.view.showMenuVoluntario();
+            do {
+                op = input.lerInt();
+                switch (op) {
+                    case 0:
+                        clearScreen();
+                        this.view.showMenuLogin();
+                        return;
+                    case 1:
+                        Voluntario aux = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail());
+                        aux.setDisponibilidade(true);
+                        this.bd.addVoluntarioDisponivel(aux);
+                        System.out.println("Está disponível para levantar encomendas.");
+                        System.out.println("Insira uma nova opção: ");
+                        break;
+                    case 2:
+                        System.out.println("Pedidos de entrega: ");
+                        int size = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico().size();
+                        if(size == 0) System.out.println("Não tem pedidos de encomendas");
+                        else {
+                            System.out.println(this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico());
+                        }
+                        break;
+                }
 
+
+            } while (op != 0);
+        } catch (VoluntarioNotFoundException e){
+            System.out.println("Email ou password inválidos");
+        }
     }
 
+    private void lojaFlow() {
+        int op;
+        Input input = new Input();
+        clearScreen();
+        this.view.headLoginLoja();
+        this.view.email();
+        String email = input.lerString();
+        this.view.password();
+        String password = input.lerString();
+        try {
+            Loja lj = bd.loginLoja(email, password);
+            clearScreen();
+            this.view.showMenuLoja();
+            do {
+                op = input.lerInt();
+                switch (op) {
+                    case 0:
+                        clearScreen();
+                        this.view.showMenuLogin();
+                        return;
+                    case 1:
+                        System.out.println("Conjunto de voluntários disponíveis");
+                        System.out.println(this.bd.getVoluntarios().printVoluntario());
+                        System.out.println("Selecione o código de um voluntário");
+                        String codigo = Input.lerString();
+                        try {
+                            String emailVol = this.bd.getVoluntarios().getEmail(codigo);
+                            Voluntario v = this.bd.getVoluntarios().getVoluntarios().get(emailVol);
+                            Encomenda e = lj.getEncomendas_recebidas().get(0).clone();
+                            v.addEncomenda(e);
+                            Loja aux = this.bd.getLojas().getLojas().get(lj.getEmail());
+                            this.bd.updateLoja2(e, aux);
+                            this.bd.updateVoluntario2(v);
+                            System.out.println("Realizado com sucesso");
+
+                        } catch (VoluntarioNotFoundException e){
+                            System.out.println("Voluntário inválido");
+                        }
+                        break;
+                    case 2:
+                        System.out.println(this.bd.getLojas().getLojas().get(lj.getEmail()).getEncomendas_recebidas());
+                        break;
+
+                }
+            } while (op != 0);
+
+        } catch (LojaNotFoundException e) {
+            System.out.println("Email ou password inválidos");
+        }
+    }
 
     private void userFlow() throws InterruptedException{
         int op;
@@ -293,7 +391,7 @@ public class TrazAquiController implements Serializable {
                                 this.view.encomendas_medicas2();
                                 enc_med = input.lerBoolean();
                                 clearScreen();
-                                System.out.println(this.bd.getLojas().listLojas(u));
+                                System.out.println(this.bd.getLojas().listLojasUser(u));
                                 System.out.println("Selecione o código de uma loja");
                                 String loja = input.lerString();
                                 try {

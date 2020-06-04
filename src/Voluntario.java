@@ -193,4 +193,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.classificacao = total / this.avaliacoes;
     }
 
+    public void addEncomenda (Encomenda e){
+        this.historico.add(e.clone());
+    }
+
 }

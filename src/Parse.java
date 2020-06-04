@@ -188,7 +188,6 @@ public class Parse {
         for(Encomenda e: encomendas){
             for(Loja j: this.baseGeral.getLojas().getLojas().values()){
                 if(e.getCodigo_loja().equals(j.getCodigo())){
-                    j.addEncomenda(e);
                     this.baseGeral.updateLoja(e, j);
                 }
             }
@@ -199,7 +198,6 @@ public class Parse {
         for(Encomenda e: encomendas){
             for(Utilizador u: this.baseGeral.getUtilizadores().getUsers().values()){
                 if(e.getCodigo_user().equals(u.getCodigo())){
-                    u.addEncomenda(e);
                     this.baseGeral.updateUser(e, u);
                 }
             }

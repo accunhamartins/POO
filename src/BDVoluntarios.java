@@ -81,7 +81,10 @@ public class BDVoluntarios implements Serializable {
                 System.out.println("Login feito com sucesso");
                 return aux;
             }
-            else System.out.println("Password incorreta");
+            else{
+                System.out.println("Password incorreta");
+                return null;
+            }
         }
         return aux;
     }
@@ -106,5 +109,8 @@ public class BDVoluntarios implements Serializable {
         this.voluntarios.put(v.getEmail(), v);
     }
 
+    public void updateVoluntario2(Voluntario v){
+        this.voluntarios.put(v.getEmail(), v);
+    }
 
 }

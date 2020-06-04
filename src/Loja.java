@@ -127,4 +127,8 @@ public class Loja extends UtilizadorSistema implements Serializable {
     public void addEncomenda(Encomenda e){
         this.encomendas_recebidas.add(e.clone());
     }
+
+    public void removeEncomenda(Encomenda e){
+        this.encomendas_recebidas.remove(e);
+    }
 }

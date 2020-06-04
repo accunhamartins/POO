@@ -58,6 +58,10 @@ public class BDGeral implements Serializable {
         else this.voluntarios.add(v);
     }
 
+    public void addVoluntarioDisponivel(Voluntario v){
+        this.voluntarios.add(v);
+    }
+
     public void addUser(Utilizador u){
         if(this.utilizadores.existe(u)){
             System.out.println("Já existe esse utilizador");
@@ -100,54 +104,20 @@ public class BDGeral implements Serializable {
         return sb.toString();
     }
 
-    public String userString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-------------Utilizadores----------------------- \n");
-        sb.append(this.utilizadores.toString() + "\n");
-
-        return sb.toString();
-    }
-
-    public String transporteString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-------------Empresas de transportes------------ \n");
-        sb.append(this.transportes.toString() + "\n");
-
-        return sb.toString();
-    }
-
-    public String voluntarioString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-------------Voluntários------------------------ \n");
-        sb.append(this.voluntarios.toString() + "\n");
-
-        return sb.toString();
-    }
-
-    public String lojaString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-------------Lojas------------------------------\n");
-        sb.append(this.lojas.toString() + "\n");
-
-        return sb.toString();
-    }
-
-    public String produtoString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("-------------Produtos------------------------------\n");
-        sb.append(this.produtos.toString() + "\n");
-
-        return sb.toString();
-    }
-
-
-
     public void updateLoja(Encomenda e, Loja j){
         this.lojas.updateLoja(e, j);
     }
 
+    public void updateLoja2(Encomenda e ,Loja j){
+        this.lojas.updateLoja2(e,j);
+    }
+
     public void updateUser(Encomenda e, Utilizador j){
         this.utilizadores.updateUser(e, j);
+    }
+
+    public void updateVoluntario2(Voluntario v){
+        this.voluntarios.updateVoluntario2(v);
     }
 
     public void updateVoluntario(Double classificacao, Voluntario v){
@@ -166,6 +136,20 @@ public class BDGeral implements Serializable {
         Utilizador aux;
         aux = this.utilizadores.tryLogin(email, password);
         if(aux == null) throw new UserNotFoundException();
+        else return aux;
+    }
+
+    public Voluntario loginVoluntario(String email, String password) throws VoluntarioNotFoundException{
+        Voluntario aux;
+        aux = this.voluntarios.tryLogin(email, password);
+        if(aux == null) throw new VoluntarioNotFoundException();
+        else return aux;
+    }
+
+    public Loja loginLoja(String email, String password) throws LojaNotFoundException{
+        Loja aux;
+        aux = this.lojas.tryLogin(email, password);
+        if(aux == null) throw new LojaNotFoundException();
         else return aux;
     }
 
