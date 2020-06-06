@@ -147,8 +147,6 @@ public class Encomenda implements Serializable{
         sb.append(this.vendedor+"\n");
         sb.append("Produtos: ").append("\n");
         sb.append(this.produtos).append("\n");
-        sb.append("Encomenda médica: ");
-        sb.append(this.encomendaMedica+"\n");
 
         return sb.toString();
     }

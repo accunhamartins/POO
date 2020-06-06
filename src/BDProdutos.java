@@ -1,8 +1,5 @@
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
     public class BDProdutos implements Serializable {
@@ -10,7 +7,7 @@ import java.util.stream.Collectors;
         private Set<String> codigos;
 
         public BDProdutos() {
-            this.produtos = new HashMap<>();
+            this.produtos = new TreeMap<>();
             this.codigos = new TreeSet<>();
         }
 
@@ -28,10 +25,20 @@ import java.util.stream.Collectors;
             return this.produtos.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
         }
 
-        public void setProdutos(Map<String, LinhaEncomenda> produtos
-        ) {
-            this.produtos = new HashMap<>();
+
+        public void setProdutos(Map<String, LinhaEncomenda> produtos) {
+            this.produtos = new TreeMap<>();
             produtos.entrySet().forEach(e -> this.produtos.put(e.getKey(), e.getValue().clone()));
+        }
+
+        public Map<String, LinhaEncomenda> getProdMedicos(Map<String, LinhaEncomenda> produtos){
+            Map<String, LinhaEncomenda> aux = new TreeMap<>();
+            for(String s: produtos.keySet()){
+                if(s.equals("Desinfetante") || s.equals("Alcool") || s.equals("Saco de lixo 50l") || s.equals("Saco de lixo 30l")){
+                    aux.put(s, produtos.get(s).clone());
+                }
+            }
+            return aux;
         }
 
         public Set<String> getCodigos() {
@@ -75,10 +82,26 @@ import java.util.stream.Collectors;
             this.produtos.put(v.getDescricao(), v.clone());
         }
 
-        public String listProdutos(){
+        public String listProdutosNormais(){
             StringBuilder sb = new StringBuilder();
-            sb.append("LISTA DE PRODUTOS\n");
+            Map<String, LinhaEncomenda> normais = new HashMap<>();
             for(String s: this.produtos.keySet()){
+                if(!s.equals("Desinfetante") || !s.equals("Alcool") || !s.equals("Saco de lixo 50l") || !s.equals("Saco de lixo 30l")){
+                    normais.put(s, this.produtos.get(s));
+                }
+            }
+            sb.append("LISTA DE PRODUTOS\n");
+            for(String s: normais.keySet()){
+                sb.append("--> " + s + "\n");
+            }
+            return sb.toString();
+        }
+
+        public String listProdutosMedicos(){
+            StringBuilder sb = new StringBuilder();
+            Map<String, LinhaEncomenda> aux = getProdMedicos(this.produtos);
+            sb.append("LISTA DE PRODUTOS MÉDICOS\n");
+            for(String s: aux.keySet()){
                 sb.append("--> " + s + "\n");
             }
             return sb.toString();

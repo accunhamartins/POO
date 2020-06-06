@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Map;
 
 public class BDGeral implements Serializable {
     private BDVoluntarios voluntarios;
@@ -150,6 +151,13 @@ public class BDGeral implements Serializable {
         Loja aux;
         aux = this.lojas.tryLogin(email, password);
         if(aux == null) throw new LojaNotFoundException();
+        else return aux;
+    }
+
+    public EmpresaTransportes loginEmpresa(String email, String password) throws TransporteNotFoundException{
+        EmpresaTransportes aux;
+        aux = this.transportes.tryLogin(email, password);
+        if(aux == null) throw new TransporteNotFoundException();
         else return aux;
     }
 

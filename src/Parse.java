@@ -140,7 +140,7 @@ public class Parse {
       double raio_acao = Double.parseDouble(campos[4]);
       String email = codigo + "@gmail.com";
       String password = "12345";
-      return new Voluntario(email, password, nome, codigo, false, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0);
+      return new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0, true);
     }
 
     public EmpresaTransportes parseEmpresaTransportes(String input){
@@ -163,6 +163,10 @@ public class Parse {
         String codigo = campos[0];
         String codigo_user = campos[1];
         String codigo_loja = campos[2];
+        String aux1 = codigo_user + "@gmail.com";
+        String aux2 = codigo_loja + "@gmail.com";
+        String comprador = this.baseGeral.getUtilizadores().getUsers().get(aux1).getNome();
+        String vendedor= this.baseGeral.getLojas().getLojas().get(aux2).getNome();
         double peso = Double.parseDouble(campos[3]);
         for(int i = 4; i < campos.length; i += 4){
             String aux = campos[i] + "," + campos[i+1] + "," + campos[i+2] + "," + campos[i+3];
@@ -170,7 +174,7 @@ public class Parse {
             produtos.put(le.getCodigo(), le.clone());
             baseGeral.addProduto(le);
         }
-        return new Encomenda(codigo, codigo_user, codigo_loja, peso, " ", " ", produtos,false);
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false);
     }
 
 
@@ -181,7 +185,7 @@ public class Parse {
         double quantidade = Double.parseDouble(campos[2]);
         double preco = Double.parseDouble(campos[3]);
 
-        return new LinhaEncomenda(codigo, descricao, preco, quantidade, false);
+        return new LinhaEncomenda(codigo, descricao, preco, quantidade);
     }
 
     public void addEncomendas(List<Encomenda> encomendas){

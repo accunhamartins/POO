@@ -5,22 +5,19 @@ public class LinhaEncomenda implements Serializable {
     private String descricao;
     private double quantidade;
     private double preco;
-    private boolean produtoMedico;
 
     public LinhaEncomenda(){
         this.codigo = " ";
         this.descricao = " ";
         this.preco = 0;
         this.quantidade = 0;
-        this.produtoMedico = false;
     }
 
-    public LinhaEncomenda(String codigo, String descricao, double preco, double  quantidade, boolean produtoMedico){
+    public LinhaEncomenda(String codigo, String descricao, double quantidade, double  preco){
         this.codigo = codigo;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
-        this.produtoMedico = produtoMedico;
     }
 
     public LinhaEncomenda(LinhaEncomenda a){
@@ -28,15 +25,10 @@ public class LinhaEncomenda implements Serializable {
         this.descricao = a.getDescricao();
         this.preco = a.getPreco();
         this.quantidade = a.getQuantidade();
-        this.produtoMedico = a.isProdutoMedico();
     }
 
     public String getCodigo(){
         return this.codigo;
-    }
-
-    public boolean isProdutoMedico() {
-        return this.produtoMedico;
     }
 
     public double getPreco() {
@@ -67,27 +59,23 @@ public class LinhaEncomenda implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public void setProdutoMedico(boolean produtoMedico) {
-        this.produtoMedico = produtoMedico;
-    }
-
     public LinhaEncomenda clone(){
 
         return (new LinhaEncomenda(this));
     }
 
 
-    public boolean equals(Object obj){
-        if(obj == this) return true;
-        if(obj == null || obj.getClass() != this.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
         LinhaEncomenda o = (LinhaEncomenda) obj;
 
-        return  this.codigo.equals(o.getCodigo()) &&
+        return this.codigo.equals(o.getCodigo()) &&
                 this.descricao.equals(o.getDescricao()) &&
                 this.preco == o.getPreco() &&
-                this.quantidade == o.getQuantidade() &&
-                this.produtoMedico == o.isProdutoMedico();
+                this.quantidade == o.getQuantidade();
     }
+
 
 
     public String toString(){
@@ -101,11 +89,10 @@ public class LinhaEncomenda implements Serializable {
         sb.append(this.quantidade+"\n");
         sb.append("Preço: ");
         sb.append(this.preco + "\n");
-        sb.append("É um produto médico: ");
-        sb.append(this.produtoMedico +"\n");
 
         return sb.toString();
     }
+
 
 
 }

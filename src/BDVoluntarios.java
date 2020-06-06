@@ -1,8 +1,5 @@
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BDVoluntarios implements Serializable {
@@ -95,6 +92,30 @@ public class BDVoluntarios implements Serializable {
             sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() +" RATE --> "+ this.voluntarios.get(s).getClassificacao() + "\n" );
         }
         return sb.toString();
+    }
+
+    public String printVoluntarioLoja(Loja j){
+        StringBuilder sb = new StringBuilder();
+        for(String s: this.voluntarios.keySet()){
+            Voluntario v = this.voluntarios.get(s);
+            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            if(dist <= v.getRaio_acao()) {
+                sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() + " RATE --> " + this.voluntarios.get(s).getClassificacao()+ " KMS: " + dist + "\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    public List<Voluntario> voluntariosDisponíveis(Loja j) {
+        List<Voluntario> ret = new ArrayList<>();
+        for (String s : this.voluntarios.keySet()) {
+            Voluntario v = this.voluntarios.get(s);
+            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            if (dist <= v.getRaio_acao() && v.getDisponibilidade()) {
+                ret.add(v);
+            }
+        }
+        return ret;
     }
 
     public String getEmail(String cod) throws VoluntarioNotFoundException{

@@ -6,6 +6,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     private String nome;
     private String codigo;
     private boolean disponivel;
+    private boolean transporteMedico;
     private double latitude;
     private double longitude;
     private LocalDate inicio_transporte;
@@ -45,7 +46,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     //Construtor parametrizado
-    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double classificacao, int avaliacoes){
+    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
         super(email, password, "Voluntario");
         this.nome = a;
         this.codigo = b;
@@ -57,6 +58,15 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.classificacao = classificacao;
         this.avaliacoes = avaliacoes;
         this.setHistorico(h);
+        this.transporteMedico = transporteMedico;
+    }
+
+    public boolean aceitoTransporteMedicamentos(){
+        return this.transporteMedico;
+    }
+
+    public void aceitaMedicamentos(boolean state){
+        this.transporteMedico = state;
     }
 
     //Métodos de obtenção de variáveis
@@ -197,4 +207,20 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.historico.add(e.clone());
     }
 
+    public Encomenda removeEncomenda(String cod){
+        for(Encomenda s: this.historico){
+            if(cod.equals(s.getCodigo())){
+                this.historico.remove(s);
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public String devolveLoja(String cod){
+        for(Encomenda s: this.historico){
+            if(cod.equals(s.getCodigo())) return s.getCodigo_loja();
+        }
+        return null;
+    }
 }

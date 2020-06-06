@@ -58,23 +58,27 @@ public class TrazAquiView implements Serializable {
 
     public void headLoginLoja() { System.out.println("----------------LOGIN LOJA----------------");}
 
+    public void headLoginEmpresa() { System.out.println("----------------LOGIN EMPRESA TRANSPORTADORA---------------");}
+
     public void headNovaEncomenda() {  System.out.println("----------------NOVA ENCOMENDA----------------");}
 
 
     public static void showMenuUser(){
         System.out.println("----------------USER----------------");
         System.out.println("1. Nova encomenda");
-        System.out.println("2. Histórico de encomendas");
-        System.out.println("3. Avaliar um voluntário");
-        System.out.println("4. Avaliar uma transportadora");
+        System.out.println("2. Nova encomenda Médica");
+        System.out.println("3. Histórico de encomendas");
+        System.out.println("4. Avaliar um voluntário");
+        System.out.println("5. Avaliar uma transportadora");
         System.out.println("0. Retroceder");
     }
 
     public static void showMenuVoluntario(){
         System.out.println("----------------VOLUNTÁRIO----------------");
         System.out.println("1. Declarar-se disponível para ir buscar encomenda");
-        System.out.println("2. Selecionar levantamento de encomenda");
-        System.out.println("3. Indicar tempo até entrega de encomenda");
+        System.out.println("2. Pedidos de encomendas");
+        System.out.println("3. Rejeitar encomenda");
+        System.out.println("4. Indicar tempo até entrega de encomenda");
         System.out.println("0. Retroceder");
     }
 
@@ -82,6 +86,14 @@ public class TrazAquiView implements Serializable {
         System.out.println("----------------LOJA----------------");
         System.out.println("1. Chamar voluntário para levantar encomenda");
         System.out.println("2. Ver encomendas em stock");
+        System.out.println("0. Retroceder");
+    }
+
+    public static void showMenuTranspores(){
+        System.out.println("----------------EMPRESA TRANSPORTADORA----------------");
+        System.out.println("1. Declarar-se disponível para transporte de encomenda");
+        System.out.println("2. Apresentar preço de transporte de encomenda");
+        System.out.println("3. Anotar tempo e entrega de uma encomenda");
         System.out.println("0. Retroceder");
     }
 

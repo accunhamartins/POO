@@ -70,6 +70,14 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.classificao = a.getClassificao();
     }
 
+    public boolean aceitoTransporteMedicamentos(){
+        return this.transporteMedico;
+    }
+
+    public void aceitaMedicamentos(boolean state){
+        this.transporteMedico = state;
+    }
+
     public String getCodigo(){
       return this.codigo;
     }

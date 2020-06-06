@@ -83,7 +83,10 @@ public class BDTransportes implements Serializable {
                 System.out.println("Login feito com sucesso");
                 return aux;
             }
-            else System.out.println("Password incorreta");
+            else{
+                System.out.println("Password incorreta");
+                return null;
+            }
         }
         return aux;
     }
@@ -108,4 +111,17 @@ public class BDTransportes implements Serializable {
         this.transportes.put(e.getEmail(), e);
     }
 
+    public String printEmpresas(Utilizador u, Loja j, double peso) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : this.transportes.keySet()) {
+            EmpresaTransportes et = this.transportes.get(s);
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao()){
+                double custo = dist1 * et.getCusto_km() + dist2 *et.getCusto_km() + (peso * 0.2);
+                sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" || RATE --> "+ this.transportes.get(s).getClassificao() + " || CUSTO: " + custo + "\n");
+            }
+        }
+        return sb.toString();
+    }
 }

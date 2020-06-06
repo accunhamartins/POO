@@ -145,12 +145,14 @@ public class TrazAquiController implements Serializable {
                         this.view.raio_acao();
                         raio = input.lerDouble();
                         codigo = "v" + random.nextInt(99);
+                        this.view.encomendas_medicas();
+                        medico = input.lerBoolean();
                         while (bd.getVoluntarios().existeCodigo(codigo)) codigo = "v" + random.nextInt(99);
                     } catch (InputMismatchException e) {
                         input.lerString();
                         System.out.println("Input inválido");
                     }
-                    bd.addVoluntario(new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio, new ArrayList<>(), 0, 0));
+                    bd.addVoluntario(new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio, new ArrayList<>(), 0, 0, medico));
                     System.out.println("REGISTO EFETUADO COM SUCESSO");
                     System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
@@ -249,7 +251,7 @@ public class TrazAquiController implements Serializable {
                     lojaFlow();
                     break;
                 case 4:
-                   // empresaFlow();
+                    empresaFlow();
                     break;
                 default:
                     System.out.println("Opcao inválida");
@@ -259,7 +261,26 @@ public class TrazAquiController implements Serializable {
         while (op != 0);
     }
 
-    private void voluntarioFlow(){
+    private void empresaFlow(){
+        int op;
+        Input input = new Input();
+        clearScreen();
+        this.view.headLoginEmpresa();
+        this.view.email();
+        String email = input.lerString();
+        this.view.password();
+        String password = input.lerString();
+        try{
+            EmpresaTransportes et = bd.loginEmpresa(email, password);
+        } catch (TransporteNotFoundException e){
+            clearScreen();
+            System.out.println("Email ou password inválidos\n\n");
+            System.out.println("Selecione nova opção de login\n");
+            this.view.showMenuLogin();
+        }
+    }
+
+    private void voluntarioFlow() {
         int op;
         Input input = new Input();
         clearScreen();
@@ -268,7 +289,7 @@ public class TrazAquiController implements Serializable {
         String email = input.lerString();
         this.view.password();
         String password = input.lerString();
-        try{
+        try {
             Voluntario v = bd.loginVoluntario(email, password);
             clearScreen();
             this.view.showMenuVoluntario();
@@ -289,21 +310,57 @@ public class TrazAquiController implements Serializable {
                     case 2:
                         System.out.println("Pedidos de entrega: ");
                         int size = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico().size();
-                        if(size == 0) System.out.println("Não tem pedidos de encomendas");
+                        if (size == 0) System.out.println("Não tem pedidos de encomendas");
                         else {
                             System.out.println(this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico());
+                        }
+                        break;
+                    case 3:
+                        int size2 = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico().size();
+                        if (size2 == 0) System.out.println("Não tem pedidos de encomendas");
+                        else {
+                            try {
+                                System.out.println(this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico());
+                                System.out.println("Insira o código a encomendas que pretende rejeitar");
+                                String codEnc = input.lerString();
+                                Encomenda novaEnc = v.removeEncomenda(codEnc);
+                                this.bd.updateVoluntario2(v);
+                                String codLoja = v.devolveLoja(codEnc);
+                                String emailLoja = this.bd.getLojas().getEmail(codLoja);
+                                Loja j = this.bd.getLojas().getLojas().get(emailLoja);
+                                List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
+                                if(disponiveis.size() == 1){
+                                    Voluntario v2 = disponiveis.get(0);
+                                    System.out.println("A encomenda será entregue pelo voluntário --> " + v2.getNome() + " --> " + v2.getCodigo());
+                                    v2.addEncomenda(novaEnc);
+                                    this.bd.updateVoluntario2(v2);
+                                }
+                                else {
+                                    Random random = new Random();
+                                    int choice = random.nextInt(disponiveis.size() - 1);
+                                    Voluntario v3 = disponiveis.get(choice);
+                                    System.out.println("A encomenda será entregue pelo voluntário --> " + v.getNome() + " --> " + v.getCodigo());
+                                    v.addEncomenda(novaEnc);
+                                    this.bd.updateVoluntario2(v3);
+                                }
+                            } catch (LojaNotFoundException e){
+                                System.out.println("Loja inválida");
+                            }
                         }
                         break;
                 }
 
 
             } while (op != 0);
-        } catch (VoluntarioNotFoundException e){
-            System.out.println("Email ou password inválidos");
+        } catch (VoluntarioNotFoundException e) {
+            clearScreen();
+            System.out.println("Email ou password inválidos\n\n");
+            System.out.println("Selecione nova opção de login\n");
+            this.view.showMenuLogin();
         }
     }
 
-    private void lojaFlow() {
+    private void lojaFlow(){
         int op;
         Input input = new Input();
         clearScreen();
@@ -325,17 +382,15 @@ public class TrazAquiController implements Serializable {
                         return;
                     case 1:
                         System.out.println("Conjunto de voluntários disponíveis");
-                        System.out.println(this.bd.getVoluntarios().printVoluntario());
+                        System.out.println(this.bd.getVoluntarios().printVoluntarioLoja(lj));
                         System.out.println("Selecione o código de um voluntário");
                         String codigo = Input.lerString();
                         try {
                             String emailVol = this.bd.getVoluntarios().getEmail(codigo);
                             Voluntario v = this.bd.getVoluntarios().getVoluntarios().get(emailVol);
                             Encomenda e = lj.getEncomendas_recebidas().get(0).clone();
-                            v.addEncomenda(e);
                             Loja aux = this.bd.getLojas().getLojas().get(lj.getEmail());
                             this.bd.updateLoja2(e, aux);
-                            this.bd.updateVoluntario2(v);
                             System.out.println("Realizado com sucesso");
 
                         } catch (VoluntarioNotFoundException e){
@@ -350,16 +405,22 @@ public class TrazAquiController implements Serializable {
             } while (op != 0);
 
         } catch (LojaNotFoundException e) {
-            System.out.println("Email ou password inválidos");
+            clearScreen();
+            System.out.println("Email ou password inválidos\n\n");
+            System.out.println("Selecione nova opção de login\n");
+            this.view.showMenuLogin();
         }
     }
 
     private void userFlow() throws InterruptedException{
         int op;
         Input input = new Input();
-        String email = "", password = "", produto = "";
+        String email, password, produto = "";
         int quantidade = 0;
-        boolean enc_med = false;
+        Double quantidadeTot = 0.0;
+        String loja;
+        List<String> produtosSel = new ArrayList<>();
+        Map<String, LinhaEncomenda> produtos = new TreeMap<>();
 
         clearScreen();
         this.view.headLoginUser();
@@ -381,46 +442,152 @@ public class TrazAquiController implements Serializable {
                         case 1:
                             this.view.headNovaEncomenda();
                             this.view.preenchimentoObrg();
-                            System.out.println(bd.getProdutos().listProdutos());
-                            this.view.produto();
-                            produto = input.lerString();
-                            try{
-                                this.bd.getProdutos().existeProd(produto);
-                                this.view.quantidade();
-                                quantidade = input.lerInt();
-                                this.view.encomendas_medicas2();
-                                enc_med = input.lerBoolean();
-                                clearScreen();
-                                System.out.println(this.bd.getLojas().listLojasUser(u));
-                                System.out.println("Selecione o código de uma loja");
-                                String loja = input.lerString();
+                            System.out.println(this.bd.getLojas().listLojasUser(u));
+                            System.out.println("Selecione o código de uma loja");
+                            loja = input.lerString();
+                            try {
+                                System.out.println(bd.getProdutos().listProdutosNormais());
+                                String emailLoja = this.bd.getLojas().getEmail(loja);
+                                while (!produto.equals("0")) {
+                                    this.view.produto();
+                                    System.out.println("Insira 0 para concluir a seleção de produtos");
+                                    produto = input.lerString();
+                                    produtosSel.add(produto);
+                                    System.out.println("\n");
+                                }
+                                produtosSel.remove("0");
                                 try {
-                                    String emailLoja = this.bd.getLojas().getEmail(loja);
-                                    LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(produto).getCodigo(), produto, quantidade, bd.getProdutos().getProdutos().get(produto).getPreco() * quantidade, enc_med);
-                                    Map<String, LinhaEncomenda> produtos = new TreeMap<>();
-                                    produtos.put(produto, enc);
+                                    for (String s : produtosSel) {
+                                        this.bd.getProdutos().existeProd(s);
+                                        clearScreen();
+                                        System.out.println("Insira a quantidade de " + s);
+                                        quantidade = input.lerInt();
+                                        LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(s).getCodigo(), s, quantidade, bd.getProdutos().getProdutos().get(s).getPreco());
+                                        produtos.put(s, enc);
+                                        quantidadeTot += quantidade;
+                                    }
+                                    Loja j = this.bd.getLojas().getLojas().get(emailLoja);
                                     Random random = new Random();
                                     String cod = "e" + random.nextInt(9999);
-                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidade, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, enc_med);
-                                    u.addEncomenda(novaEnc);
-                                    this.bd.getLojas().updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                    System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 0 PARA SAIR");
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, false);
+                                    List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
 
-                                } catch (LojaNotFoundException e){
-                                    System.out.println("Loja inválida");
+                                    if(disponiveis.size() == 0){
+                                        System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
+                                        System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                    }
+                                    else if(disponiveis.size() == 1){
+                                        u.addEncomenda(novaEnc);
+                                        Voluntario v = disponiveis.get(0);
+                                        System.out.println("A encomenda será entregue pelo voluntário --> " + v.getNome() + " --> " + v.getCodigo());
+                                        v.addEncomenda(novaEnc);
+                                        this.bd.updateVoluntario2(v);
+                                        this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                    }
+                                    else {
+                                        u.addEncomenda(novaEnc);
+                                        int choice = random.nextInt(disponiveis.size() - 1);
+                                        Voluntario v = disponiveis.get(choice);
+                                        System.out.println("A encomenda será entregue pelo voluntário --> " + v.getNome() + " --> " + v.getCodigo());
+                                        v.addEncomenda(novaEnc);
+                                        this.bd.updateVoluntario2(v);
+                                        this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                    }
+
+                                } catch (ProductNotFoundException e) {
+                                    System.out.println("Produto não existe");
                                     System.out.println("Prima 0 para retroceder");
                                 }
-
-                            } catch (ProductNotFoundException e){
-                                System.out.println("Produto não existe");
+                            } catch (LojaNotFoundException e){
+                                System.out.println("Loja inválida");
                                 System.out.println("Prima 0 para retroceder");
                             }
                             break;
+
                         case 2:
-                            System.out.println(u.printEncomendas());
-                            System.out.println("Insira 5 para imprimir de novo o menu");
+                            this.view.headNovaEncomenda();
+                            this.view.preenchimentoObrg();
+                            System.out.println(this.bd.getLojas().listLojasUser(u));
+                            System.out.println("Selecione o código de uma loja");
+                            loja = input.lerString();
+                            try {
+                                System.out.println(bd.getProdutos().listProdutosMedicos());
+                                String emailLoja = this.bd.getLojas().getEmail(loja);
+                                while (!produto.equals("0")) {
+                                    this.view.produto();
+                                    System.out.println("Insira 0 para concluir a seleção de produtos");
+                                    produto = input.lerString();
+                                    produtosSel.add(produto);
+                                    System.out.println("\n");
+                                }
+                                produtosSel.remove("0");
+                                try {
+                                    for (String s : produtosSel) {
+                                        this.bd.getProdutos().existeProd(s);
+                                        clearScreen();
+                                        System.out.println("Insira a quantidade de " + s);
+                                        quantidade = input.lerInt();
+                                        LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(s).getCodigo(), s, quantidade, bd.getProdutos().getProdutos().get(s).getPreco());
+                                        produtos.put(s, enc);
+                                        quantidadeTot += quantidade;
+                                    }
+                                    Loja j = this.bd.getLojas().getLojas().get(emailLoja);
+                                    Random random = new Random();
+                                    String cod = "e" + random.nextInt(9999);
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, true);
+                                    List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
+
+                                    if(disponiveis.size() == 0){
+                                        System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
+                                        System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        System.out.println(this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso()));
+                                        System.out.println("Selecione 0 para cancelar encomenda ou 1 para selecionar empresa");
+                                       int novaOp = input.lerInt();
+                                       if(novaOp == 0) op = 0;
+                                       else{
+                                           System.out.println("Selecione o código da empresa que pretende escolher");
+                                           String codTrans = input.lerString();
+
+                                       }
+
+                                    }
+                                    else if(disponiveis.size() == 1){
+                                        u.addEncomenda(novaEnc);
+                                        Voluntario v = disponiveis.get(0);
+                                        System.out.println("A encomenda será entregue pelo voluntário --> " + v.getNome() + " --> " + v.getCodigo());
+                                        v.addEncomenda(novaEnc);
+                                        this.bd.updateVoluntario2(v);
+                                        this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                    }
+                                    else {
+                                        u.addEncomenda(novaEnc);
+                                        int choice = random.nextInt(disponiveis.size() - 1);
+                                        Voluntario v = disponiveis.get(choice);
+                                        System.out.println("A encomenda será entregue pelo voluntário --> " + v.getNome() + " --> " + v.getCodigo());
+                                        v.addEncomenda(novaEnc);
+                                        this.bd.updateVoluntario2(v);
+                                        this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                    }
+
+                                } catch (ProductNotFoundException e) {
+                                    System.out.println("Produto não existe");
+                                    System.out.println("Prima 0 para retroceder");
+                                }
+                            } catch (LojaNotFoundException e){
+                                System.out.println("Loja inválida");
+                                System.out.println("Prima 0 para retroceder");
+                            }
                             break;
+
                         case 3:
+                            System.out.println(u.printEncomendas());
+                            System.out.println("Insira 6 para imprimir de novo o menu");
+                            break;
+                        case 4:
                             System.out.println(this.bd.getVoluntarios().printVoluntario());
                             System.out.println("Escolha o código do voluntário a avaliar");
                             String cod = Input.lerString();
@@ -440,7 +607,7 @@ public class TrazAquiController implements Serializable {
                                 System.out.println("Prima 0 para retroceder");
                             }
                             break;
-                        case 4:
+                        case 5:
                             System.out.println(this.bd.getTransportes().printTransportes());
                             System.out.println("Escolha o código da empresa de transportes a avaliar");
                             String cod2 = Input.lerString();
@@ -460,7 +627,7 @@ public class TrazAquiController implements Serializable {
                                 System.out.println("Prima 0 para retroceder");
                             }
                             break;
-                        case 5:
+                        case 6:
                             clearScreen();
                             this.view.showMenuUser();
                             break;
@@ -472,7 +639,11 @@ public class TrazAquiController implements Serializable {
                 while (op != 0);
 
             } catch (UserNotFoundException e){
-            System.out.println("Email ou password inválidos");
+            clearScreen();
+            System.out.println("Email ou password inválidos\n\n");
+            System.out.println("Selecione nova opção de login\n");
+            this.view.showMenuLogin();
+
         }
     }
 
