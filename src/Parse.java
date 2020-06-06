@@ -3,6 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -176,7 +177,7 @@ public class Parse {
             produtos.put(le.getCodigo(), le.clone());
             baseGeral.addProduto(le);
         }
-        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false);
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false, LocalDateTime.now(), false);
     }
 
 

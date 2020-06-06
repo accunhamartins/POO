@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Voluntario extends UtilizadorSistema implements Serializable {
     private String nome;
@@ -13,7 +14,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     private double raio_acao;
     private double classificacao;
     private int avaliacoes;
-    private ArrayList<Encomenda> historico;
+    private List<Encomenda> historico;
 
     //Construtores de classe
     //Construtor de classe por omissão
@@ -46,7 +47,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     //Construtor parametrizado
-    public Voluntario(String email,String password,String a, String b, boolean c, double d, double e, LocalDate f, double g, ArrayList<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
+    public Voluntario(String email, String password, String a, String b, boolean c, double d, double e, LocalDate f, double g, List<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
         super(email, password, "Voluntario");
         this.nome = a;
         this.codigo = b;
@@ -105,8 +106,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return avaliacoes;
     }
 
-    public ArrayList<Encomenda> getHistorico(){
-        ArrayList<Encomenda> res = new ArrayList<>();
+    public List<Encomenda> getHistorico(){
+        List<Encomenda> res = new ArrayList<>();
         for(Encomenda s: this.historico) res.add(s);
         return res;
     }
@@ -148,7 +149,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.raio_acao = a;
     }
 
-    public void setHistorico(ArrayList<Encomenda> a){
+    public void setHistorico(List<Encomenda> a){
         this.historico = new ArrayList<>();
         for(Encomenda s: a) this.historico.add(s);
     }
@@ -223,4 +224,30 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         }
         return null;
     }
+
+    public void updateEncomenda(Encomenda enc){
+       List<Encomenda> aux = new ArrayList<>();
+       enc.setEntregue(true);
+       aux.add(enc);
+       for(Encomenda e: this.historico){
+           if(!e.getCodigo().equals(enc.getCodigo())){
+               aux.add(e);
+           }
+       }
+       setHistorico(aux);
+    }
+
+    public String getNaoEntregue(){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda s: this.historico){
+            if(!s.isEntregue()){
+                sb.append(s);
+                count++;
+            }
+        }
+        if(count == 0) sb.append("0");
+        return sb.toString();
+    }
+
 }

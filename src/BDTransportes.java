@@ -124,4 +124,9 @@ public class BDTransportes implements Serializable {
         }
         return sb.toString();
     }
+
+    public void updateTransportes2(EmpresaTransportes et){
+        this.transportes.put(et.getEmail(), et);
+    }
+
 }

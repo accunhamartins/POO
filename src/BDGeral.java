@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.Map;
 
-public class BDGeral implements Serializable {
+public class BDGeral implements Serializable, BDGeralInterface {
     private BDVoluntarios voluntarios;
     private BDUtilizador utilizadores;
     private BDLojas lojas;
@@ -141,6 +141,10 @@ public class BDGeral implements Serializable {
 
     public void updateTransportes(Double classificacao, EmpresaTransportes e){
         this.transportes.updateTransporte(e, classificacao);
+    }
+
+    public void updateTransportes2(EmpresaTransportes e){
+        this.transportes.updateTransportes2(e);
     }
 
     public BDGeral clone(){

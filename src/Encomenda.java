@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,6 +11,8 @@ public class Encomenda implements Serializable{
     private double peso;
     private String comprador;
     private String vendedor;
+    private LocalDateTime data;
+    private boolean entregue;
     private Map<String, LinhaEncomenda> produtos;
     private boolean encomendaMedica;
 
@@ -21,17 +24,21 @@ public class Encomenda implements Serializable{
         this.peso = 0.0;
         this.comprador = " ";
         this.vendedor = " ";
+        this.entregue = false;
         this.produtos = new HashMap<>();
+        this.data = LocalDateTime.now();
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos, boolean encomendaMedica){
+    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos, boolean encomendaMedica, LocalDateTime data, boolean entregue){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;
         this.peso = peso;
         this.comprador = comprador;
         this.vendedor = vendedor;
+        this.data = data;
+        this.entregue = entregue;
         this.setProdutos(produtos);
         this.encomendaMedica = encomendaMedica;
     }
@@ -44,7 +51,16 @@ public class Encomenda implements Serializable{
         this.comprador = e.getComprador();
         this.vendedor =  e.getVendedor();
         this.setProdutos(e.getProdutos());
+        this.data = e.getData();
         this.encomendaMedica = e.isEncomendaMedica();
+    }
+
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public boolean isEntregue() {
+        return entregue;
     }
 
     public String getCodigo(){
@@ -75,6 +91,10 @@ public class Encomenda implements Serializable{
         return this.produtos.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
+    public void setEntregue(boolean entregue) {
+        this.entregue = entregue;
+    }
+
     public boolean isEncomendaMedica() {
         return this.encomendaMedica;
     }
@@ -101,6 +121,10 @@ public class Encomenda implements Serializable{
 
     public void setVendedor(String vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
     }
 
     public void setProdutos(Map<String, LinhaEncomenda> produtos) {
@@ -145,6 +169,8 @@ public class Encomenda implements Serializable{
         sb.append(this.comprador + "\n");
         sb.append("Vendedor: ");
         sb.append(this.vendedor+"\n");
+        sb.append("Data de emissão da encomenda: ");
+        sb.append(this.data+"\n");
         sb.append("Produtos: ").append("\n");
         sb.append(this.produtos).append("\n");
 

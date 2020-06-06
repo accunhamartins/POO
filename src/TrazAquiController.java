@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -305,7 +308,7 @@ public class TrazAquiController implements Serializable {
                         aux.setDisponibilidade(true);
                         this.bd.addVoluntarioDisponivel(aux);
                         System.out.println("Está disponível para levantar encomendas.");
-                        System.out.println("Prima 6 para voltar ao menu");
+                        System.out.println("Prima 7 para voltar ao menu");
                         break;
                     case 2:
                         System.out.println("Pedidos de entrega por aceitar: ");
@@ -329,7 +332,7 @@ public class TrazAquiController implements Serializable {
                             }
                         }
                         System.out.println("\n");
-                        System.out.println("Prima 6 para voltar ao menu");
+                        System.out.println("Prima 7 para voltar ao menu");
                         break;
                     case 3:
                         int count2 = 0;
@@ -360,7 +363,7 @@ public class TrazAquiController implements Serializable {
                                         System.out.println("A encomenda será entregue pelo voluntário --> " + v2.getNome() + " --> " + v2.getCodigo());
                                         v2.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v2);
-                                        System.out.println("Prima 4 para voltar ao menu");
+                                        System.out.println("Prima 7 para voltar ao menu");
                                     } else {
                                         Random random = new Random();
                                         int choice = random.nextInt(disponiveis.size() - 1);
@@ -368,7 +371,7 @@ public class TrazAquiController implements Serializable {
                                         System.out.println("A encomenda será entregue pelo voluntário --> " + v3.getNome() + " --> " + v3.getCodigo());
                                         v.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v3);
-                                        System.out.println("Prima 5 para voltar ao menu");
+                                        System.out.println("Prima 7 para voltar ao menu");
                                     }
                                 }
                             } catch (LojaNotFoundException e){
@@ -383,7 +386,7 @@ public class TrazAquiController implements Serializable {
                         else {
                            System.out.println(this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getHistorico());
                         }
-                        System.out.println("Prima 6 para voltar ao menu");
+                        System.out.println("Prima 7 para voltar ao menu");
                         break;
                     case 5:
                         Voluntario aux2 = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail());
@@ -404,9 +407,28 @@ public class TrazAquiController implements Serializable {
                         } catch (EncomendaNotFoundException e){
                             System.out.println("Encomenda Inválida");
                         }
-                        System.out.println("Insira 6 para voltar a imprimir o menu");
+                        System.out.println("Insira 7 para voltar a imprimir o menu");
                         break;
                     case 6:
+                        String naoEntregue = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getNaoEntregue();
+                        if(naoEntregue.equals("0")){System.out.println("Não existem encomendas por entregar");}
+                        else {
+                            System.out.println(naoEntregue);
+                            System.out.println("Indique a encomenda que acabou de ser entregue");
+                            String cod2 = Input.lerString();
+                            Encomenda encomenda2 = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getEncomenda(cod2);
+                            LocalDateTime entrega = LocalDateTime.now();
+                            LocalDateTime emissao = encomenda2.getData();
+                            Duration duration = Duration.between(entrega, emissao);
+                            long diff = Math.abs(duration.toMinutes());
+                            v.updateEncomenda(encomenda2);
+                            this.bd.updateVoluntario2(v);
+                            System.out.println("A encomenda " + encomenda2.getCodigo() + " foi entregue ao utilizador " + encomenda2.getCodigo_user());
+                            System.out.println("Demorou " + diff + " minutos a ser entregue");
+                            System.out.println("Insira 7 para voltar a imprimir o menu");
+                        }
+                        break;
+                    case 7:
                         clearScreen();
                         this.view.showMenuVoluntario();
                         break;
@@ -414,6 +436,7 @@ public class TrazAquiController implements Serializable {
 
 
             } while (op != 0);
+
         } catch (VoluntarioNotFoundException e) {
             clearScreen();
             System.out.println("Email ou password inválidos\n\n");
@@ -478,11 +501,6 @@ public class TrazAquiController implements Serializable {
         int op;
         Input input = new Input();
         String email, password, produto = "";
-        int quantidade = 0;
-        Double quantidadeTot = 0.0;
-        String loja;
-        List<String> produtosSel = new ArrayList<>();
-        Map<String, LinhaEncomenda> produtos = new TreeMap<>();
 
         clearScreen();
         this.view.headLoginUser();
@@ -502,6 +520,11 @@ public class TrazAquiController implements Serializable {
                             this.view.showMenuLogin();
                             return;
                         case 1:
+                            int quantidade = 0;
+                            Double quantidadeTot = 0.0;
+                            String loja;
+                            List<String> produtosSel = new ArrayList<>();
+                            Map<String, LinhaEncomenda> produtos = new TreeMap<>();
                             this.view.headNovaEncomenda();
                             this.view.preenchimentoObrg();
                             System.out.println(this.bd.getLojas().listLojasUser(u));
@@ -532,12 +555,29 @@ public class TrazAquiController implements Serializable {
                                     Random random = new Random();
                                     String cod = "e" + random.nextInt(9999);
                                     while(this.bd.getEncomendasAceites().getAceites().contains(cod)) cod = "e" + random.nextInt(9999);
-                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, false);
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, false, LocalDateTime.now(), false);
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
 
                                     if(disponiveis.size() == 0){
                                         System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
                                         System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        System.out.println(this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso()));
+                                        System.out.println("Selecione o código de uma empresa ou 0 para cancelar a encomenda");
+                                        String opEmpresa = input.lerString();
+                                        if(opEmpresa.equals("0")) op = 0;
+                                        else {
+                                            try {
+                                                u.addEncomenda(novaEnc);
+                                                String emailEmpresa = this.bd.getTransportes().getEmail(opEmpresa);
+                                                EmpresaTransportes et = this.bd.getTransportes().getTransportes().get(emailEmpresa);
+                                                et.addEncomenda(novaEnc);
+                                                this.bd.updateTransportes2(et);
+                                                this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
+                                                System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                            } catch (TransporteNotFoundException e){
+                                                System.out.println("Empresa transportadora inválida");
+                                            }
+                                        }
                                     }
                                     else if(disponiveis.size() == 1){
                                         u.addEncomenda(novaEnc);
@@ -570,37 +610,43 @@ public class TrazAquiController implements Serializable {
                             break;
 
                         case 2:
+                            int quantidade2 = 0;
+                            Double quantidadeTot2 = 0.0;
+                            String loja2;
+                            List<String> produtosSel2 = new ArrayList<>();
+                            Map<String, LinhaEncomenda> produtos2 = new TreeMap<>();
+                            String produto2 = "";
                             this.view.headNovaEncomenda();
                             this.view.preenchimentoObrg();
                             System.out.println(this.bd.getLojas().listLojasUser(u));
                             System.out.println("Selecione o código de uma loja");
-                            loja = input.lerString();
+                            loja2 = input.lerString();
                             try {
                                 System.out.println(bd.getProdutos().listProdutosMedicos());
-                                String emailLoja = this.bd.getLojas().getEmail(loja);
-                                while (!produto.equals("0")) {
+                                String emailLoja = this.bd.getLojas().getEmail(loja2);
+                                while (!produto2.equals("0")) {
                                     this.view.produto();
                                     System.out.println("Insira 0 para concluir a seleção de produtos");
-                                    produto = input.lerString();
-                                    produtosSel.add(produto);
+                                    produto2 = input.lerString();
+                                    produtosSel2.add(produto2);
                                     System.out.println("\n");
                                 }
-                                produtosSel.remove("0");
+                                produtosSel2.remove("0");
                                 try {
-                                    for (String s : produtosSel) {
+                                    for (String s : produtosSel2) {
                                         this.bd.getProdutos().existeProd(s);
                                         clearScreen();
                                         System.out.println("Insira a quantidade de " + s);
-                                        quantidade = input.lerInt();
-                                        LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(s).getCodigo(), s, quantidade, bd.getProdutos().getProdutos().get(s).getPreco());
-                                        produtos.put(s, enc);
-                                        quantidadeTot += quantidade;
+                                        quantidade2 = input.lerInt();
+                                        LinhaEncomenda enc = new LinhaEncomenda(bd.getProdutos().getProdutos().get(s).getCodigo(), s, quantidade2, bd.getProdutos().getProdutos().get(s).getPreco());
+                                        produtos2.put(s, enc);
+                                        quantidadeTot2 += quantidade2;
                                     }
                                     Loja j = this.bd.getLojas().getLojas().get(emailLoja);
                                     Random random = new Random();
                                     String cod = "e" + random.nextInt(9999);
                                     while(this.bd.getEncomendasAceites().getAceites().contains(cod)) cod = "e" + random.nextInt(9999);
-                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, true);
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja2, quantidadeTot2, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos2, true, LocalDateTime.now(), false);
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
 
                                     if(disponiveis.size() == 0){

@@ -235,6 +235,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.classificao = total / this.avaliacoes;
     }
 
+    public void addEncomenda (Encomenda e){
+        this.registos.add(e.clone());
+    }
+
 
 
 }
