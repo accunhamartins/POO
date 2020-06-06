@@ -217,9 +217,9 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return null;
     }
 
-    public String devolveLoja(String cod){
+    public Encomenda getEncomenda(String cod){
         for(Encomenda s: this.historico){
-            if(cod.equals(s.getCodigo())) return s.getCodigo_loja();
+            if(cod.equals(s.getCodigo())) return s;
         }
         return null;
     }

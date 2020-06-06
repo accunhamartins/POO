@@ -92,6 +92,8 @@ public class Parse {
         }
         addEncomendas(this.encomendas);
         addEncomendasCliente(this.encomendas);
+        addEncomendasVoluntarios(this.encomendas);
+        addEncomendasAceites(this.ea);
     }
 
     public List<String> lerFicheiro(String nomeFich) {
@@ -204,6 +206,33 @@ public class Parse {
                 if(e.getCodigo_user().equals(u.getCodigo())){
                     this.baseGeral.updateUser(e, u);
                 }
+            }
+        }
+    }
+
+    public void addEncomendasAceites(EncomendasAceites ea){
+        this.baseGeral.setEncomendasAceites(ea);
+    }
+
+    public void addEncomendasVoluntarios(List<Encomenda> encomendas){
+        for(Encomenda e: encomendas){
+            String codigo_loja = e.getCodigo_loja();
+            Loja j = this.baseGeral.getLojas().getLojas().get(codigo_loja+"@gmail.com");
+            List<Voluntario> disponiveis = this.baseGeral.getVoluntarios().voluntariosDisponíveis(j);
+            if(disponiveis.size() == 1){
+                Voluntario v = disponiveis.get(0);
+                v.addEncomenda(e);
+                this.baseGeral.updateVoluntario2(v);
+            }
+            else if(disponiveis.size() == 0){
+                return;
+            }
+            else {
+                Random random = new Random();
+                int choice = random.nextInt(disponiveis.size() - 1);
+                Voluntario v = disponiveis.get(choice);
+                v.addEncomenda(e);
+                this.baseGeral.updateVoluntario2(v);
             }
         }
     }

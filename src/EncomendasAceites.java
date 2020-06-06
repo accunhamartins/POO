@@ -53,4 +53,8 @@ public class EncomendasAceites implements Serializable {
 
       return sb.toString();
     }
+
+    public void updateAceites(String cod){
+        this.aceites.add(cod);
+    }
 }

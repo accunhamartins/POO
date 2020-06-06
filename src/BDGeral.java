@@ -7,8 +7,8 @@ public class BDGeral implements Serializable {
     private BDLojas lojas;
     private BDTransportes transportes;
     private BDProdutos produtos;
-
-
+    private EncomendasAceites encomendasAceites;
+    
     public BDGeral(){
         this.voluntarios = new BDVoluntarios();
         this.utilizadores = new BDUtilizador();
@@ -17,12 +17,13 @@ public class BDGeral implements Serializable {
         this.produtos = new BDProdutos();
     }
 
-    public BDGeral(BDVoluntarios v, BDUtilizador u, BDLojas l, BDTransportes t, BDProdutos p){
+    public BDGeral(BDVoluntarios v, BDUtilizador u, BDLojas l, BDTransportes t, BDProdutos p, EncomendasAceites ea){
         this.voluntarios = v.clone();
         this.utilizadores = u.clone();
         this.lojas = l.clone();
         this.transportes = t.clone();
         this.produtos = p.clone();
+        this.encomendasAceites = ea.clone();
     }
 
     public BDGeral(BDGeral b){
@@ -31,11 +32,16 @@ public class BDGeral implements Serializable {
         this.lojas = b.getLojas();
         this.transportes = b.getTransportes();
         this.produtos = b.getProdutos();
+        this.encomendasAceites = b.getEncomendasAceites();
     }
 
 
     public BDLojas getLojas() {
         return this.lojas.clone();
+    }
+
+    public EncomendasAceites getEncomendasAceites() {
+        return encomendasAceites.clone();
     }
 
     public BDTransportes getTransportes() {
@@ -51,6 +57,10 @@ public class BDGeral implements Serializable {
     }
 
     public BDProdutos getProdutos() { return this.produtos.clone();}
+
+    public void setEncomendasAceites(EncomendasAceites encomendasAceites) {
+        this.encomendasAceites = encomendasAceites;
+    }
 
     public void addVoluntario(Voluntario v){
         if(this.voluntarios.existe(v)){
@@ -123,6 +133,10 @@ public class BDGeral implements Serializable {
 
     public void updateVoluntario(Double classificacao, Voluntario v){
         this.voluntarios.updateVoluntario(v, classificacao);
+    }
+
+    public void updateAceites(String cod){
+        this.encomendasAceites.updateAceites(cod);
     }
 
     public void updateTransportes(Double classificacao, EmpresaTransportes e){

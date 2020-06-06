@@ -131,4 +131,12 @@ public class Loja extends UtilizadorSistema implements Serializable {
     public void removeEncomenda(Encomenda e){
         this.encomendas_recebidas.remove(e);
     }
+
+    public Encomenda getEnc(String cod) throws EncomendaNotFoundException{
+        for(Encomenda e: this.encomendas_recebidas){
+            if(cod.equals(e.getCodigo())) return e.clone();
+        }
+        throw new EncomendaNotFoundException();
+    }
+
 }

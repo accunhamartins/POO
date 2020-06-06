@@ -118,6 +118,18 @@ public class BDVoluntarios implements Serializable {
         return ret;
     }
 
+    public List<Voluntario> voluntariosDisponíveis2(Loja j, Voluntario v) {
+        List<Voluntario> ret = new ArrayList<>();
+        for (String s : this.voluntarios.keySet()) {
+            Voluntario v2 = this.voluntarios.get(s);
+            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            if (dist <= v2.getRaio_acao() && v2.getDisponibilidade() && !v.getCodigo().equals(v2.getCodigo())) {
+                ret.add(v2);
+            }
+        }
+        return ret;
+    }
+
     public String getEmail(String cod) throws VoluntarioNotFoundException{
         for(String s: this.voluntarios.keySet()){
             if(this.voluntarios.get(s).getCodigo().equals(cod)) return this.voluntarios.get(s).getEmail();
