@@ -101,6 +101,14 @@ public class BDLojas implements Serializable {
     }
 
     /**
+     * Método que atualiza uma loja
+     * @param j
+     */
+    public void updateLoja3(Loja j){
+        this.lojas.put(j.getEmail(), j);
+    }
+
+    /**
      * Método que verifica se um código de uma loja existe
      * @param s é o código a verificar
      * @return

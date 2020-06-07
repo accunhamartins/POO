@@ -3,13 +3,9 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class EmpresaTransportes extends UtilizadorSistema implements Serializable {
-    private String codigo;
-    private String nome;
     private int nif;
     private double custo_km;
     private String local;
-    private double latitude;
-    private double longitude;
     private double raioDeAcao;
     private double classificao;
     private int avaliacoes;
@@ -20,13 +16,9 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public EmpresaTransportes(){
         super();
-        this.codigo = " ";
-        this.nome = " ";
         this.nif = 0;
         this.custo_km = 0;
         this.local = " ";
-        this.latitude = 0;
-        this.longitude = 0;
         this.raioDeAcao = 0.0;
         this.registos = new ArrayList<>();
         this.numeroMinimoEncomenda = 0;
@@ -37,14 +29,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda,
                               boolean transporteMedico, double classificao, int avaliacoes){
-        super(email, password, "Transportadora");
-        this.codigo = codigo;
-        this.nome = nome;
+        super(email, password, "Transportadora", codigo, nome, latitude, longitude);
         this.nif = nif;
         this.custo_km = custo_km;
         this.local = local;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.raioDeAcao = raioDeAcao;
         this.setRegistos(registos);
         this.numeroMinimoEncomenda = numeroMinimoEncomenda;
@@ -55,13 +43,9 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public EmpresaTransportes(EmpresaTransportes a){
         super(a);
-        this.codigo = a.getCodigo();
-        this.nome = a.getNome();
         this.nif = a.getNif();
         this.custo_km = a.getCusto_km();
         this.local = a.getLocal();
-        this.latitude = a.getLatitude();
-        this.longitude = a.getLongitude();
         this.raioDeAcao = a.getRaioDeAcao();
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
@@ -79,7 +63,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public String getCodigo(){
-      return this.codigo;
+      return super.getCodigo();
     }
 
     public int getAvaliacoes() {
@@ -91,7 +75,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public String getNome(){
-      return this.nome;
+      return super.getNome();
     }
 
     public int getNif(){
@@ -107,11 +91,11 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public double getLatitude() {
-        return this.latitude;
+        return super.getLatitude();
     }
 
     public double getLongitude() {
-        return this.longitude;
+        return super.getLongitude();
     }
 
     public double getRaioDeAcao() {
@@ -132,7 +116,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        super.setCodigo(codigo);
     }
 
     public void setAvaliacoes(int avaliacoes) {
@@ -144,7 +128,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        super.setNome(nome);
     }
 
     public void setNif(int nif) {
@@ -187,13 +171,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         if (obj == this )return true;
         if(obj == null || this.getClass() != obj.getClass()) return false;
         EmpresaTransportes e = (EmpresaTransportes) obj;
-        return  this.codigo.equals(e.getCodigo()) &&
-                this.nome.equals(e.getNome()) &&
+        return  super.equals(obj) &&
                 this.nif == e.getNif() &&
                 this.custo_km == e.getCusto_km() &&
                 this.local.equals(e.getLocal()) &&
-                this.latitude == e.getLatitude() &&
-                this.longitude == e.getLongitude() &&
                 this.raioDeAcao == e.getRaioDeAcao() &&
                 this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
                 this.registos.equals(e.getRegistos()) &&
@@ -204,9 +185,9 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append("Código de empresa: ");
-        sb.append(this.codigo + "\n");
+        sb.append(getCodigo() + "\n");
         sb.append("Nome: ");
-        sb.append(this.nome + "\n");
+        sb.append(getNome() + "\n");
         sb.append("Nif: ");
         sb.append(this.nif + "\n");
         sb.append("Custo por km: ");
@@ -214,9 +195,9 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         sb.append("Local: ");
         sb.append(this.local + "\n");
         sb.append("Latitude: ");
-        sb.append(this.latitude + "\n");
+        sb.append(getLatitude() + "\n");
         sb.append("Longitude: ");
-        sb.append(this.longitude + "\n");
+        sb.append(getLongitude() + "\n");
         sb.append("Raio de ação: ");
         sb.append(this.raioDeAcao + "\n");
         sb.append("Registos de encomendas: ");

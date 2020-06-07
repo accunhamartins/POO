@@ -172,6 +172,14 @@ public class BDGeral implements Serializable, BDGeralInterface {
     }
 
     /**
+     * Método que atualiza uma loja
+     * @param j
+     */
+    public void updateLoja3(Loja j){
+        this.lojas.updateLoja3(j);
+    }
+
+    /**
      * Método que adiciona uma nova encomenda a um utilizador
      * @param e é a nova encomenda realizada
      * @param u é o utilizador a ser atualizado
@@ -212,6 +220,12 @@ public class BDGeral implements Serializable, BDGeralInterface {
      */
     public void updateTransportes(Double classificacao, EmpresaTransportes e){
         this.transportes.updateTransporte(e, classificacao);
+    }
+
+    public void updateEncomendaVoluntario(Encomenda enc) throws EncomendaNotFoundException {
+        Voluntario v = this.voluntarios.encontraEnc(enc.getCodigo());
+        v.updateEncomendaPreparada(enc);
+        updateVoluntario2(v);
     }
 
     /**

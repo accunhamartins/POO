@@ -195,4 +195,13 @@ public class BDVoluntarios implements Serializable {
         this.voluntarios.put(v.getEmail(), v);
     }
 
+    public Voluntario encontraEnc(String enc) throws EncomendaNotFoundException{
+        Voluntario aux;
+        for(String s: this.voluntarios.keySet()){
+            aux = this.voluntarios.get(s);
+            if(aux.existe(enc)) return aux;
+        }
+        throw new EncomendaNotFoundException();
+    }
+
 }

@@ -3,55 +3,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utilizador extends UtilizadorSistema implements Serializable {
-      private String codigo;
-      private String nome;
-      private double latitude;
-      private double longitude;
       private List<Encomenda> encomendas_realizadas;
 
     //Construtores
       public Utilizador(){
           super();
-          this.codigo = " ";
-          this.nome = " ";
-          this.latitude = 0;
-          this.longitude = 0;
           this.encomendas_realizadas = new ArrayList<>();
       }
 
       public Utilizador(String email, String password, String codigo, String nome, double latitude, double longitude, ArrayList<Encomenda> encomendas_realizadas){
-          super(email,password,"Utilizador");
-          this.codigo = codigo;
-          this.nome = nome;
-          this.latitude = latitude;
-          this.longitude = longitude;
+          super(email,password,"Utilizador", codigo, nome, latitude, longitude);
           setEncomendas(encomendas_realizadas);
       }
 
       public Utilizador(Utilizador user){
           super(user);
-          this.codigo = user.getCodigo();
-          this.nome = user.getNome();
-          this.latitude = user.getLatitude();
-          this.longitude = user.getLongitude();
           setEncomendas(user.getEncomendas());
       }
 
       //Getters
       public String getCodigo(){
-        return this.codigo;
+        return super.getCodigo();
       }
 
       public String getNome(){
-          return this.nome;
+         return  super.getNome();
       }
 
       public double getLatitude(){
-          return this.latitude;
+          return super.getLatitude();
       }
 
       public double getLongitude(){
-          return this.longitude;
+          return super.getLongitude();
       }
 
       public ArrayList<Encomenda> getEncomendas(){
@@ -63,19 +47,19 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
 
     //Setters
       public void setCodigo(String codigo){
-          this.codigo = codigo;
+          super.setCodigo(codigo);
       }
 
       public void setNome(String nome){
-          this.nome = nome;
+          super.setNome(nome);
       }
 
       public void setLatitude(double latitude){
-          this.latitude = latitude;
+          super.setLatitude(latitude);
       }
 
       public void setLongitude(double longitude){
-          this.longitude = longitude;
+          super.setLongitude(longitude);
       }
 
       public void setEncomendas(ArrayList<Encomenda> enc){
@@ -91,24 +75,17 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
 
       //Equals
       public boolean equals(Object o){
-          if (o == null || this.getClass() != o.getClass()) return false;
-          if (this == o) return true;
-          Utilizador user = (Utilizador) o;
-          return  this.codigo.equals(user.getCodigo()) &&
-                  this.nome.equals(user.getNome()) &&
-                  this.latitude == user.getLatitude() &&
-                  this.longitude == user.getLongitude();
-
+          return super.equals(o);
       }
 
       public String toString(){
         StringBuilder sb = new StringBuilder();
 
         sb.append(super.toString());
-        sb.append("Código: ").append(this.codigo + "\n");
-        sb.append("Nome: ").append(this.nome + "\n");
-        sb.append("Latitude: ").append(this.latitude + "\n");
-        sb.append("Longitude: ").append(this.longitude + "\n");
+        sb.append("Código: ").append(getCodigo() + "\n");
+        sb.append("Nome: ").append(getNome() + "\n");
+        sb.append("Latitude: ").append(getLatitude() + "\n");
+        sb.append("Longitude: ").append(getLongitude() + "\n");
 
 
         return sb.toString();
@@ -129,7 +106,7 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
       }
 
     /**
-     * Método que adiciona uma encomenda ao utilizador
+     * Método que adiciona uma encoemenda
      * @param e
      */
       public void addEncomenda(Encomenda e){

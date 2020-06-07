@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Voluntario extends UtilizadorSistema implements Serializable {
-    private String nome;
-    private String codigo;
     private boolean disponivel;
     private boolean transporteMedico;
-    private double latitude;
-    private double longitude;
     private LocalDate inicio_transporte;
     private double raio_acao;
     private double classificacao;
@@ -20,11 +16,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     //Construtor de classe por omissão
     public Voluntario(){
         super();
-        this.nome = " ";
-        this.codigo = " ";
         this.disponivel = false;
-        this.latitude = 0;
-        this.longitude = 0;
         this.inicio_transporte = LocalDate.now();
         this.raio_acao = 0;
         this.classificacao = 0;
@@ -34,11 +26,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     //Construtor de classe por clone
     public Voluntario(Voluntario a){
         super(a);
-        this.nome = a.getNome();
-        this.codigo = a.getCodigo();
         this.disponivel = a.getDisponibilidade();
-        this.latitude = a.getLatitude();
-        this.longitude = a.getLongitude();
         this.inicio_transporte = a.getInicio_transporte();
         this.raio_acao = a.getRaio_acao();
         this.classificacao = a.getClassificacao();
@@ -48,12 +36,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
     //Construtor parametrizado
     public Voluntario(String email, String password, String a, String b, boolean c, double d, double e, LocalDate f, double g, List<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
-        super(email, password, "Voluntario");
-        this.nome = a;
-        this.codigo = b;
+        super(email, password, "Voluntario", b, a, d, e);
         this.disponivel = c;
-        this.latitude =  d;
-        this.longitude = e;
         this.inicio_transporte = f;
         this.raio_acao = g;
         this.classificacao = classificacao;
@@ -72,14 +56,14 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
     //Métodos de obtenção de variáveis
     public String getNome(){
-      return this.nome;
+      return super.getNome();
     }
 
     public double getClassificacao() {
         return classificacao;
     }
     public String getCodigo(){
-      return this.codigo;
+      return super.getCodigo();
     }
 
     public boolean getDisponibilidade(){
@@ -87,11 +71,11 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public double getLatitude(){
-        return this.latitude;
+        return super.getLatitude();
     }
 
     public double getLongitude(){
-        return this.longitude;
+        return super.getLongitude();
     }
 
     public double getRaio_acao(){
@@ -103,7 +87,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public int getAvaliacoes() {
-        return avaliacoes;
+        return this.avaliacoes;
     }
 
     public List<Encomenda> getHistorico(){
@@ -114,7 +98,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
     //Método de definição de variáveis
     public void setNome(String a){
-      this.nome = a;
+      super.setNome(a);
     }
 
     public void setAvaliacoes(int avaliacoes) {
@@ -126,7 +110,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public void setCodigo(String a){
-      this.codigo = a;
+      super.setCodigo(a);
     }
 
     public void setDisponibilidade(boolean a){
@@ -134,11 +118,11 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public void setLatitude(double a){
-        this.latitude = a;
+       super.setLatitude(a);
     }
 
     public void setLongitude(double a){
-        this.longitude = a;
+        super.setLongitude(a);
     }
 
     public void setInicio_Transporte(LocalDate a){
@@ -164,11 +148,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Voluntario v = (Voluntario) o;
-        return this.nome.equals(v.getNome())
-        && this.codigo.equals(v.getCodigo())
+        return super.equals(o)
         && this.disponivel ==  v.getDisponibilidade()
-        && this.latitude == v.getLatitude()
-        && this.longitude == v.getLongitude()
         && this.inicio_transporte.equals(v.getInicio_transporte())
         && this.raio_acao == v.getRaio_acao()
         && this.historico.equals(v.getHistorico());
@@ -178,15 +159,15 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append("Nome: ");
-        sb.append(this.nome + "\n");
+        sb.append(getNome() + "\n");
         sb.append("Código de voluntário: ");
-        sb.append(this.codigo + "\n");
+        sb.append(getCodigo() + "\n");
         sb.append("Disponível: ");
         sb.append(this.disponivel + "\n");
         sb.append("Latitude: ");
-        sb.append(this.latitude + "\n");
+        sb.append(getLatitude() + "\n");
         sb.append("Longitude: ");
-        sb.append(this.longitude + "\n");
+        sb.append(getLongitude() + "\n");
         sb.append("Data de início de entrega: ");
         sb.append(this.inicio_transporte + "\n");
         sb.append("Raio de ação: ");
@@ -276,6 +257,23 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     /**
+     * Método que define uma encomenda como estando preparada
+     * @param enc
+     */
+    public void updateEncomendaPreparada(Encomenda enc){
+        List<Encomenda> aux = new ArrayList<>();
+        enc.setPreparada(true);
+        aux.add(enc);
+        for(Encomenda e: this.historico){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setHistorico(aux);
+    }
+
+
+    /**
      * Método que devolve as encomendas ainda não entregues, mas já levantas da loja
      * @return
      */
@@ -290,6 +288,36 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         }
         if(count == 0) sb.append("0");
         return sb.toString();
+    }
+
+    /**
+     * Método que devolve as encomendas prepradas e prontas a serem levantas
+     * @return
+     */
+    public String getPreparadas(){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda s: this.historico){
+            if(!s.isEntregue() && !s.isLevantada() && s.isPreparada()){
+                sb.append(s);
+                count++;
+            }
+        }
+        if(count == 0) sb.append("0");
+        return sb.toString();
+    }
+
+    /**
+     * Método que verifica se uma encomenda existe num voluntário
+     * @param enc
+     * @return
+     */
+
+    public boolean existe(String enc){
+        for(Encomenda e: this.historico){
+            if(e.getCodigo().equals(enc)) return true;
+        }
+        return false;
     }
 
 }

@@ -1,51 +1,36 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Loja extends UtilizadorSistema implements Serializable {
-    private String codigo;
-    private String nome;
     private double tempo_espera;
-    private double latitude;
-    private double longitude;
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Loja (){
         super();
-        this.codigo = " ";
-        this.nome = " ";
         this.tempo_espera = 0;
-        this.latitude = 0;
-        this.longitude = 0;
         this.encomendas_recebidas = new ArrayList<>();
     }
 
     public Loja (String email, String password, String codigo, String nome, double tempo_espera, double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
-        super(email, password, "Loja");
-        this.codigo = codigo;
-        this.nome = nome;
+        super(email, password, "Loja", codigo, nome, latitude, longitude);
         this.tempo_espera = tempo_espera;
-        this.latitude = latitude;
-        this.longitude = longitude;
         setEncomendas_recebidas(encomendas_recebidas);
     }
 
     public Loja (Loja loja){
         super(loja);
-        this.codigo = loja.getCodigo();
-        this.nome = loja.getNome();
         this.tempo_espera = loja.getTempo_espera();
-        this.latitude = loja.getLatitude();
-        this.longitude = loja.getLongitude();
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
     public String getCodigo(){
-        return this.codigo;
+        return super.getCodigo();
     }
 
     public String getNome() {
-        return this.nome;
+        return super.getNome();
     }
 
     public double getTempo_espera() {
@@ -53,11 +38,11 @@ public class Loja extends UtilizadorSistema implements Serializable {
     }
 
     public double getLatitude() {
-        return this.latitude;
+        return super.getLatitude();
     }
 
     public double getLongitude() {
-        return this.longitude;
+        return super.getLatitude();
     }
 
     public ArrayList<Encomenda> getEncomendas_recebidas(){
@@ -69,11 +54,11 @@ public class Loja extends UtilizadorSistema implements Serializable {
     }
 
     public void setCodigo(String codigo){
-      this.codigo = codigo;
+      super.setCodigo(codigo);
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        super.setNome(nome);
     }
 
     public void setTempo_espera(double tempo_espera) {
@@ -81,11 +66,11 @@ public class Loja extends UtilizadorSistema implements Serializable {
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        super.setLatitude(latitude);
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        super.setLongitude(longitude);
     }
 
     public void setEncomendas_recebidas(ArrayList<Encomenda> encomendas_recebidas) {
@@ -103,21 +88,18 @@ public class Loja extends UtilizadorSistema implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loja Loja = (Loja) o;
-        return  this.codigo.equals(Loja.getCodigo()) &&
+        return  super.equals(o) &&
                 this.tempo_espera == Loja.getTempo_espera() &&
-                Loja.getLatitude() == this.latitude &&
-                Loja.getLongitude() == this.longitude &&
-                this.nome.equals(Loja.nome) &&
                 this.encomendas_recebidas.equals(Loja.encomendas_recebidas);
     }
 
     public String toString() {
         final StringBuffer sb = new StringBuffer("Loja: ").append("\n");
-        sb.append("Código da loja: ").append(this.codigo).append('\n');
-        sb.append("Nome da loja: ").append(this.nome).append('\n');
+        sb.append("Código da loja: ").append(getCodigo()).append('\n');
+        sb.append("Nome da loja: ").append(getNome()).append('\n');
         sb.append("Tempo de espera: ").append(this.tempo_espera).append('\n');
-        sb.append("Latitude: ").append(this.latitude).append('\n');
-        sb.append("Longitude: ").append(this.longitude).append('\n');
+        sb.append("Latitude: ").append(getLatitude()).append('\n');
+        sb.append("Longitude: ").append(getLongitude()).append('\n');
         sb.append("Lista de encomendas recebidas: ");
         this.encomendas_recebidas.forEach(e -> sb.append(e.toString() + "\n"));
         sb.append(super.toString());
@@ -141,7 +123,7 @@ public class Loja extends UtilizadorSistema implements Serializable {
     }
 
     /**
-     * Método que devolve uma encomenda, dando o seu código
+     * Método que devolve uma encomenda com o código cod
      * @param cod
      * @return
      * @throws EncomendaNotFoundException
@@ -151,6 +133,36 @@ public class Loja extends UtilizadorSistema implements Serializable {
             if(cod.equals(e.getCodigo())) return e.clone();
         }
         throw new EncomendaNotFoundException();
+    }
+
+    /**
+     * Método que devolve todas as encomendas que estão por preparar
+     * @return
+     */
+    public String getEncNotReady(){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda e: this.encomendas_recebidas){
+            if(!e.isPreparada()){
+                sb.append(e);
+                count++;
+            }
+        }
+        if(count == 0) sb.append("0");
+        return sb.toString();
+    }
+
+
+    public void updateEncomenda(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setPreparada(true);
+        aux.add(enc);
+        for(Encomenda e: this.encomendas_recebidas){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setEncomendas_recebidas(aux);
     }
 
 }

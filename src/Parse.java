@@ -221,9 +221,8 @@ public class Parse {
             produtos.put(le.getCodigo(), le.clone());
             baseGeral.addProduto(le);
         }
-        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false, LocalDateTime.now(), false, false);
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false, LocalDateTime.now(), false, false, true);
     }
-
     /**
      * Método que faz o parse das linhas de encomenda
      * @param input

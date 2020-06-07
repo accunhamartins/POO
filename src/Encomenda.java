@@ -12,6 +12,7 @@ public class Encomenda implements Serializable{
     private String comprador;
     private String vendedor;
     private LocalDateTime data;
+    private boolean preparada;
     private boolean entregue;
     private boolean levantada;
     private Map<String, LinhaEncomenda> produtos;
@@ -27,13 +28,14 @@ public class Encomenda implements Serializable{
         this.vendedor = " ";
         this.entregue = false;
         this.levantada = false;
+        this.preparada = false;
         this.produtos = new HashMap<>();
         this.data = LocalDateTime.now();
         this.encomendaMedica = true;
     }
 
     public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos,
-                      boolean encomendaMedica, LocalDateTime data, boolean entregue, boolean levantada){
+                      boolean encomendaMedica, LocalDateTime data, boolean entregue, boolean levantada, boolean preparada){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;
@@ -43,6 +45,7 @@ public class Encomenda implements Serializable{
         this.data = data;
         this.entregue = entregue;
         this.levantada = levantada;
+        this.preparada = preparada;
         this.setProdutos(produtos);
         this.encomendaMedica = encomendaMedica;
     }
@@ -59,6 +62,7 @@ public class Encomenda implements Serializable{
         this.encomendaMedica = e.isEncomendaMedica();
         this.levantada = e.isLevantada();
         this.entregue = e.isEntregue();
+        this.preparada = e.isPreparada();
     }
 
     public LocalDateTime getData() {
@@ -71,6 +75,10 @@ public class Encomenda implements Serializable{
 
     public boolean isLevantada() {
         return levantada;
+    }
+
+    public boolean isPreparada() {
+        return preparada;
     }
 
     public String getCodigo(){
@@ -95,6 +103,10 @@ public class Encomenda implements Serializable{
 
     public String getVendedor() {
         return this.vendedor;
+    }
+
+    public void setPreparada(boolean preparada) {
+        this.preparada = preparada;
     }
 
     public Map<String, LinhaEncomenda> getProdutos(){

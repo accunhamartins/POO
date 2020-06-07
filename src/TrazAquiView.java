@@ -80,18 +80,17 @@ public class TrazAquiView implements Serializable {
     public static void showMenuVoluntario(){
         System.out.println("----------------VOLUNTÁRIO----------------");
         System.out.println("1. Declarar-se disponível para ir buscar encomenda");
-        System.out.println("2. Aceitar encomenda.");
-        System.out.println("3. Rejeitar encomenda.");
-        System.out.println("4. Histórico total de encomendas.");
-        System.out.println("5. Sinalizar levantamento de encomenda em loja");
-        System.out.println("6. Sinalizar entrega de encomenda a utilizador");
-        System.out.println("7. Imprimir menu.");
+        System.out.println("2. Declarar-se indisponível para ir buscar encomenda");
+        System.out.println("3. Histórico total de encomendas.");
+        System.out.println("4. Sinalizar levantamento de encomenda em loja");
+        System.out.println("5. Sinalizar entrega de encomenda a utilizador");
+        System.out.println("6. Imprimir menu.");
         System.out.println("0. Retroceder");
     }
 
     public static void showMenuLoja(){
         System.out.println("----------------LOJA----------------");
-        System.out.println("1. Sinalizar nova encomenda por reclamar");
+        System.out.println("1. Marcar encomenda como preparada");
         System.out.println("2. Ver encomendas em stock");
         System.out.println("0. Retroceder");
     }

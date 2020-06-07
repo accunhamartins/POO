@@ -4,6 +4,10 @@ public abstract class  UtilizadorSistema implements Serializable {
     private String email;
     private String password;
     private String typeUser;
+    private String codigo;
+    private String nome;
+    private double latitude;
+    private double longitude;
 
 
     //Construtores
@@ -11,13 +15,21 @@ public abstract class  UtilizadorSistema implements Serializable {
         this.email = "";
         this.password = "";
         this.typeUser = "";
+        this.codigo = "";
+        this.nome = "";
+        this.latitude = 0.0;
+        this.longitude = 0.0;
 
     }
 
-    public  UtilizadorSistema(String email, String password, String typeUser){
+    public  UtilizadorSistema(String email, String password, String typeUser, String codigo, String nome, double latitude, double longitude){
         this.email = email;
         this.password = password;
         this.typeUser = typeUser;
+        this.codigo = codigo;
+        this.nome = nome;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
     }
 
@@ -25,6 +37,10 @@ public abstract class  UtilizadorSistema implements Serializable {
         this.email = a.getEmail();
         this.password = a.getPassword();
         this.typeUser = a.getTypeUser();
+        this.codigo = a.getCodigo();
+        this.nome = a.getNome();
+        this.latitude = a.getLatitude();
+        this.longitude = a.getLongitude();
 
     }
 
@@ -42,6 +58,22 @@ public abstract class  UtilizadorSistema implements Serializable {
         return typeUser;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
     //Setters
     public void setPassword(String password) {
         this.password = password;
@@ -54,6 +86,22 @@ public abstract class  UtilizadorSistema implements Serializable {
 
     public void setTypeUser(String typeUser) {
         this.typeUser = typeUser;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public abstract UtilizadorSistema clone();
