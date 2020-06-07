@@ -90,6 +90,16 @@ public class BDGeral implements Serializable, BDGeralInterface {
         this.voluntarios.add(v);
     }
 
+
+    /**
+     * Método que atualiza uma empresa de transportes do sistema, tornando a disponível para entregar uma encomenda
+     * @param e
+     */
+
+    public void addEmpresaDisponivel(EmpresaTransportes e){
+        this.transportes.add(e);
+    }
+
     /**
      * Métoodo que adiciona um novo utilizador doméstico
      * @param u é o Utilizador a ser adicionado

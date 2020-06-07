@@ -168,6 +168,20 @@ public class BDTransportes implements Serializable {
         return sb.toString();
     }
 
+    public String printEmpresasMed(Utilizador u, Loja j, double peso) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : this.transportes.keySet()) {
+            EmpresaTransportes et = this.transportes.get(s);
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.aceitoTransporteMedicamentos()){
+                double custo = dist1 * et.getCusto_km() + dist2 *et.getCusto_km() + (peso * 0.2);
+                sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" || RATE --> "+ this.transportes.get(s).getClassificao() + " || CUSTO: " + custo + "\n");
+            }
+        }
+        return sb.toString();
+    }
+
     public void updateTransportes2(EmpresaTransportes et){
         this.transportes.put(et.getEmail(), et);
     }

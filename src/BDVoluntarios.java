@@ -144,6 +144,18 @@ public class BDVoluntarios implements Serializable {
         return ret;
     }
 
+    public List<Voluntario> voluntariosDisponíveisMed(Loja j) {
+        List<Voluntario> ret = new ArrayList<>();
+        for (String s : this.voluntarios.keySet()) {
+            Voluntario v = this.voluntarios.get(s);
+            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            if (dist <= v.getRaio_acao() && v.getDisponibilidade() && v.aceitoTransporteMedicamentos()) {
+                ret.add(v);
+            }
+        }
+        return ret;
+    }
+
     /**
      * Lista de voluntários disponíveis para se deslocarem a uma loja, excetuando o voluntário passado como argumento
      * @param j

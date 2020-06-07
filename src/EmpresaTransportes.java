@@ -12,6 +12,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     private ArrayList<Encomenda> registos;
     private int numeroMinimoEncomenda;
     private boolean transporteMedico;
+    private boolean disponivel;
 
 
     public EmpresaTransportes(){
@@ -25,10 +26,11 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.avaliacoes = 0;
         this.classificao = 0;
         this.transporteMedico = false;
+        this.disponivel = false;
     }
 
     public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda,
-                              boolean transporteMedico, double classificao, int avaliacoes){
+                              boolean transporteMedico, double classificao, int avaliacoes, boolean disponivel){
         super(email, password, "Transportadora", codigo, nome, latitude, longitude);
         this.nif = nif;
         this.custo_km = custo_km;
@@ -39,6 +41,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.transporteMedico = transporteMedico;
         this.classificao = classificao;
         this.avaliacoes = avaliacoes;
+        this.disponivel = disponivel;
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
@@ -102,6 +105,13 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return raioDeAcao;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
 
     public ArrayList<Encomenda> getRegistos() {
         return this.registos.stream().map(Encomenda::clone).collect(Collectors.toCollection(ArrayList::new));

@@ -195,7 +195,7 @@ public class Parse {
         double custo_km = Double.parseDouble(campos[6]);
         String email = codigo + "@gmail.com";
         String password = "12345";
-        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0);
+        return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0, true);
     }
 
     /**

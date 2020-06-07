@@ -95,11 +95,14 @@ public class TrazAquiView implements Serializable {
         System.out.println("0. Retroceder");
     }
 
-    public static void showMenuTranspores(){
+    public static void showMenuTransportes(){
         System.out.println("----------------EMPRESA TRANSPORTADORA----------------");
         System.out.println("1. Declarar-se disponível para transporte de encomenda");
-        System.out.println("2. Apresentar preço de transporte de encomenda");
-        System.out.println("3. Anotar tempo e entrega de uma encomenda");
+        System.out.println("2. Declarar-se indisponível para transporte de encomenda");
+        System.out.println("3. Apresentar preço de transporte de encomenda");
+        System.out.println("4. Anotar tempo e entrega de uma encomenda");
+        System.out.println("5. Histórico de encomendas");
+        System.out.println("6. Imprimir menu");
         System.out.println("0. Retroceder");
     }
 
