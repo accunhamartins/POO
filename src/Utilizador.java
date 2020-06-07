@@ -95,15 +95,25 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
      * Método que imprime as encomendas do utilizador
      * @return
      */
-      public String printEncomendas(){
+      public String printEncomendasRecebidas(){
           StringBuilder sb = new StringBuilder();
-          if(this.encomendas_realizadas.size() == 0) sb.append("Não existem encomendas realizadas\n");
+          if(!this.encomendas_realizadas.stream().anyMatch(e -> e.isEntregue())) sb.append("Não existem encomendas recebidas\n");
           else {
               System.out.println("ENCOMENDAS REALIZADAS PELO USER: ");
-              this.encomendas_realizadas.forEach(e -> sb.append(e.toString()));
+              this.encomendas_realizadas.stream().filter(e -> e.isEntregue()).forEach(e -> sb.append(e.toString()));
           }
           return sb.toString();
       }
+
+    public String printEncomendasPorEntregar(){
+        StringBuilder sb = new StringBuilder();
+        if(this.encomendas_realizadas.stream().allMatch(e -> e.isEntregue())) sb.append("Não existem encomendas por entregar\n");
+        else {
+            System.out.println("ENCOMENDAS REALIZADAS PELO USER: ");
+            this.encomendas_realizadas.stream().filter(e -> !e.isEntregue()).forEach(e -> sb.append(e.toString()));
+        }
+        return sb.toString();
+    }
 
     /**
      * Método que adiciona uma encoemenda
@@ -113,4 +123,19 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
           this.encomendas_realizadas.add(e.clone());
       }
 
+    /**
+     * Método que atualiza uma encomenda
+     * @param enc
+     */
+    public void updateEncomenda(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setEntregue(true);
+        aux.add(enc);
+        for(Encomenda e: this.encomendas_realizadas){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setEncomendas(aux);
+    }
 }

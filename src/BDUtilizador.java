@@ -120,4 +120,19 @@ public class BDUtilizador implements Serializable {
             }
         }
     }
+
+    public String getEmail(String cod) throws UserNotFoundException{
+        for(String s: this.users.keySet()){
+            if(this.users.get(s).getCodigo().equals(cod)) return this.users.get(s).getEmail();
+        }
+        throw new UserNotFoundException();
+    }
+
+    /**
+     * Método que atualiza um utilizador
+     * @param u
+     */
+    public void updateUser2(Utilizador u){
+        this.users.put(u.getEmail(), u.clone());
+    }
 }

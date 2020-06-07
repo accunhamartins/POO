@@ -138,7 +138,7 @@ public class BDVoluntarios implements Serializable {
             Voluntario v = this.voluntarios.get(s);
             double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
             if (dist <= v.getRaio_acao() && v.getDisponibilidade()) {
-                ret.add(v);
+                ret.add(v.clone());
             }
         }
         return ret;
@@ -150,7 +150,7 @@ public class BDVoluntarios implements Serializable {
             Voluntario v = this.voluntarios.get(s);
             double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
             if (dist <= v.getRaio_acao() && v.getDisponibilidade() && v.aceitoTransporteMedicamentos()) {
-                ret.add(v);
+                ret.add(v.clone());
             }
         }
         return ret;

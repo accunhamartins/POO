@@ -216,6 +216,14 @@ public class BDGeral implements Serializable, BDGeralInterface {
     }
 
     /**
+     * Método que atualiza um utilizador
+     * @param u
+     */
+    public void updateUser2(Utilizador u){
+        this.utilizadores.updateUser2(u);
+    }
+
+    /**
      * Método que atualiza as encomendas aceites do sistema
      * @param cod é o código de encomenda da nova encomenda aceite
      */
