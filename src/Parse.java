@@ -57,6 +57,9 @@ public class Parse {
         this.ea.setAceites(ea.getAceites());
     }
 
+    /**
+     * Método que faz a leitura do logs.txt e que depois cria todos os utilizadores do sistema
+     */
     public void parse(){
         List<String> ler = lerFicheiro("logs.txt");
         String[] linhaPartida;
@@ -97,6 +100,12 @@ public class Parse {
         addEncomendasAceites(this.ea);
     }
 
+    /**
+     * Método que lê o logs.txt
+     * @param nomeFich
+     * @return
+     */
+
     public List<String> lerFicheiro(String nomeFich) {
         List<String> lines = new ArrayList<>();
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -104,12 +113,24 @@ public class Parse {
         return lines;
     }
 
+    /**
+     * Método que faz o parse das encomendas aceites
+     * @param linha
+     * @param ea
+     * @return
+     */
     public EncomendasAceites parseEncomendasAceites(String linha, EncomendasAceites ea){
         List<String> aux = ea.getAceites();
         aux.add(linha);
         ea.setAceites(aux);
         return ea;
     }
+
+    /**
+     * Método que faz o parse das lojas
+     * @param input
+     * @return
+     */
 
     public Loja parseLojas(String input){
       String []campos = input.split(",");
@@ -122,6 +143,12 @@ public class Parse {
       return new Loja(email, password, codigo, nome, 20.0, latitude, longitude, new ArrayList<>());
     }
 
+    /**
+     * Método que faz o parse dos utilizadores domésticos
+     * @param input
+     * @return
+     */
+
     public Utilizador parseUtilizador(String input){
       String []campos = input.split(",");
       String codigo = campos[0];
@@ -132,6 +159,12 @@ public class Parse {
       String password = "12345";
       return new Utilizador(email, password, codigo, nome, latitude, longitude, new ArrayList<>());
     }
+
+    /**
+     * Método que faz o parse dos voluntários
+     * @param input
+     * @return
+     */
 
     public Voluntario parseVoluntarios(String input){
 
@@ -146,6 +179,11 @@ public class Parse {
       return new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0, true);
     }
 
+    /**
+     * Método que faz o parse das empresas de transportes
+     * @param input
+     * @return
+     */
     public EmpresaTransportes parseEmpresaTransportes(String input){
         String []campos = input.split(",");
         String codigo = campos[0];
@@ -159,6 +197,12 @@ public class Parse {
         String password = "12345";
         return new EmpresaTransportes(email, password,codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0);
     }
+
+    /**
+     * Método que faz o parse das encomendas
+     * @param input
+     * @return
+     */
 
     public Encomenda parseEncomenda(String input){
         Map<String, LinhaEncomenda> produtos = new HashMap<>();
@@ -177,10 +221,14 @@ public class Parse {
             produtos.put(le.getCodigo(), le.clone());
             baseGeral.addProduto(le);
         }
-        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false, LocalDateTime.now(), false);
+        return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador , vendedor, produtos,false, LocalDateTime.now(), false, false);
     }
 
-
+    /**
+     * Método que faz o parse das linhas de encomenda
+     * @param input
+     * @return
+     */
     public LinhaEncomenda parseLinhaEncomenda(String input){
         String []campos = input.split(",");
         String codigo = campos[0];
@@ -191,6 +239,10 @@ public class Parse {
         return new LinhaEncomenda(codigo, descricao, preco, quantidade);
     }
 
+    /**
+     * Método que adiciona as encomendas às respetivas lojas
+     * @param encomendas
+     */
     public void addEncomendas(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){
             for(Loja j: this.baseGeral.getLojas().getLojas().values()){
@@ -201,6 +253,10 @@ public class Parse {
         }
     }
 
+    /**
+     * Método que adiciona as encomendas aos users
+     * @param encomendas
+     */
     public void addEncomendasCliente(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){
             for(Utilizador u: this.baseGeral.getUtilizadores().getUsers().values()){
@@ -211,10 +267,18 @@ public class Parse {
         }
     }
 
+    /**
+     * Método que adiciona as encomendas aceites
+     * @param ea
+     */
     public void addEncomendasAceites(EncomendasAceites ea){
         this.baseGeral.setEncomendasAceites(ea);
     }
 
+    /**
+     * Método que adicona as encomendas aos voluntários disponíveis
+     * @param encomendas
+     */
     public void addEncomendasVoluntarios(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){
             String codigo_loja = e.getCodigo_loja();

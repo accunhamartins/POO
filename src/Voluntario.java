@@ -198,16 +198,29 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Método que atualiza a classificação
+     * @param classificacao
+     */
     public void updateRate(Double classificacao){
         double total = this.classificacao * this.avaliacoes + classificacao;
         this.avaliacoes++;
         this.classificacao = total / this.avaliacoes;
     }
 
+    /**
+     * Método que adiciona uma encomenda
+     * @param e
+     */
     public void addEncomenda (Encomenda e){
         this.historico.add(e.clone());
     }
 
+    /**
+     * Método que remove uma encomenda
+     * @param cod
+     * @return
+     */
     public Encomenda removeEncomenda(String cod){
         for(Encomenda s: this.historico){
             if(cod.equals(s.getCodigo())){
@@ -218,6 +231,11 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return null;
     }
 
+    /**
+     * Método que devolve a encomenda com o código cod
+     * @param cod
+     * @return
+     */
     public Encomenda getEncomenda(String cod){
         for(Encomenda s: this.historico){
             if(cod.equals(s.getCodigo())) return s;
@@ -225,6 +243,10 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         return null;
     }
 
+    /**
+     * Método que define uma encomenda como entregue
+     * @param enc
+     */
     public void updateEncomenda(Encomenda enc){
        List<Encomenda> aux = new ArrayList<>();
        enc.setEntregue(true);
@@ -237,11 +259,31 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
        setHistorico(aux);
     }
 
+    /**
+     * Método que define uma encomenda como levantada de uma loja
+     * @param enc
+     */
+    public void updateEncomendaLoja(Encomenda enc){
+        List<Encomenda> aux = new ArrayList<>();
+        enc.setLevantada(true);
+        aux.add(enc);
+        for(Encomenda e: this.historico){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setHistorico(aux);
+    }
+
+    /**
+     * Método que devolve as encomendas ainda não entregues, mas já levantas da loja
+     * @return
+     */
     public String getNaoEntregue(){
         StringBuilder sb = new StringBuilder();
         int count = 0;
         for(Encomenda s: this.historico){
-            if(!s.isEntregue()){
+            if(!s.isEntregue() && s.isLevantada()){
                 sb.append(s);
                 count++;
             }

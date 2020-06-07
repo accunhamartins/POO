@@ -54,6 +54,10 @@ public class EncomendasAceites implements Serializable {
       return sb.toString();
     }
 
+    /**
+     * Método que adiciona uma nova encomenda aceite
+     * @param cod
+     */
     public void updateAceites(String cod){
         this.aceites.add(cod);
     }

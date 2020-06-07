@@ -8,7 +8,11 @@ public class BDGeral implements Serializable, BDGeralInterface {
     private BDTransportes transportes;
     private BDProdutos produtos;
     private EncomendasAceites encomendasAceites;
-    
+
+    /**
+     * Construtores
+     */
+
     public BDGeral(){
         this.voluntarios = new BDVoluntarios();
         this.utilizadores = new BDUtilizador();
@@ -35,7 +39,7 @@ public class BDGeral implements Serializable, BDGeralInterface {
         this.encomendasAceites = b.getEncomendasAceites();
     }
 
-
+    //Getters
     public BDLojas getLojas() {
         return this.lojas.clone();
     }
@@ -58,10 +62,19 @@ public class BDGeral implements Serializable, BDGeralInterface {
 
     public BDProdutos getProdutos() { return this.produtos.clone();}
 
+    /**
+     * Setter de Encomendas Aceites
+     * @param encomendasAceites
+     */
+
     public void setEncomendasAceites(EncomendasAceites encomendasAceites) {
         this.encomendasAceites = encomendasAceites;
     }
 
+    /**
+     * Método que adiciona uma novo voluntário ao sistema
+     * @param v é o Voluntário a ser adicionado
+     */
     public void addVoluntario(Voluntario v){
         if(this.voluntarios.existe(v)){
             System.out.println("Já existe esse voluntário");
@@ -69,9 +82,18 @@ public class BDGeral implements Serializable, BDGeralInterface {
         else this.voluntarios.add(v);
     }
 
+    /**
+     * Método que atualiza um voluntário do sistema, tornando o disponível para entregar uma encomenda
+     * @param v é o Voluntário disponível
+     */
     public void addVoluntarioDisponivel(Voluntario v){
         this.voluntarios.add(v);
     }
+
+    /**
+     * Métoodo que adiciona um novo utilizador doméstico
+     * @param u é o Utilizador a ser adicionado
+     */
 
     public void addUser(Utilizador u){
         if(this.utilizadores.existe(u)){
@@ -79,6 +101,11 @@ public class BDGeral implements Serializable, BDGeralInterface {
         }
         else this.utilizadores.add(u);
     }
+
+    /**
+     * Método que adiciona uma nova empresa de transportes
+     * @param t é a empresa de transportes
+     */
 
     public void addTransporte(EmpresaTransportes t){
         if(this.transportes.existe(t)){
@@ -88,11 +115,21 @@ public class BDGeral implements Serializable, BDGeralInterface {
 
     }
 
+    /**
+     * Método que adiciona uma nova loja
+     * @param l é a loja
+     */
+
     public void addLoja(Loja l){
         if(this.lojas.existe(l))
             System.out.println("Já existe esse voluntário");
         else this.lojas.add(l);
     }
+
+    /**
+     * Método que adiciona um novo produto, que pode depois ser encomendado
+     * @param p é o novo produto a ser adicionado
+     */
 
     public void addProduto(LinhaEncomenda p){
         if (!this.produtos.existe(p.getDescricao())) this.produtos.add(p);
@@ -115,33 +152,72 @@ public class BDGeral implements Serializable, BDGeralInterface {
         return sb.toString();
     }
 
+    /**
+     * Método que atualiza uma loja do sistema, adicionando-lhe uma nova encomenda
+     * @param e é a nova encomenda a ser adicionada
+     * @param j é a loja a ser atualizada
+     */
+
     public void updateLoja(Encomenda e, Loja j){
         this.lojas.updateLoja(e, j);
     }
 
+    /**
+     * Método que atualiza uma loja do sistema, desta vez, retirando-lhe uma encomenda em stock
+     * @param e é a encomenda a ser retirada
+     * @param j é a loja a ser atualizada
+     */
     public void updateLoja2(Encomenda e ,Loja j){
         this.lojas.updateLoja2(e,j);
     }
 
-    public void updateUser(Encomenda e, Utilizador j){
-        this.utilizadores.updateUser(e, j);
+    /**
+     * Método que adiciona uma nova encomenda a um utilizador
+     * @param e é a nova encomenda realizada
+     * @param u é o utilizador a ser atualizado
+     */
+    public void updateUser(Encomenda e, Utilizador u){
+        this.utilizadores.updateUser(e, u);
     }
 
+    /**
+     * Método que atualiza um voluntário do sistema
+     * @param v é o voluntário a ser atualizado
+     */
     public void updateVoluntario2(Voluntario v){
         this.voluntarios.updateVoluntario2(v);
     }
 
+    /**
+     * Método que atualiza a classificação de um voluntário
+     * @param classificacao é classificação recebida
+     * @param v é o voluntário
+     */
     public void updateVoluntario(Double classificacao, Voluntario v){
         this.voluntarios.updateVoluntario(v, classificacao);
     }
 
+    /**
+     * Método que atualiza as encomendas aceites do sistema
+     * @param cod é o código de encomenda da nova encomenda aceite
+     */
     public void updateAceites(String cod){
         this.encomendasAceites.updateAceites(cod);
     }
 
+    /**
+     * Método que atualiza a classificação de uma empresa de transportes
+     * @param classificacao é a nova classificação
+     * @param e é a empresa de transportes
+     */
     public void updateTransportes(Double classificacao, EmpresaTransportes e){
         this.transportes.updateTransporte(e, classificacao);
     }
+
+    /**
+     * Método que atualiza uma empresa de transportes do sistema
+     * @param e é a empresa a ser atualizada
+     */
 
     public void updateTransportes2(EmpresaTransportes e){
         this.transportes.updateTransportes2(e);
@@ -151,12 +227,27 @@ public class BDGeral implements Serializable, BDGeralInterface {
         return new BDGeral(this);
     }
 
+    /**
+     * Método que efetua a tentativa de login de um utilizador doméstico
+     * @param email
+     * @param password
+     * @return Utilizador, caso o login tenha sido efetuado
+     * @throws UserNotFoundException
+     */
     public Utilizador loginUser(String email, String password) throws UserNotFoundException{
         Utilizador aux;
         aux = this.utilizadores.tryLogin(email, password);
         if(aux == null) throw new UserNotFoundException();
         else return aux;
     }
+
+    /**
+     * Método que efetua a tentativa de login de um Voluntário
+     * @param email
+     * @param password
+     * @return Voluntario, caso o login tenha sido efetuado
+     * @throws UserNotFoundException
+     */
 
     public Voluntario loginVoluntario(String email, String password) throws VoluntarioNotFoundException{
         Voluntario aux;
@@ -165,6 +256,14 @@ public class BDGeral implements Serializable, BDGeralInterface {
         else return aux;
     }
 
+    /**
+     * Método que efetua a tentativa de login de uma loja
+     * @param email
+     * @param password
+     * @return Loja, caso o login tenha sido efetuado
+     * @throws UserNotFoundException
+     */
+
     public Loja loginLoja(String email, String password) throws LojaNotFoundException{
         Loja aux;
         aux = this.lojas.tryLogin(email, password);
@@ -172,12 +271,28 @@ public class BDGeral implements Serializable, BDGeralInterface {
         else return aux;
     }
 
+    /**
+     * Método que efetua a tentativa de login de uma empresa de transportes
+     * @param email
+     * @param password
+     * @return Empresa de transportes, caso o login tenha sido efetuado
+     * @throws UserNotFoundException
+     */
+
     public EmpresaTransportes loginEmpresa(String email, String password) throws TransporteNotFoundException{
         EmpresaTransportes aux;
         aux = this.transportes.tryLogin(email, password);
         if(aux == null) throw new TransporteNotFoundException();
         else return aux;
     }
+
+    /**
+     * Método que grava os dados num ficheiro binário
+     * @param filename
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
 
     public void gravarFicheiro(String filename) throws IOException, FileNotFoundException, IOException {
         FileOutputStream fos = new FileOutputStream(filename);
@@ -187,6 +302,13 @@ public class BDGeral implements Serializable, BDGeralInterface {
         oos.close();
     }
 
+    /**
+     * Método que carrega os dados de um ficheiro binário
+     * @param filename
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public BDGeral lerFicheiro(String filename) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(filename);
         ObjectInputStream ois = new ObjectInputStream(fis);

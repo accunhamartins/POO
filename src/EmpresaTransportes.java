@@ -229,12 +229,20 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+    /**
+     * Método que atualiza a classificação da empressa
+     * @param classificacao
+     */
     public void updateRate(Double classificacao){
         double total = this.classificao* this.avaliacoes + classificacao;
         this.avaliacoes++;
         this.classificao = total / this.avaliacoes;
     }
 
+    /**
+     * Método que adiciona uma encomenda aos registos de encomendas
+     * @param e
+     */
     public void addEncomenda (Encomenda e){
         this.registos.add(e.clone());
     }

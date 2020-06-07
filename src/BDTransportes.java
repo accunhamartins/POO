@@ -63,18 +63,39 @@ public class BDTransportes implements Serializable {
         return this.transportes.equals(r.getTransportes());
     }
 
+    /**
+     * Método que verifica se uma empresa de transportes existe
+     * @param v
+     * @return
+     */
     public boolean existe(EmpresaTransportes v){
         return this.transportes.keySet().contains(v.getEmail());
     }
 
+    /**
+     * Método que verifica se o código de uma empresa existe
+     * @param s
+     * @return
+     */
     public boolean existeCodigo(String s){
         return this.codigos.contains(s);
     }
+
+    /**
+     * Método que adiciona uma empresa de transportes
+     * @param t
+     */
 
     public void add(EmpresaTransportes t){
         this.transportes.put(t.getEmail(), t.clone());
     }
 
+    /**
+     * Método que tenta efetuar o login de uma empresa de transportes
+     * @param email
+     * @param password
+     * @return
+     */
     public EmpresaTransportes tryLogin(String email, String password){
         EmpresaTransportes aux = this.transportes.get(email);
         if(aux == null) System.out.println("Não existe essa empresa de transportes");
@@ -91,6 +112,10 @@ public class BDTransportes implements Serializable {
         return aux;
     }
 
+    /**
+     * Método que devolve os transportes a serem impressos, bem como a sua classificação
+     * @return
+     */
     public String printTransportes(){
         StringBuilder sb = new StringBuilder();
         for(String s: this.transportes.keySet()){
@@ -99,6 +124,12 @@ public class BDTransportes implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Método que devolve o email de uma empresa, dando lhe o seu código
+     * @param cod
+     * @return
+     * @throws TransporteNotFoundException
+     */
     public String getEmail(String cod) throws TransporteNotFoundException{
         for(String s: this.transportes.keySet()){
             if(this.transportes.get(s).getCodigo().equals(cod)) return this.transportes.get(s).getEmail();
@@ -106,11 +137,23 @@ public class BDTransportes implements Serializable {
         throw new TransporteNotFoundException();
     }
 
+    /**
+     * Método que atualiza a calssificação de uma empresa de transportes
+     * @param e
+     * @param classificao
+     */
     public void updateTransporte(EmpresaTransportes e, double classificao){
         e.updateRate(classificao);
         this.transportes.put(e.getEmail(), e);
     }
 
+    /**
+     * Método que devolve as empresas de transportes disponíveis e o custo de efetuar a entrega da encomenda
+     * @param u
+     * @param j
+     * @param peso
+     * @return
+     */
     public String printEmpresas(Utilizador u, Loja j, double peso) {
         StringBuilder sb = new StringBuilder();
         for (String s : this.transportes.keySet()) {

@@ -62,24 +62,50 @@ public class BDUtilizador implements Serializable {
         return this.users.equals((r.getUsers()));
     }
 
+    /**
+     * Método que verifica se um utiizador existe
+     * @param v
+     * @return
+     */
+
     public boolean existe(Utilizador v){
         return this.users.keySet().contains(v.getEmail());
     }
 
+    /**
+     * Método que adiciona um utilizador
+     * @param u
+     */
     public void add(Utilizador u) {
         this.users.put(u.getEmail(), u.clone());
         this.codigos.add(u.getCodigo());
     }
 
+    /**
+     * Método que verifica se um código de utilizador existe
+     * @param s
+     * @return
+     */
     public boolean existeCodigo(String s){
         return this.codigos.contains(s);
     }
 
+    /**
+     * Método que adiciona uma encomenda a um utilizador
+     * @param e
+     * @param u
+     */
     public void updateUser(Encomenda e, Utilizador u){
         u.addEncomenda(e);
         this.users.put(u.getEmail(), u);
     }
 
+    /**
+     * Método que efetua o login de um utilizador
+     * @param email
+     * @param password
+     * @return
+     */
     public Utilizador tryLogin(String email, String password){
         if(!this.users.containsKey(email)) return null;
         else{

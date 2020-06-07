@@ -66,10 +66,21 @@ public class BDVoluntarios implements Serializable {
         return this.codigos.contains(s);
     }
 
+    /**
+     * Método que adiciona um voluntário
+     * @param v
+     */
+
     public void add(Voluntario v){
         this.voluntarios.put(v.getEmail(), v.clone());
     }
 
+    /**
+     * Método que efetua o login de um voluntário
+     * @param email
+     * @param password
+     * @return
+     */
     public Voluntario tryLogin(String email, String password){
         Voluntario aux = this.voluntarios.get(email);
         if(aux == null) System.out.println("Não existe esse voluntário");
@@ -86,6 +97,10 @@ public class BDVoluntarios implements Serializable {
         return aux;
     }
 
+    /**
+     * Método que devolve os voluntário a imprimir
+     * @return
+     */
     public String printVoluntario(){
         StringBuilder sb = new StringBuilder();
         for(String s: this.voluntarios.keySet()){
@@ -93,6 +108,12 @@ public class BDVoluntarios implements Serializable {
         }
         return sb.toString();
     }
+
+    /**
+     * Métodos que devolve os voluntário disponíveis para se deslocarem a uma loja
+     * @param j
+     * @return
+     */
 
     public String printVoluntarioLoja(Loja j){
         StringBuilder sb = new StringBuilder();
@@ -106,6 +127,11 @@ public class BDVoluntarios implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Método que devolve a lista de voluntário disponíveis para se deslocarem a uma determinada loja
+     * @param j
+     * @return
+     */
     public List<Voluntario> voluntariosDisponíveis(Loja j) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
@@ -118,6 +144,12 @@ public class BDVoluntarios implements Serializable {
         return ret;
     }
 
+    /**
+     * Lista de voluntários disponíveis para se deslocarem a uma loja, excetuando o voluntário passado como argumento
+     * @param j
+     * @param v
+     * @return
+     */
     public List<Voluntario> voluntariosDisponíveis2(Loja j, Voluntario v) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
@@ -130,6 +162,12 @@ public class BDVoluntarios implements Serializable {
         return ret;
     }
 
+    /**
+     * Método que devolve o email de um voluntário
+     * @param cod
+     * @return
+     * @throws VoluntarioNotFoundException
+     */
     public String getEmail(String cod) throws VoluntarioNotFoundException{
         for(String s: this.voluntarios.keySet()){
             if(this.voluntarios.get(s).getCodigo().equals(cod)) return this.voluntarios.get(s).getEmail();
@@ -137,10 +175,21 @@ public class BDVoluntarios implements Serializable {
         throw new VoluntarioNotFoundException();
     }
 
+    /**
+     * Método que atualiza a classificação de um voluntário
+     * @param v
+     * @param classificao
+     */
+
     public void updateVoluntario(Voluntario v, double classificao){
         v.updateRate(classificao);
         this.voluntarios.put(v.getEmail(), v);
     }
+
+    /**
+     * Método que atualiza o voluntário v
+     * @param v
+     */
 
     public void updateVoluntario2(Voluntario v){
         this.voluntarios.put(v.getEmail(), v);

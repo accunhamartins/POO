@@ -11,7 +11,17 @@ public class TrazAquiController implements Serializable {
     private BDGeral bd;
     private TrazAquiView view;
 
+    /**
+     * Método que define a view que o controlador irá conhecer
+     * @param view
+     */
+
     public void setView(TrazAquiView view){this.view = view;}
+
+    /**
+     * Método que define o model, que , neste caso, é a BDGeral, que contém todos os users do sistema.
+     * @param bd
+     */
 
     public void setBd(BDGeral bd){
         this.bd = bd;
@@ -21,6 +31,13 @@ public class TrazAquiController implements Serializable {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    /**
+     * Método que define se é para carregar os ficheiros a partir de um ficheiro txt ou de um ficheiro binário
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
 
     public BDGeral readFlow() throws IOException, ClassNotFoundException {
         int op;
@@ -49,6 +66,13 @@ public class TrazAquiController implements Serializable {
             }
         } while (true);
     }
+
+    /**
+     * Método que controla a execucção de cada uma das opções do menu inicial
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
 
     public void mainFlow() throws IOException, ClassNotFoundException, InterruptedException{
         int op;
@@ -86,6 +110,10 @@ public class TrazAquiController implements Serializable {
         }
         while (op != 0);
     }
+
+    /**
+     * Método utilizado para realizar os registos de novos users do sistema
+     */
 
     private void registosFlow(){
         int op;
@@ -232,6 +260,11 @@ public class TrazAquiController implements Serializable {
         while (op != 0);
     }
 
+    /**
+     * Método que controla todas as ações do user, tendo este já efetuado o login no sistema
+     * @throws InterruptedException
+     */
+
     private void loginFlow() throws InterruptedException{
         int op;
         Input input = new Input();
@@ -264,6 +297,10 @@ public class TrazAquiController implements Serializable {
         while (op != 0);
     }
 
+    /**
+     * Método que controla as opções de um utilizador do tipo Empresa de Trnasportes
+     */
+
     private void empresaFlow(){
         int op;
         Input input = new Input();
@@ -282,6 +319,10 @@ public class TrazAquiController implements Serializable {
             this.view.showMenuLogin();
         }
     }
+
+    /**
+     * Método que controla as opções de um utilizador do tipo Voluntário
+     */
 
     private void voluntarioFlow() {
         int op;
@@ -407,6 +448,8 @@ public class TrazAquiController implements Serializable {
                         } catch (EncomendaNotFoundException e){
                             System.out.println("Encomenda Inválida");
                         }
+                        v.updateEncomendaLoja(encomenda);
+                        this.bd.updateVoluntario2(v);
                         System.out.println("Insira 7 para voltar a imprimir o menu");
                         break;
                     case 6:
@@ -432,6 +475,9 @@ public class TrazAquiController implements Serializable {
                         clearScreen();
                         this.view.showMenuVoluntario();
                         break;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
                 }
 
 
@@ -444,6 +490,10 @@ public class TrazAquiController implements Serializable {
             this.view.showMenuLogin();
         }
     }
+
+    /**
+     * Método que controla as opções de um utilizador do tipo Loja
+     */
 
     private void lojaFlow(){
         int op;
@@ -485,7 +535,9 @@ public class TrazAquiController implements Serializable {
                     case 2:
                         System.out.println(this.bd.getLojas().getLojas().get(lj.getEmail()).getEncomendas_recebidas());
                         break;
-
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
                 }
             } while (op != 0);
 
@@ -496,6 +548,10 @@ public class TrazAquiController implements Serializable {
             this.view.showMenuLogin();
         }
     }
+
+    /**
+     * Método que controla as opções de um utilizador do Utilizador doméstico
+     */
 
     private void userFlow() throws InterruptedException{
         int op;
@@ -555,7 +611,7 @@ public class TrazAquiController implements Serializable {
                                     Random random = new Random();
                                     String cod = "e" + random.nextInt(9999);
                                     while(this.bd.getEncomendasAceites().getAceites().contains(cod)) cod = "e" + random.nextInt(9999);
-                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, false, LocalDateTime.now(), false);
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja, quantidadeTot, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos, false, LocalDateTime.now(), false, false);
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
 
                                     if(disponiveis.size() == 0){
@@ -646,7 +702,7 @@ public class TrazAquiController implements Serializable {
                                     Random random = new Random();
                                     String cod = "e" + random.nextInt(9999);
                                     while(this.bd.getEncomendasAceites().getAceites().contains(cod)) cod = "e" + random.nextInt(9999);
-                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja2, quantidadeTot2, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos2, true, LocalDateTime.now(), false);
+                                    Encomenda novaEnc = new Encomenda(cod, u.getCodigo(), loja2, quantidadeTot2, u.getNome(), this.bd.getLojas().getLojas().get(emailLoja).getNome(), produtos2, true, LocalDateTime.now(), false, false);
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j);
 
                                     if(disponiveis.size() == 0){

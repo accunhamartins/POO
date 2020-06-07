@@ -124,14 +124,28 @@ public class Loja extends UtilizadorSistema implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Método que adiciona uma nova encomenda a uma loja
+     * @param e
+     */
     public void addEncomenda(Encomenda e){
         this.encomendas_recebidas.add(e.clone());
     }
 
+    /**
+     * Método que remove uma encomenda do stock
+     * @param e
+     */
     public void removeEncomenda(Encomenda e){
         this.encomendas_recebidas.remove(e);
     }
 
+    /**
+     * Método que devolve uma encomenda, dando o seu código
+     * @param cod
+     * @return
+     * @throws EncomendaNotFoundException
+     */
     public Encomenda getEnc(String cod) throws EncomendaNotFoundException{
         for(Encomenda e: this.encomendas_recebidas){
             if(cod.equals(e.getCodigo())) return e.clone();

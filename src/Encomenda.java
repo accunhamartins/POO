@@ -13,6 +13,7 @@ public class Encomenda implements Serializable{
     private String vendedor;
     private LocalDateTime data;
     private boolean entregue;
+    private boolean levantada;
     private Map<String, LinhaEncomenda> produtos;
     private boolean encomendaMedica;
 
@@ -25,12 +26,14 @@ public class Encomenda implements Serializable{
         this.comprador = " ";
         this.vendedor = " ";
         this.entregue = false;
+        this.levantada = false;
         this.produtos = new HashMap<>();
         this.data = LocalDateTime.now();
         this.encomendaMedica = true;
     }
 
-    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos, boolean encomendaMedica, LocalDateTime data, boolean entregue){
+    public  Encomenda(String codigo, String codigo_user, String codigo_loja, double peso, String comprador, String vendedor, Map<String, LinhaEncomenda> produtos,
+                      boolean encomendaMedica, LocalDateTime data, boolean entregue, boolean levantada){
         this.codigo = codigo;
         this.codigo_user = codigo_user;
         this.codigo_loja = codigo_loja;
@@ -39,6 +42,7 @@ public class Encomenda implements Serializable{
         this.vendedor = vendedor;
         this.data = data;
         this.entregue = entregue;
+        this.levantada = levantada;
         this.setProdutos(produtos);
         this.encomendaMedica = encomendaMedica;
     }
@@ -53,6 +57,8 @@ public class Encomenda implements Serializable{
         this.setProdutos(e.getProdutos());
         this.data = e.getData();
         this.encomendaMedica = e.isEncomendaMedica();
+        this.levantada = e.isLevantada();
+        this.entregue = e.isEntregue();
     }
 
     public LocalDateTime getData() {
@@ -61,6 +67,10 @@ public class Encomenda implements Serializable{
 
     public boolean isEntregue() {
         return entregue;
+    }
+
+    public boolean isLevantada() {
+        return levantada;
     }
 
     public String getCodigo(){
@@ -89,6 +99,10 @@ public class Encomenda implements Serializable{
 
     public Map<String, LinhaEncomenda> getProdutos(){
         return this.produtos.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
+    }
+
+    public void setLevantada(boolean levantada) {
+        this.levantada = levantada;
     }
 
     public void setEntregue(boolean entregue) {

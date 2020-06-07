@@ -114,6 +114,10 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
         return sb.toString();
       }
 
+    /**
+     * Método que imprime as encomendas do utilizador
+     * @return
+     */
       public String printEncomendas(){
           StringBuilder sb = new StringBuilder();
           if(this.encomendas_realizadas.size() == 0) sb.append("Não existem encomendas realizadas\n");
@@ -124,6 +128,10 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
           return sb.toString();
       }
 
+    /**
+     * Método que adiciona uma encomenda ao utilizador
+     * @param e
+     */
       public void addEncomenda(Encomenda e){
           this.encomendas_realizadas.add(e.clone());
       }

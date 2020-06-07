@@ -31,6 +31,11 @@ import java.util.stream.Collectors;
             produtos.entrySet().forEach(e -> this.produtos.put(e.getKey(), e.getValue().clone()));
         }
 
+        /**
+         * Método que devolve um map com os produtos que são considerados como médicos
+         * @param produtos é o map com todos os produtos
+         * @return
+         */
         public Map<String, LinhaEncomenda> getProdMedicos(Map<String, LinhaEncomenda> produtos){
             Map<String, LinhaEncomenda> aux = new TreeMap<>();
             for(String s: produtos.keySet()){
@@ -70,18 +75,28 @@ import java.util.stream.Collectors;
             return this.produtos.equals(r.getProdutos());
         }
 
+        /**
+         * Método que verifica se um produto existe
+         * @param v é o produto a ser testado
+         * @return
+         */
+
         public boolean existe(String v) {
             return this.produtos.keySet().contains(v);
         }
 
-        public boolean existeCodigo(String s) {
-            return this.codigos.contains(s);
-        }
-
+        /**
+         * Método que adiciona um novo produto
+         * @param v
+         */
         public void add(LinhaEncomenda v) {
             this.produtos.put(v.getDescricao(), v.clone());
         }
 
+        /**
+         * Método que determina os produtos que não são médicos, que serão depois impressos
+         * @return
+         */
         public String listProdutosNormais(){
             StringBuilder sb = new StringBuilder();
             Map<String, LinhaEncomenda> normais = new HashMap<>();
@@ -97,6 +112,10 @@ import java.util.stream.Collectors;
             return sb.toString();
         }
 
+        /**
+         * Método que devolve os produtos médicos para serem impressos
+         * @return
+         */
         public String listProdutosMedicos(){
             StringBuilder sb = new StringBuilder();
             Map<String, LinhaEncomenda> aux = getProdMedicos(this.produtos);
@@ -107,6 +126,13 @@ import java.util.stream.Collectors;
             return sb.toString();
         }
 
+
+        /**
+         * Método que verifica se um produto existe
+         * @param cod
+         * @return
+         * @throws ProductNotFoundException
+         */
         public boolean existeProd(String cod) throws ProductNotFoundException{
             if(!this.produtos.containsKey(cod)) throw new ProductNotFoundException();
             else return true;

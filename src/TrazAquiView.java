@@ -3,6 +3,9 @@ import java.io.Serializable;
 public class TrazAquiView implements Serializable {
     public TrazAquiView(){}
 
+    /**
+     * Método que imprime o menu inicial
+     */
 
     public void showMenuInicial(){
         System.out.println("«««««««««««««««««««««TRAZ-AQUI»»»»»»»»»»»»»»»»»»»»»»»»");
@@ -12,6 +15,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("4.Carregar estado");
         System.out.println("0.Sair da aplicação");
     }
+
 
     public void loadMenu(){
         System.out.println("ESCOLHA O TIPO DE LOAD QUE PRETENDE REALIZAR");

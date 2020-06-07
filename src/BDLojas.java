@@ -9,6 +9,10 @@ public class BDLojas implements Serializable {
     private Map<String, Loja> lojas;
     private Set<String> codigos;
 
+    /**
+     * Construtores
+     */
+
     public BDLojas(){
         this.lojas = new HashMap<>();
         this.codigos = new TreeSet<>();
@@ -24,6 +28,8 @@ public class BDLojas implements Serializable {
         setCodigos(r.getCodigos());
     }
 
+    //Getters
+
     public Map<String, Loja> getLojas() {
         return this.lojas.entrySet().stream().collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue().clone()));
     }
@@ -32,6 +38,7 @@ public class BDLojas implements Serializable {
         return this.codigos.stream().collect(Collectors.toSet());
     }
 
+    //Setters
     public void setCodigos(Set<String> codigos) {
         this.codigos = new TreeSet<>();
         for(String s: codigos) this.codigos.add(s);
@@ -62,28 +69,62 @@ public class BDLojas implements Serializable {
         return this.lojas.equals(r.getLojas());
     }
 
+    /**
+     * Método que verifica se uma loja existe
+     * @param v é a loja que se pretende saber se existe
+     * @return
+     */
+
     public boolean existe(Loja v){
         return this.lojas.keySet().contains(v.getEmail());
     }
 
+    /**
+     * Método que adiciona uma encomenda a uma loja
+     * @param e é a encomenda
+     * @param j é a loja
+     */
     public void updateLoja(Encomenda e, Loja j){
         j.addEncomenda(e);
         this.lojas.put(j.getEmail(), j);
     }
+
+    /**
+     * Método que remove uma encomenda de uma loja
+     * @param e é a encomenda
+     * @param j é a loja
+     */
 
     public void updateLoja2(Encomenda e ,Loja j){
         j.removeEncomenda(e);
         this.lojas.put(j.getEmail(), j);
     }
 
-    public boolean existeCodigo(String s){
+    /**
+     * Método que verifica se um código de uma loja existe
+     * @param s é o código a verificar
+     * @return
+     */
+
+   public boolean existeCodigo(String s){
         return this.codigos.contains(s);
     }
+
+    /**
+     * Método que adiciona uma loja
+     * @param l
+     */
 
     public void add(Loja l){
         this.lojas.put(l.getEmail(), l.clone());
     }
 
+    /**
+     * Método que tenta efetuar o login de uma loja no sistema
+     * @param email
+     * @param password
+     * @return
+     */
     public Loja tryLogin(String email, String password){
         Loja aux = this.lojas.get(email);
         if(aux == null) System.out.println("Não existe essa loja");
@@ -100,6 +141,11 @@ public class BDLojas implements Serializable {
         return aux;
     }
 
+    /**
+     * Método que imprime as lojas, indicando a distância a uma determinado utilizador doméstico
+     * @param u é o utilizador que serve de referência
+     * @return
+     */
     public String listLojasUser(Utilizador u){
         StringBuilder sb = new StringBuilder();
         sb.append("LISTA DE LOJAS\n");
@@ -110,6 +156,12 @@ public class BDLojas implements Serializable {
         }
         return sb.toString();
     }
+
+    /**
+     * Nétodo que imprime as lojas, indicando a distância a um determinado voluntário
+     * @param u
+     * @return
+     */
 
     public String listLojasVol(Voluntario u){
         StringBuilder sb = new StringBuilder();
@@ -126,6 +178,13 @@ public class BDLojas implements Serializable {
         if(count == 0) sb.append("Não existem lojas no seu raio de ação");
         return sb.toString();
     }
+
+    /**
+     * Método que devolve o email de uma loja, quando lhe é fornecido o seu código
+     * @param cod
+     * @return
+     * @throws LojaNotFoundException
+     */
 
     public String getEmail(String cod) throws LojaNotFoundException{
         for(String s: this.lojas.keySet()){
