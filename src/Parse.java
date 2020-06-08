@@ -140,7 +140,9 @@ public class Parse {
       double longitude = Double.parseDouble(campos[3]);
       String email = codigo + "@gmail.com";
       String password = "12345";
-      return new Loja(email, password, codigo, nome, 20.0, latitude, longitude, new ArrayList<>());
+      Random random = new Random();
+      int espera = random.nextInt(15);
+      return new Loja(email, password, codigo, nome, espera, latitude, longitude, new ArrayList<>(), 0);
     }
 
     /**

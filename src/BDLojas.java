@@ -109,6 +109,15 @@ public class BDLojas implements Serializable {
     }
 
     /**
+     * Método que verifica se um email já está registado
+     * @param email
+     * @return
+     */
+    public boolean existeEmail(String email){
+        return this.lojas.keySet().contains(email);
+    }
+
+    /**
      * Método que verifica se um código de uma loja existe
      * @param s é o código a verificar
      * @return

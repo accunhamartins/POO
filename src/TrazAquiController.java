@@ -1,9 +1,10 @@
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -140,6 +141,10 @@ public class TrazAquiController implements Serializable {
                         this.view.preenchimentoObrg();
                         this.view.email();
                         email = input.lerString();
+                        while (this.bd.getUtilizadores().existeEmail(email)){
+                            System.out.println("Já existe esse email, selecione um email diferente");
+                            email = input.lerString();
+                        }
                         this.view.password();
                         password = input.lerString();
                         this.view.nome();
@@ -165,6 +170,10 @@ public class TrazAquiController implements Serializable {
                         this.view.preenchimentoObrg();
                         this.view.email();
                         email = input.lerString();
+                        while (this.bd.getVoluntarios().existeEmail(email)){
+                            System.out.println("Já existe esse email, selecione um email diferente");
+                            email = input.lerString();
+                        }
                         this.view.password();
                         password = input.lerString();
                         this.view.nome();
@@ -194,6 +203,10 @@ public class TrazAquiController implements Serializable {
                         this.view.preenchimentoObrg();
                         this.view.email();
                         email = input.lerString();
+                        while (this.bd.getLojas().existeEmail(email)){
+                            System.out.println("Já existe esse email, selecione um email diferente");
+                            email = input.lerString();
+                        }
                         this.view.password();
                         password = input.lerString();
                         this.view.nome();
@@ -210,7 +223,7 @@ public class TrazAquiController implements Serializable {
                         input.lerString();
                         System.out.println("Input inválido");
                     }
-                    bd.addLoja(new Loja(email, password, codigo, nome, tempo_espera, latitude, longitude, new ArrayList<>()).clone());
+                    bd.addLoja(new Loja(email, password, codigo, nome, tempo_espera, latitude, longitude, new ArrayList<>(), 0).clone());
                     System.out.println("REGISTO EFETUADO COM SUCESSO");
                     System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
@@ -221,6 +234,10 @@ public class TrazAquiController implements Serializable {
                         this.view.preenchimentoObrg();
                         this.view.email();
                         email = input.lerString();
+                        while (this.bd.getTransportes().existeEmail(email)){
+                            System.out.println("Já existe esse email, selecione um email diferente");
+                            email = input.lerString();
+                        }
                         this.view.password();
                         password = input.lerString();
                         this.view.nome();
@@ -634,7 +651,7 @@ public class TrazAquiController implements Serializable {
                                                 et.addEncomenda(novaEnc);
                                                 this.bd.updateTransportes2(et);
                                                 this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                                System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                                System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                             } catch (TransporteNotFoundException e){
                                                 System.out.println("Empresa transportadora inválida");
                                             }
@@ -647,7 +664,7 @@ public class TrazAquiController implements Serializable {
                                         v.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v);
                                         this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                     }
                                     else {
                                         u.addEncomenda(novaEnc);
@@ -657,16 +674,16 @@ public class TrazAquiController implements Serializable {
                                         v.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v);
                                         this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                     }
 
                                 } catch (ProductNotFoundException e) {
                                     System.out.println("Produto não existe");
-                                    System.out.println("Prima 0 para retroceder");
+                                    System.out.println("Prima 9 para retroceder");
                                 }
                             } catch (LojaNotFoundException e){
                                 System.out.println("Loja inválida");
-                                System.out.println("Prima 0 para retroceder");
+                                System.out.println("Prima 9 para retroceder");
                             }
                             break;
 
@@ -728,7 +745,7 @@ public class TrazAquiController implements Serializable {
                                                 et.addEncomenda(novaEnc);
                                                 this.bd.updateTransportes2(et);
                                                 this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                                System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                                System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                             } catch (TransporteNotFoundException e){
                                                 System.out.println("Empresa transportadora inválida");
                                             }
@@ -741,7 +758,7 @@ public class TrazAquiController implements Serializable {
                                         v.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v);
                                         this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                     }
                                     else {
                                         u.addEncomenda(novaEnc);
@@ -751,26 +768,26 @@ public class TrazAquiController implements Serializable {
                                         v.addEncomenda(novaEnc);
                                         this.bd.updateVoluntario2(v);
                                         this.bd.updateLoja(novaEnc, this.bd.getLojas().getLojas().get(emailLoja));
-                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 6 PARA SAIR");
+                                        System.out.println("ENCOMENDA FEITA COM SUCESSO. PRIMA 9 PARA SAIR");
                                     }
 
                                 } catch (ProductNotFoundException e) {
                                     System.out.println("Produto não existe");
-                                    System.out.println("Prima 0 para retroceder");
+                                    System.out.println("Prima 9 para retroceder");
                                 }
                             } catch (LojaNotFoundException e){
                                 System.out.println("Loja inválida");
-                                System.out.println("Prima 0 para retroceder");
+                                System.out.println("Prima 9 para retroceder");
                             }
                             break;
 
                         case 3:
                             System.out.println(u.printEncomendasRecebidas());
-                            System.out.println("Insira 7 para imprimir de novo o menu");
+                            System.out.println("Insira 9 para imprimir de novo o menu");
                             break;
                         case 4:
                             System.out.println(u.printEncomendasPorEntregar());
-                            System.out.println("Insira 7 para imprimir de novo o menu");
+                            System.out.println("Insira 9 para imprimir de novo o menu");
                             break;
                         case 5:
                             System.out.println(this.bd.getVoluntarios().printVoluntario());
@@ -789,7 +806,7 @@ public class TrazAquiController implements Serializable {
 
                             } catch (VoluntarioNotFoundException e){
                                 System.out.println("Voluntário inválido");
-                                System.out.println("Prima 0 para retroceder");
+                                System.out.println("Prima 9 para retroceder");
                             }
                             break;
                         case 6:
@@ -809,10 +826,38 @@ public class TrazAquiController implements Serializable {
 
                             } catch (TransporteNotFoundException e){
                                 System.out.println("Empresa inválida");
-                                System.out.println("Prima 0 para retroceder");
+                                System.out.println("Prima 9 para retroceder");
                             }
                             break;
                         case 7:
+                             System.out.println(this.bd.getVoluntarios().printVoluntario());
+                             System.out.println("Insira o código do voluntário que pretende analisar");
+                            String cod7 = Input.lerString();
+                            try {
+                                String emailVol = this.bd.getVoluntarios().getEmail(cod7);
+                                Voluntario v = this.bd.getVoluntarios().getVoluntarios().get(emailVol).clone();
+                                System.out.println("Insira o intervalo temporal que pretende analisar (DD/MM/YYYY)");
+                                System.out.println("Inicio: ");
+                                Scanner sc = new Scanner(System.in);
+                                String dataRecebida = sc.nextLine();
+                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                Date dateTime1 = df.parse(dataRecebida);
+                                System.out.println("Fim: ");
+                                String dataRecebida2 = sc.nextLine();
+                                Date dateTime2 = df.parse(dataRecebida2);
+                                LocalDateTime d1 = dateTime1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                                LocalDateTime d2 = dateTime2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                                System.out.println(v.getInfoEncomendas(d1, d2));
+                                System.out.println("Prima 9 para retroceder");
+                                break;
+
+                            } catch (VoluntarioNotFoundException e){
+                                System.out.println("Código inválido");
+                                System.out.println("Insira 9 para retroceder");
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        case 9:
                             clearScreen();
                             this.view.showMenuUser();
                             break;

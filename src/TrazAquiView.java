@@ -75,6 +75,8 @@ public class TrazAquiView implements Serializable {
         System.out.println("4. Histórico de encomendas por entregar");
         System.out.println("5. Avaliar um voluntário");
         System.out.println("6. Avaliar uma transportadora");
+        System.out.println("7. Informação sobre entregas de voluntário");
+        System.out.println("8. Informação sobre entregas de Empresa Transportadora");
         System.out.println("0. Retroceder");
     }
 

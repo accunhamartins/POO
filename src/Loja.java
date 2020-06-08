@@ -5,23 +5,27 @@ import java.util.Objects;
 
 public class Loja extends UtilizadorSistema implements Serializable {
     private double tempo_espera;
+    private int nrPessoasEmFila;
     private ArrayList<Encomenda> encomendas_recebidas;
 
     public Loja (){
         super();
         this.tempo_espera = 0;
+        this.nrPessoasEmFila = 0;
         this.encomendas_recebidas = new ArrayList<>();
     }
 
-    public Loja (String email, String password, String codigo, String nome, double tempo_espera, double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas){
+    public Loja (String email, String password, String codigo, String nome, double tempo_espera, double latitude, double longitude, ArrayList<Encomenda> encomendas_recebidas, int nrPessoasEmFila){
         super(email, password, "Loja", codigo, nome, latitude, longitude);
         this.tempo_espera = tempo_espera;
+        this.nrPessoasEmFila = nrPessoasEmFila;
         setEncomendas_recebidas(encomendas_recebidas);
     }
 
     public Loja (Loja loja){
         super(loja);
         this.tempo_espera = loja.getTempo_espera();
+        this.nrPessoasEmFila = loja.getNrPessoasEmFila();
         setEncomendas_recebidas(loja.getEncomendas_recebidas());
     }
 
@@ -35,6 +39,10 @@ public class Loja extends UtilizadorSistema implements Serializable {
 
     public double getTempo_espera() {
         return tempo_espera;
+    }
+
+    public int getNrPessoasEmFila() {
+        return nrPessoasEmFila;
     }
 
     public double getLatitude() {
@@ -51,6 +59,10 @@ public class Loja extends UtilizadorSistema implements Serializable {
             aux.add(s);
         }
         return aux;
+    }
+
+    public void setNrPessoasEmFila(int nrPessoasEmFila) {
+        this.nrPessoasEmFila = nrPessoasEmFila;
     }
 
     public void setCodigo(String codigo){

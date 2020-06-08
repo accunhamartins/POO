@@ -64,6 +64,16 @@ public class BDTransportes implements Serializable {
     }
 
     /**
+     * Método que verifica se um dado email já está registado
+     * @param email
+     * @return
+     */
+
+    public boolean existeEmail(String email){
+        return this.transportes.keySet().contains(email);
+    }
+
+    /**
      * Método que verifica se uma empresa de transportes existe
      * @param v
      * @return

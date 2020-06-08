@@ -63,6 +63,15 @@ public class BDUtilizador implements Serializable {
     }
 
     /**
+     * Método que verifica se um email já está registado
+     * @param email
+     * @return
+     */
+    public boolean existeEmail(String email){
+        return this.users.keySet().contains(email);
+    }
+
+    /**
      * Método que verifica se um utiizador existe
      * @param v
      * @return

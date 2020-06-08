@@ -58,6 +58,15 @@ public class BDVoluntarios implements Serializable {
         BDVoluntarios r = (BDVoluntarios) obj;
         return this.voluntarios.equals(r.getVoluntarios());
     }
+    /**
+     * Método que verifica se um email já está registado
+     * @param email
+     * @return
+     */
+    public boolean existeEmail(String email){
+        return this.voluntarios.keySet().contains(email);
+    }
+
 
     public boolean existe(Voluntario v){
         return this.voluntarios.keySet().contains(v.getEmail());

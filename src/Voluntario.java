@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -318,6 +319,28 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
             if(e.getCodigo().equals(enc)) return true;
         }
         return false;
+    }
+
+    /**
+     * Método que devolve o número de encomendas efetuadas pelo voluntário entre 2 datas
+     * @param d1
+     * @param d2
+     * @return
+     */
+    public String getInfoEncomendas(LocalDateTime d1, LocalDateTime d2){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda e: this.historico){
+            LocalDateTime date = e.getData();
+            if(date.compareTo(d1) >= 0 && date.compareTo(d2) <= 0){
+                count++;
+            }
+        }
+        String s1 = d1.getDayOfMonth() + "/" + d1.getMonthValue() + "/" + d1.getYear();
+        String s2 = d2.getDayOfMonth() + "/" + d2.getMonthValue() + "/" + d2.getYear();
+
+        sb.append("Entre as datas " + s1 + " e " + s2 + " foram realizadas " + count + " encomendas pelo voluntário " + getNome());
+        return sb.toString();
     }
 
 }
