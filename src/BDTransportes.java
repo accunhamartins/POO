@@ -1,8 +1,5 @@
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BDTransportes implements Serializable {
@@ -194,6 +191,18 @@ public class BDTransportes implements Serializable {
 
     public void updateTransportes2(EmpresaTransportes et){
         this.transportes.put(et.getEmail(), et);
+    }
+
+    public List<EmpresaTransportes> transDisponiveis(Loja j) {
+        List<EmpresaTransportes> ret = new ArrayList<>();
+        for (String s : this.transportes.keySet()) {
+            EmpresaTransportes et = this.transportes.get(s);
+            double dist = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
+            if (dist <= et.getRaioDeAcao() && et.isDisponivel()) {
+                ret.add(et.clone());
+            }
+        }
+        return ret;
     }
 
 }

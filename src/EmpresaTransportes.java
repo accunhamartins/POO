@@ -1,5 +1,8 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class EmpresaTransportes extends UtilizadorSistema implements Serializable {
@@ -238,6 +241,30 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.registos.add(e.clone());
     }
 
+    /**
+     * Método que devolve o número de encomendas efetuadas pelo voluntário entre 2 datas
+     * @param d1
+     * @param d2
+     * @return
+     */
+    public String getInfoEncomendas(LocalDateTime d1, LocalDateTime d2){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        Set<String> lojas = new TreeSet<>();
+        for(Encomenda e: this.registos){
+            LocalDateTime date = e.getData();
+            if(date.compareTo(d1) >= 0 && date.compareTo(d2) <= 0){
+                lojas.add(e.getCodigo_loja());
+                count++;
+            }
+        }
+        String s1 = d1.getDayOfMonth() + "/" + d1.getMonthValue() + "/" + d1.getYear();
+        String s2 = d2.getDayOfMonth() + "/" + d2.getMonthValue() + "/" + d2.getYear();
+
+        sb.append("Entre as datas " + s1 + " e " + s2 + " foram realizadas " + count + " encomendas pela empresa " + getNome() +"\n");
+        sb.append("Efetuou encomendas em " + lojas.size() + " lojas");
+        return sb.toString();
+    }
 
 
 }

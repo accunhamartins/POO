@@ -832,7 +832,7 @@ public class TrazAquiController implements Serializable {
                         case 7:
                              System.out.println(this.bd.getVoluntarios().printVoluntario());
                              System.out.println("Insira o código do voluntário que pretende analisar");
-                            String cod7 = Input.lerString();
+                             String cod7 = Input.lerString();
                             try {
                                 String emailVol = this.bd.getVoluntarios().getEmail(cod7);
                                 Voluntario v = this.bd.getVoluntarios().getVoluntarios().get(emailVol).clone();
@@ -852,6 +852,33 @@ public class TrazAquiController implements Serializable {
                                 break;
 
                             } catch (VoluntarioNotFoundException e){
+                                System.out.println("Código inválido");
+                                System.out.println("Insira 9 para retroceder");
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        case 8:
+                            System.out.println(this.bd.getTransportes().printTransportes());
+                            System.out.println("Insira o código da empresa de transportes que pretende analisar");
+                            String cod8 = Input.lerString();
+                            try {
+                                String emailTrans = this.bd.getTransportes().getEmail(cod8);
+                                EmpresaTransportes et = this.bd.getTransportes().getTransportes().get(emailTrans).clone();
+                                System.out.println("Insira o intervalo temporal que pretende analisar (DD/MM/YYYY)");
+                                System.out.println("Inicio: ");
+                                Scanner sc = new Scanner(System.in);
+                                String dataRecebida = sc.nextLine();
+                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                Date dateTime1 = df.parse(dataRecebida);
+                                System.out.println("Fim: ");
+                                String dataRecebida2 = sc.nextLine();
+                                Date dateTime2 = df.parse(dataRecebida2);
+                                LocalDateTime d1 = dateTime1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                                LocalDateTime d2 = dateTime2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                                System.out.println(et.getInfoEncomendas(d1, d2));
+                                System.out.println("Prima 9 para retroceder");
+                                break;
+                            } catch (TransporteNotFoundException e){
                                 System.out.println("Código inválido");
                                 System.out.println("Insira 9 para retroceder");
                             } catch (ParseException e) {

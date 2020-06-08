@@ -96,7 +96,7 @@ public class Parse {
         }
         addEncomendas(this.encomendas);
         addEncomendasCliente(this.encomendas);
-        addEncomendasVoluntarios(this.encomendas);
+        addEncomendasVoluntariosETransportes(this.encomendas);
         addEncomendasAceites(this.ea);
     }
 
@@ -280,23 +280,33 @@ public class Parse {
      * Método que adicona as encomendas aos voluntários disponíveis
      * @param encomendas
      */
-    public void addEncomendasVoluntarios(List<Encomenda> encomendas){
+    public void addEncomendasVoluntariosETransportes(List<Encomenda> encomendas){
         for(Encomenda e: encomendas){
             String codigo_loja = e.getCodigo_loja();
             Loja j = this.baseGeral.getLojas().getLojas().get(codigo_loja+"@gmail.com");
             List<Voluntario> disponiveis = this.baseGeral.getVoluntarios().voluntariosDisponíveis(j);
+            List<EmpresaTransportes> disponiveisTrans = this.baseGeral.getTransportes().transDisponiveis(j);
             if(disponiveis.size() == 1){
-                Voluntario v = disponiveis.get(0);
+                Voluntario v = disponiveis.get(0).clone();
                 v.addEncomenda(e);
                 this.baseGeral.updateVoluntario2(v);
             }
-            else if(disponiveis.size() == 0){
-                return;
+            else if(disponiveis.size() == 0 && disponiveisTrans.size() > 1) {
+                Random random = new Random();
+                int choice = random.nextInt(disponiveisTrans.size() - 1);
+                EmpresaTransportes et = disponiveisTrans.get(choice).clone();
+                et.addEncomenda(e);
+                this.baseGeral.updateTransportes2(et);
+            }
+            else if(disponiveis.size() == 0 && disponiveisTrans.size() == 1){
+                    EmpresaTransportes et = disponiveisTrans.get(0).clone();
+                    et.addEncomenda(e);
+                    this.baseGeral.updateTransportes2(et);
             }
             else {
                 Random random = new Random();
                 int choice = random.nextInt(disponiveis.size() - 1);
-                Voluntario v = disponiveis.get(choice);
+                Voluntario v = disponiveis.get(choice).clone();
                 v.addEncomenda(e);
                 this.baseGeral.updateVoluntario2(v);
             }

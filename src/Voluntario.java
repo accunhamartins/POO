@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Voluntario extends UtilizadorSistema implements Serializable {
     private boolean disponivel;
@@ -330,16 +332,19 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     public String getInfoEncomendas(LocalDateTime d1, LocalDateTime d2){
         StringBuilder sb = new StringBuilder();
         int count = 0;
+        Set<String> lojas = new TreeSet<>();
         for(Encomenda e: this.historico){
             LocalDateTime date = e.getData();
             if(date.compareTo(d1) >= 0 && date.compareTo(d2) <= 0){
+                lojas.add(e.getCodigo_loja());
                 count++;
             }
         }
         String s1 = d1.getDayOfMonth() + "/" + d1.getMonthValue() + "/" + d1.getYear();
         String s2 = d2.getDayOfMonth() + "/" + d2.getMonthValue() + "/" + d2.getYear();
 
-        sb.append("Entre as datas " + s1 + " e " + s2 + " foram realizadas " + count + " encomendas pelo voluntário " + getNome());
+        sb.append("Entre as datas " + s1 + " e " + s2 + " foram realizadas " + count + " encomendas pelo voluntário " + getNome() +"\n");
+        sb.append("Efetuou encomendas em " + lojas.size() + " lojas");
         return sb.toString();
     }
 
