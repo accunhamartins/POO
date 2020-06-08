@@ -353,7 +353,9 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Prima 8 para voltar ao menu");
                         break;
                     case 3:
-
+                            break;
+                    case 4:
+                        break;
                     case 6:
                         int size3 = this.bd.getTransportes().getTransportes().get(et.getEmail()).getRegistos().size();
                         if (size3 == 0) System.out.println("Não tem pedidos de encomendas");

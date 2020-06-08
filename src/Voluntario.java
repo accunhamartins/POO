@@ -9,7 +9,7 @@ import java.util.TreeSet;
 public class Voluntario extends UtilizadorSistema implements Serializable {
     private boolean disponivel;
     private boolean transporteMedico;
-    private LocalDate inicio_transporte;
+    private LocalDate horaDeRegisto;
     private double raio_acao;
     private double classificacao;
     private int avaliacoes;
@@ -20,28 +20,30 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     public Voluntario(){
         super();
         this.disponivel = false;
-        this.inicio_transporte = LocalDate.now();
+        this.horaDeRegisto = LocalDate.now();
         this.raio_acao = 0;
         this.classificacao = 0;
         this.avaliacoes = 0;
         this.historico = new ArrayList<>();
+        this.transporteMedico = false;
     }
     //Construtor de classe por clone
     public Voluntario(Voluntario a){
         super(a);
         this.disponivel = a.getDisponibilidade();
-        this.inicio_transporte = a.getInicio_transporte();
+        this.horaDeRegisto = a.getInicio_transporte();
         this.raio_acao = a.getRaio_acao();
         this.classificacao = a.getClassificacao();
         this.avaliacoes = a.getAvaliacoes();
         this.setHistorico(a.getHistorico());
+        this.transporteMedico = a.aceitoTransporteMedicamentos();
     }
 
     //Construtor parametrizado
     public Voluntario(String email, String password, String a, String b, boolean c, double d, double e, LocalDate f, double g, List<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
         super(email, password, "Voluntario", b, a, d, e);
         this.disponivel = c;
-        this.inicio_transporte = f;
+        this.horaDeRegisto = f;
         this.raio_acao = g;
         this.classificacao = classificacao;
         this.avaliacoes = avaliacoes;
@@ -86,7 +88,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public LocalDate getInicio_transporte(){
-        return this.inicio_transporte;
+        return this.horaDeRegisto;
     }
 
     public int getAvaliacoes() {
@@ -129,7 +131,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     }
 
     public void setInicio_Transporte(LocalDate a){
-        this.inicio_transporte = a;
+        this.horaDeRegisto = a;
     }
 
     public void setRaio_acao(double a){
@@ -153,7 +155,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         Voluntario v = (Voluntario) o;
         return super.equals(o)
         && this.disponivel ==  v.getDisponibilidade()
-        && this.inicio_transporte.equals(v.getInicio_transporte())
+        && this.horaDeRegisto.equals(v.getInicio_transporte())
         && this.raio_acao == v.getRaio_acao()
         && this.historico.equals(v.getHistorico());
     }
@@ -171,8 +173,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         sb.append(getLatitude() + "\n");
         sb.append("Longitude: ");
         sb.append(getLongitude() + "\n");
-        sb.append("Data de início de entrega: ");
-        sb.append(this.inicio_transporte + "\n");
+        sb.append("Hora de registo: ");
+        sb.append(this.horaDeRegisto + "\n");
         sb.append("Raio de ação: ");
         sb.append(this.raio_acao + "\n");
         sb.append("Registos de encomendas: ");

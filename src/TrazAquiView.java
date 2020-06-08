@@ -169,13 +169,5 @@ public class TrazAquiView implements Serializable {
         System.out.println("Insira o produto a comprar: ");
     }
 
-    public void quantidade() {
-        System.out.println("Insira a quantidade a comprar");
-    }
-
-    public void encomendas_medicas2() {
-        System.out.println("É uma encomenda médica? (True/False) ");
-    }
-
 
 }
