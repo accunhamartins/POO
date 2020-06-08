@@ -77,6 +77,8 @@ public class TrazAquiView implements Serializable {
         System.out.println("6. Avaliar uma transportadora");
         System.out.println("7. Informação sobre entregas de voluntário");
         System.out.println("8. Informação sobre entregas de Empresa Transportadora");
+        System.out.println("9. TOP10 mais encomendas efetuadas");
+        System.out.println("10.TOP10 mais kms percorridos por transportadoras");
         System.out.println("0. Retroceder");
     }
 
@@ -103,10 +105,11 @@ public class TrazAquiView implements Serializable {
         System.out.println("1. Declarar-se disponível para transporte de encomenda");
         System.out.println("2. Declarar-se indisponível para transporte de encomenda");
         System.out.println("3. Apresentar preço de transporte de encomenda");
-        System.out.println("4. Anotar tempo e entrega de uma encomenda");
-        System.out.println("5. Histórico de encomendas");
-        System.out.println("6. Total faturado entre 2 datas");
-        System.out.println("7. Imprimir menu");
+        System.out.println("4. Sinalizar levantamento de encomenda na loja");
+        System.out.println("5. Anotar tempo e entrega de uma encomenda");
+        System.out.println("6. Histórico de encomendas");
+        System.out.println("7. Total faturado entre 2 datas");
+        System.out.println("8. Imprimir menu");
         System.out.println("0. Retroceder");
     }
 

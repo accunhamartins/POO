@@ -55,9 +55,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.raioDeAcao = a.getRaioDeAcao();
         this.setRegistos(a.getRegistos());
         this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
-        this.transporteMedico = a.isTransporteMedico();
+        this.transporteMedico = a.aceitoTransporteMedicamentos();
         this.avaliacoes = a.getAvaliacoes();
         this.classificao = a.getClassificao();
+        this.disponivel = a.isDisponivel();
     }
 
     public boolean aceitoTransporteMedicamentos(){
@@ -109,7 +110,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     }
 
     public boolean isDisponivel() {
-        return disponivel;
+        return this.disponivel;
     }
 
     public void setDisponivel(boolean disponivel) {
@@ -122,10 +123,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public int getNumeroMinimoEncomenda() {
         return numeroMinimoEncomenda;
-    }
-
-    public boolean isTransporteMedico() {
-        return this.transporteMedico;
     }
 
     public void setCodigo(String codigo) {
@@ -191,7 +188,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
                 this.raioDeAcao == e.getRaioDeAcao() &&
                 this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
                 this.registos.equals(e.getRegistos()) &&
-                this.transporteMedico == e.isTransporteMedico();
+                this.transporteMedico == e.aceitoTransporteMedicamentos();
     }
 
     public String toString(){
@@ -266,5 +263,68 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+
+    /**
+     * Método que devolve o total faturado por uma empresa entre duas datas
+     * @param d1
+     * @param d2
+     * @param bd
+     * @return
+     */
+
+    public String getFaturacao(LocalDateTime d1, LocalDateTime d2, BDGeral bd){
+        StringBuilder sb = new StringBuilder();
+        double total = 0;
+        for(Encomenda e: this.registos){
+            double unit = 0;
+            double kms = 0;
+            LocalDateTime date = e.getData();
+            if(date.compareTo(d1) >= 0 && date.compareTo(d2) <= 0){
+                unit += e.getPeso() * 0.2;
+                try {
+                    Utilizador userEnc = bd.getUtilizadores().getUsers().get(bd.getUtilizadores().getEmail(e.getCodigo_user()));
+                    Loja lojaEnc = bd.getLojas().getLojas().get(bd.getLojas().getEmail(e.getCodigo_loja()));
+                    kms += DistanceCalculator.distance(this.getLatitude(), lojaEnc.getLatitude(), this.getLongitude(), lojaEnc.getLongitude());
+                    kms += DistanceCalculator.distance(lojaEnc.getLatitude(), userEnc.getLatitude(), lojaEnc.getLongitude(), userEnc.getLongitude());
+
+                    unit += kms * this.getCusto_km();
+
+                } catch (UserNotFoundException enc){
+                    System.out.println("User not found");
+                } catch (LojaNotFoundException enc){
+                    System.out.println("Loja not found");
+                }
+            }
+            total += unit;
+        }
+
+        String s1 = d1.getDayOfMonth() + "/" + d1.getMonthValue() + "/" + d1.getYear();
+        String s2 = d2.getDayOfMonth() + "/" + d2.getMonthValue() + "/" + d2.getYear();
+
+        sb.append("A sua empresa faturou " + total + " entre as datas " + s1 + " e " + s2 );
+        return sb.toString();
+    }
+
+    public int getKms(BDGeral bd){
+        int total = 0;
+        for(Encomenda e: this.registos){
+            try {
+                Utilizador u = bd.getUtilizadores().getUsers().get(bd.getUtilizadores().getEmail(e.getCodigo_user())).clone();
+                Loja j = bd.getLojas().getLojas().get(bd.getLojas().getEmail(e.getCodigo_loja())).clone();
+
+                double dist1 = DistanceCalculator.distance(this.getLatitude(), j.getLatitude(), this.getLongitude(), j.getLongitude());
+                double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+                int kms = (int) (dist1 + dist2);
+                total += kms;
+
+            } catch (UserNotFoundException exp){
+
+            } catch (LojaNotFoundException exp){
+
+            }
+        }
+
+        return total;
+    }
 
 }

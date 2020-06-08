@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 public interface BDGeralInterface {
     BDLojas getLojas();
@@ -29,4 +30,5 @@ public interface BDGeralInterface {
     EmpresaTransportes loginEmpresa(String email, String password) throws TransporteNotFoundException;
     void gravarFicheiro(String filename) throws IOException, FileNotFoundException, IOException;
     BDGeral lerFicheiro(String filename) throws IOException, ClassNotFoundException;
+    public Set<Pair> top10Encomendas();
 }

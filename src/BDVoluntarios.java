@@ -141,24 +141,26 @@ public class BDVoluntarios implements Serializable {
      * @param j
      * @return
      */
-    public List<Voluntario> voluntariosDisponíveis(Loja j) {
+    public List<Voluntario> voluntariosDisponíveis(Loja j, Utilizador u) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
             Voluntario v = this.voluntarios.get(s);
-            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
-            if (dist <= v.getRaio_acao() && v.getDisponibilidade()) {
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if (dist1 <= v.getRaio_acao() && dist2 <= v.getRaio_acao() && v.getDisponibilidade()) {
                 ret.add(v.clone());
             }
         }
         return ret;
     }
 
-    public List<Voluntario> voluntariosDisponíveisMed(Loja j) {
+    public List<Voluntario> voluntariosDisponíveisMed(Loja j , Utilizador u) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
-            Voluntario v = this.voluntarios.get(s);
-            double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
-            if (dist <= v.getRaio_acao() && v.getDisponibilidade() && v.aceitoTransporteMedicamentos()) {
+            Voluntario v = this.voluntarios.get(s).clone();
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if (dist1 <= v.getRaio_acao() && dist2 <= v.getRaio_acao() && v.getDisponibilidade() && v.aceitoTransporteMedicamentos()) {
                 ret.add(v.clone());
             }
         }

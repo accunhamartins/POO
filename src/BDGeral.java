@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class BDGeral implements Serializable, BDGeralInterface {
     private BDVoluntarios voluntarios;
@@ -319,6 +321,54 @@ public class BDGeral implements Serializable, BDGeralInterface {
     }
 
     /**
+     * Método que devolve os users que mais encomendas realizaram
+     * @return
+     */
+    public Set<Pair> top10Encomendas(){
+        Set<Pair> result = new TreeSet<>(new ComparaQuantidadePair());
+        for(String voluntario: this.voluntarios.getVoluntarios().keySet()){
+            Pair aux = new Pair();
+            Voluntario v = this.voluntarios.getVoluntarios().get(voluntario).clone();
+            aux.setFst(v.getNome());
+            aux.setSecond(v.getHistorico().size());
+            if(aux.getSnd() != 0) {
+                result.add(aux);
+            }
+        }
+
+        for(String empresa: this.transportes.getTransportes().keySet()){
+            Pair aux = new Pair();
+            EmpresaTransportes et = this.transportes.getTransportes().get(empresa).clone();
+            aux.setFst(et.getNome());
+            aux.setSecond(et.getRegistos().size());
+            if(aux.getSnd() != 0) {
+                result.add(aux);
+            }
+        }
+
+        return result   ;
+    }
+
+    /**
+     * Método que devolve as empresas que mais kms percorreram
+     * @return
+     */
+    public Set<Pair> top10KmsPercorridos (){
+        Set<Pair> result = new TreeSet<>(new ComparaQuantidadePair());
+
+        for(String empresa: this.transportes.getTransportes().keySet()){
+            Pair aux = new Pair();
+            EmpresaTransportes et = this.transportes.getTransportes().get(empresa).clone();
+            aux.setFst(et.getNome());
+            aux.setSecond(et.getKms(this));
+            if(aux.getSnd() != 0) {
+                result.add(aux);
+            }
+        }
+        return result   ;
+    }
+
+    /**
      * Método que grava os dados num ficheiro binário
      * @param filename
      * @throws IOException
@@ -348,5 +398,7 @@ public class BDGeral implements Serializable, BDGeralInterface {
         ois.close();
         return d;
     }
+
+
 
 }

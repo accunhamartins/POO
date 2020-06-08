@@ -93,6 +93,10 @@ public class LinhaEncomenda implements Serializable {
         return sb.toString();
     }
 
+    public boolean isMed(){
+        if(descricao.equals("Alcool") || descricao.equals("Desinfetante") || descricao.equals("Saco de lixo 30l") || descricao.equals("Saco de lixo de 50l")) return true;
+        else return false;
+    }
 
 
 }

@@ -181,7 +181,7 @@ public class BDTransportes implements Serializable {
             EmpresaTransportes et = this.transportes.get(s);
             Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
             Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
-            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.aceitoTransporteMedicamentos()){
+            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.aceitoTransporteMedicamentos() && et.isDisponivel()){
                 double custo = dist1 * et.getCusto_km() + dist2 *et.getCusto_km() + (peso * 0.2);
                 sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" || RATE --> "+ this.transportes.get(s).getClassificao() + " || CUSTO: " + custo + "\n");
             }
@@ -193,12 +193,26 @@ public class BDTransportes implements Serializable {
         this.transportes.put(et.getEmail(), et);
     }
 
-    public List<EmpresaTransportes> transDisponiveis(Loja j) {
+    public List<EmpresaTransportes> transDisponiveis(Loja j, Utilizador u) {
         List<EmpresaTransportes> ret = new ArrayList<>();
         for (String s : this.transportes.keySet()) {
-            EmpresaTransportes et = this.transportes.get(s);
-            double dist = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
-            if (dist <= et.getRaioDeAcao() && et.isDisponivel()) {
+            EmpresaTransportes et = this.transportes.get(s).clone();
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if (dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.isDisponivel()) {
+                ret.add(et.clone());
+            }
+        }
+        return ret;
+    }
+
+    public List<EmpresaTransportes> transDisponiveisMedParse(Loja j , Utilizador u) {
+        List<EmpresaTransportes> ret = new ArrayList<>();
+        for (String s : this.transportes.keySet()) {
+            EmpresaTransportes et = this.transportes.get(s).clone();
+            Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
+            Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
+            if (dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.aceitoTransporteMedicamentos() && et.isDisponivel()){
                 ret.add(et.clone());
             }
         }
