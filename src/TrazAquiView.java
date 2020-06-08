@@ -97,6 +97,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("----------------LOJA----------------");
         System.out.println("1. Marcar encomenda como preparada");
         System.out.println("2. Ver encomendas em stock");
+        System.out.println("3. Atualizar número de pessoas na fila");
         System.out.println("0. Retroceder");
     }
 

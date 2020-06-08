@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public class EmpresaTransportes extends UtilizadorSistema implements Serializable {
     private int nif;
     private double custo_km;
+    private int velocidade;
+    private int minutosDeEspera;
     private String local;
     private double raioDeAcao;
     private double classificao;
@@ -31,10 +33,12 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.classificao = 0;
         this.transporteMedico = false;
         this.disponivel = false;
+        this.minutosDeEspera = 0;
+        this.velocidade = 0;
     }
 
     public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda,
-                              boolean transporteMedico, double classificao, int avaliacoes, boolean disponivel){
+                              boolean transporteMedico, double classificao, int avaliacoes, boolean disponivel, int minutosDeEspera, int velocidade){
         super(email, password, "Transportadora", codigo, nome, latitude, longitude);
         this.nif = nif;
         this.custo_km = custo_km;
@@ -46,6 +50,8 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.classificao = classificao;
         this.avaliacoes = avaliacoes;
         this.disponivel = disponivel;
+        this.minutosDeEspera = minutosDeEspera;
+        this.velocidade = velocidade;
     }
 
     public EmpresaTransportes(EmpresaTransportes a){
@@ -60,6 +66,16 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.avaliacoes = a.getAvaliacoes();
         this.classificao = a.getClassificao();
         this.disponivel = a.isDisponivel();
+        this.minutosDeEspera = a.getMinutosDeEspera();
+        this.velocidade = a.getVelocidade();
+    }
+
+    public int getMinutosDeEspera() {
+        return this.minutosDeEspera;
+    }
+
+    public int getVelocidade() {
+        return this.velocidade;
     }
 
     public boolean aceitoTransporteMedicamentos(){
@@ -124,6 +140,15 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
     public int getNumeroMinimoEncomenda() {
         return numeroMinimoEncomenda;
+    }
+
+
+    public void setMinutosDeEspera(int minutosDeEspera) {
+        this.minutosDeEspera = minutosDeEspera;
+    }
+
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
     }
 
     public void setCodigo(String codigo) {

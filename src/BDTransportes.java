@@ -163,15 +163,18 @@ public class BDTransportes implements Serializable {
      */
     public String printEmpresas(Utilizador u, Loja j, double peso) {
         StringBuilder sb = new StringBuilder();
+        int count = 0;
         for (String s : this.transportes.keySet()) {
             EmpresaTransportes et = this.transportes.get(s);
             Double dist1 = DistanceCalculator.distance(j.getLatitude(), et.getLatitude(), j.getLongitude(), et.getLongitude());
             Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
-            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao()){
+            if(dist1 <= et.getRaioDeAcao() && dist2 <= et.getRaioDeAcao() && et.isDisponivel()){
                 double custo = dist1 * et.getCusto_km() + dist2 *et.getCusto_km() + (peso * 0.2);
                 sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" || RATE --> "+ this.transportes.get(s).getClassificao() + " || CUSTO: " + custo + "\n");
+                count++;
             }
         }
+        if(count == 0) sb.append("Não existem empresas disponíveis\n");
         return sb.toString();
     }
 

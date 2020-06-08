@@ -9,6 +9,8 @@ import java.util.TreeSet;
 public class Voluntario extends UtilizadorSistema implements Serializable {
     private boolean disponivel;
     private boolean transporteMedico;
+    private int velocidade;
+    private int minutosDeEspera;
     private LocalDate horaDeRegisto;
     private double raio_acao;
     private double classificacao;
@@ -26,6 +28,8 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.avaliacoes = 0;
         this.historico = new ArrayList<>();
         this.transporteMedico = false;
+        this.velocidade = 0;
+        this.minutosDeEspera = 0;
     }
     //Construtor de classe por clone
     public Voluntario(Voluntario a){
@@ -37,10 +41,13 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.avaliacoes = a.getAvaliacoes();
         this.setHistorico(a.getHistorico());
         this.transporteMedico = a.aceitoTransporteMedicamentos();
+        this.minutosDeEspera = a.getMinutosDeEspera();
+        this.velocidade = a.getVelocidade();
     }
 
     //Construtor parametrizado
-    public Voluntario(String email, String password, String a, String b, boolean c, double d, double e, LocalDate f, double g, List<Encomenda> h, double classificacao, int avaliacoes, boolean transporteMedico){
+    public Voluntario(String email, String password, String a, String b, boolean c, double d, double e, LocalDate f, double g, List<Encomenda> h, double classificacao,
+                      int avaliacoes, boolean transporteMedico, int velocidade, int minutosDeEspera){
         super(email, password, "Voluntario", b, a, d, e);
         this.disponivel = c;
         this.horaDeRegisto = f;
@@ -49,6 +56,16 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         this.avaliacoes = avaliacoes;
         this.setHistorico(h);
         this.transporteMedico = transporteMedico;
+        this.velocidade = velocidade;
+        this.minutosDeEspera = minutosDeEspera;
+    }
+
+    public int getVelocidade() {
+        return velocidade;
+    }
+
+    public int getMinutosDeEspera() {
+        return minutosDeEspera;
     }
 
     public boolean aceitoTransporteMedicamentos(){
@@ -104,6 +121,14 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
     //Método de definição de variáveis
     public void setNome(String a){
       super.setNome(a);
+    }
+
+    public void setMinutosDeEspera(int minutosDeEspera) {
+        this.minutosDeEspera = minutosDeEspera;
+    }
+
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
     }
 
     public void setAvaliacoes(int avaliacoes) {

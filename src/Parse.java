@@ -185,7 +185,11 @@ public class Parse {
         double raio_acao = Double.parseDouble(campos[4]);
         String email = codigo + "@gmail.com";
         String password = "12345";
-        return new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0, false);
+        Random random = new Random();
+        int low = 50;
+        int high = 90;
+        int velocidade = random.nextInt(high-low) + low;
+        return new Voluntario(email, password, nome, codigo, true, latitude, longitude, LocalDate.now(), raio_acao, new ArrayList<>(), 0, 0, false, velocidade, 0);
     }
 
     /**
@@ -205,7 +209,11 @@ public class Parse {
         double custo_km = Double.parseDouble(campos[6]);
         String email = codigo + "@gmail.com";
         String password = "12345";
-        return new EmpresaTransportes(email, password, codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0, true);
+        Random random = new Random();
+        int low = 90;
+        int high = 120;
+        int velocidade = random.nextInt(high-low) + low;
+        return new EmpresaTransportes(email, password, codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0, true, 0, velocidade);
     }
 
     /**
