@@ -222,11 +222,11 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
      * @param cod
      * @return
      */
-    public Encomenda getEncomenda(String cod){
+    public Encomenda getEncomenda(String cod) throws EncomendaNotFoundException{
         for(Encomenda s: this.historico){
             if(cod.equals(s.getCodigo())) return s;
         }
-        return null;
+        throw  new EncomendaNotFoundException();
     }
 
     /**

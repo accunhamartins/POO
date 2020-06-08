@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -326,5 +327,75 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
 
         return total;
     }
+
+    public String getPreparadas(){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda s: this.registos){
+            if(!s.isEntregue() && !s.isLevantada() && s.isPreparada()){
+                sb.append(s);
+                count++;
+            }
+        }
+        if(count == 0) sb.append("0");
+        return sb.toString();
+    }
+
+    public Encomenda getEncomenda(String cod) throws EncomendaNotFoundException{
+        for(Encomenda s: this.registos){
+            if(cod.equals(s.getCodigo())) return s;
+        }
+        throw new EncomendaNotFoundException();
+    }
+
+    public void updateEncomendaLoja(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setLevantada(true);
+        aux.add(enc);
+        for(Encomenda e: this.registos){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setRegistos(aux);
+    }
+
+    public String getNaoEntregue(){
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(Encomenda s: this.registos){
+            if(!s.isEntregue() && s.isLevantada()){
+                sb.append(s);
+                count++;
+            }
+        }
+        if(count == 0) sb.append("0");
+        return sb.toString();
+    }
+
+    public void updateEncomenda(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setLevantada(true);
+        aux.add(enc);
+        for(Encomenda e: this.registos){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setRegistos(aux);
+    }
+
+    public void updateEncomendaPreparada(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setPreparada(true);
+        aux.add(enc);
+        for(Encomenda e: this.registos){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setRegistos(aux);
+    }
+
 
 }

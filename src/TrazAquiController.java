@@ -353,8 +353,65 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Prima 8 para voltar ao menu");
                         break;
                     case 3:
-                            break;
+                        break;
                     case 4:
+                        EmpresaTransportes et2 = this.bd.getTransportes().getTransportes().get(et.getEmail()).clone();
+                        et2.setDisponivel(false);
+                        this.bd.addEmpresaDisponivel(et2);
+                        String preparadas = this.bd.getTransportes().getTransportes().get(et.getEmail()).getPreparadas();
+                        if(preparadas.equals("0")) System.out.println("Ainda não existem encomendas preparadas");
+                        else {
+                            System.out.println(preparadas);
+                            System.out.println("Indique o código da encomenda que levantou");
+                            String cod = Input.lerString();
+                            try {
+                                Encomenda encomenda = this.bd.getTransportes().getTransportes().get(et.getEmail()).getEncomenda(cod);
+                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomenda.getCodigo_loja()));
+                                Encomenda e = lj.getEnc(cod);
+                                this.bd.updateLoja2(e, lj);
+                                et.updateEncomendaLoja(encomenda);
+                                this.bd.updateTransportes2(et);
+                                System.out.println("Realizado com sucesso");
+
+                            } catch (LojaNotFoundException e) {
+                                System.out.println("Loja inválida");
+                            } catch (EncomendaNotFoundException e) {
+                                System.out.println("Encomenda Inválida");
+                            }
+                        }
+                        System.out.println("Insira 6 para voltar a imprimir o menu");
+                        break;
+                    case 5:
+                        String naoEntregue = this.bd.getTransportes().getTransportes().get(et.getEmail()).getNaoEntregue();
+                        if(naoEntregue.equals("0")){System.out.println("Não existem encomendas por entregar");}
+                        else {
+                            System.out.println(naoEntregue);
+                            System.out.println("Indique a encomenda que acabou de ser entregue");
+                            String cod2 = Input.lerString();
+                            try {
+                                Encomenda encomenda2 = this.bd.getTransportes().getTransportes().get(et.getEmail()).getEncomenda(cod2);
+                                LocalDateTime entrega = LocalDateTime.now();
+                                LocalDateTime emissao = encomenda2.getData();
+                                Duration duration = Duration.between(entrega, emissao);
+                                long diff = Math.abs(duration.toMinutes());
+                                et.updateEncomenda(encomenda2);
+                                String codUser = encomenda2.getCodigo_user();
+                                try {
+                                    String emailUser = this.bd.getUtilizadores().getEmail(codUser);
+                                    Utilizador u = this.bd.getUtilizadores().getUsers().get(emailUser).clone().clone();
+                                    u.updateEncomenda(encomenda2);
+                                    this.bd.updateUser2(u);
+                                    this.bd.updateTransportes2(et);
+                                    System.out.println("A encomenda " + encomenda2.getCodigo() + " foi entregue ao utilizador " + encomenda2.getCodigo_user());
+                                    System.out.println("Demorou " + diff + " minutos a ser entregue");
+                                    System.out.println("Insira 6 para voltar a imprimir o menu");
+                                } catch (UserNotFoundException e) {
+                                    System.out.println("Utilizador não foi encontrado");
+                                }
+                            } catch (EncomendaNotFoundException e){
+                                System.out.println("Código que encomenda inválido");
+                            }
+                        }
                         break;
                     case 6:
                         int size3 = this.bd.getTransportes().getTransportes().get(et.getEmail()).getRegistos().size();
@@ -459,20 +516,21 @@ public class TrazAquiController implements Serializable {
                             System.out.println(preparadas);
                             System.out.println("Indique o código da encomenda que levantou");
                             String cod = Input.lerString();
-                            Encomenda encomenda = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getEncomenda(cod);
                             try {
+                                Encomenda encomenda = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getEncomenda(cod);
                                 Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomenda.getCodigo_loja()));
                                 Encomenda e = lj.getEnc(cod);
                                 this.bd.updateLoja2(e, lj);
+                                v.updateEncomendaLoja(encomenda);
+                                this.bd.updateVoluntario2(v);
                                 System.out.println("Realizado com sucesso");
-
                             } catch (LojaNotFoundException e) {
                                 System.out.println("Loja inválida");
+                                System.out.println("Insira 6 para retroceder");
                             } catch (EncomendaNotFoundException e) {
                                 System.out.println("Encomenda Inválida");
+                                System.out.println("Insira 6 para retroceder");
                             }
-                            v.updateEncomendaLoja(encomenda);
-                            this.bd.updateVoluntario2(v);
                         }
                         System.out.println("Insira 6 para voltar a imprimir o menu");
                         break;
@@ -483,24 +541,29 @@ public class TrazAquiController implements Serializable {
                             System.out.println(naoEntregue);
                             System.out.println("Indique a encomenda que acabou de ser entregue");
                             String cod2 = Input.lerString();
-                            Encomenda encomenda2 = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getEncomenda(cod2).clone();
-                            LocalDateTime entrega = LocalDateTime.now();
-                            LocalDateTime emissao = encomenda2.getData();
-                            Duration duration = Duration.between(entrega, emissao);
-                            long diff = Math.abs(duration.toMinutes());
-                            v.updateEncomenda(encomenda2);
-                            String codUser = encomenda2.getCodigo_user();
                             try {
-                                String emailUser = this.bd.getUtilizadores().getEmail(codUser);
-                                Utilizador u = this.bd.getUtilizadores().getUsers().get(emailUser).clone().clone();
-                                u.updateEncomenda(encomenda2);
-                                this.bd.updateUser2(u);
-                                this.bd.updateVoluntario2(v);
-                                System.out.println("A encomenda " + encomenda2.getCodigo() + " foi entregue ao utilizador " + encomenda2.getCodigo_user());
-                                System.out.println("Demorou " + diff + " minutos a ser entregue");
-                                System.out.println("Insira 6 para voltar a imprimir o menu");
-                            } catch (UserNotFoundException e){
-                                System.out.println("Utilizador não foi encontrado");
+                                Encomenda encomenda2 = this.bd.getVoluntarios().getVoluntarios().get(v.getEmail()).getEncomenda(cod2).clone();
+                                LocalDateTime entrega = LocalDateTime.now();
+                                LocalDateTime emissao = encomenda2.getData();
+                                Duration duration = Duration.between(entrega, emissao);
+                                long diff = Math.abs(duration.toMinutes());
+                                v.updateEncomenda(encomenda2);
+                                String codUser = encomenda2.getCodigo_user();
+                                try {
+                                    String emailUser = this.bd.getUtilizadores().getEmail(codUser);
+                                    Utilizador u = this.bd.getUtilizadores().getUsers().get(emailUser).clone().clone();
+                                    u.updateEncomenda(encomenda2);
+                                    this.bd.updateUser2(u);
+                                    this.bd.updateVoluntario2(v);
+                                    System.out.println("A encomenda " + encomenda2.getCodigo() + " foi entregue ao utilizador " + encomenda2.getCodigo_user());
+                                    System.out.println("Demorou " + diff + " minutos a ser entregue");
+                                    System.out.println("Insira 6 para voltar a imprimir o menu");
+                                } catch (UserNotFoundException e) {
+                                    System.out.println("Utilizador não foi encontrado");
+                                }
+                            } catch (EncomendaNotFoundException e){
+                                System.out.println("Código de encomenda inválido");
+                                System.out.println("Insira 6 para retroceder");
                             }
                         }
                         break;
