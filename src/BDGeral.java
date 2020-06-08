@@ -243,9 +243,15 @@ public class BDGeral implements Serializable, BDGeralInterface {
     }
 
     public void updateEncomendaVoluntario(Encomenda enc) throws EncomendaNotFoundException {
-        Voluntario v = this.voluntarios.encontraEnc(enc.getCodigo());
+        Voluntario v = this.voluntarios.encontraEnc(enc.getCodigo()).clone();
         v.updateEncomendaPreparada(enc);
         updateVoluntario2(v);
+    }
+
+    public void updateEncomendaTransportes(Encomenda enc) throws EncomendaNotFoundException{
+        EmpresaTransportes et = this.transportes.encontraEnc(enc.getCodigo()).clone();
+        et.updateEncomendaPreparada(enc);
+        updateTransportes2(et);
     }
 
     /**

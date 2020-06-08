@@ -213,11 +213,16 @@ public class BDVoluntarios implements Serializable {
      * Método que atualiza o voluntário v
      * @param v
      */
-
     public void updateVoluntario2(Voluntario v){
         this.voluntarios.put(v.getEmail(), v);
     }
 
+    /**
+     * Método que devolve o voluntário que tem a encomenda com o código enc
+     * @param enc
+     * @return
+     * @throws EncomendaNotFoundException
+     */
     public Voluntario encontraEnc(String enc) throws EncomendaNotFoundException{
         Voluntario aux;
         for(String s: this.voluntarios.keySet()){
@@ -225,6 +230,20 @@ public class BDVoluntarios implements Serializable {
             if(aux.existe(enc)) return aux;
         }
         throw new EncomendaNotFoundException();
+    }
+
+    /**
+     * Método que diz se a encomenda existe na BDVoluntários
+     * @param enc
+     * @return
+     */
+    public boolean existeEnc(String enc){
+        Voluntario aux;
+        for(String s: this.voluntarios.keySet()){
+            aux = this.voluntarios.get(s);
+            if(aux.existe(enc)) return true;
+        }
+        return false;
     }
 
 }

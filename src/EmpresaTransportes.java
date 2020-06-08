@@ -297,7 +297,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
      * @param bd
      * @return
      */
-
     public String getFaturacao(LocalDateTime d1, LocalDateTime d2, BDGeral bd){
         StringBuilder sb = new StringBuilder();
         double total = 0;
@@ -331,6 +330,11 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+    /**
+     * Método que devolve todos os kms percorridos por uma empresa com todas as suas encomendas
+     * @param bd
+     * @return
+     */
     public int getKms(BDGeral bd){
         int total = 0;
         for(Encomenda e: this.registos){
@@ -353,6 +357,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return total;
     }
 
+    /**
+     * Método que devolve as encomendas de uma empresa que já se encontram preparadas para serem entregues
+     * @return
+     */
     public String getPreparadas(){
         StringBuilder sb = new StringBuilder();
         int count = 0;
@@ -366,6 +374,12 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+    /**
+     * Método que devolve uma encomenda com código cod
+     * @param cod
+     * @return
+     * @throws EncomendaNotFoundException
+     */
     public Encomenda getEncomenda(String cod) throws EncomendaNotFoundException{
         for(Encomenda s: this.registos){
             if(cod.equals(s.getCodigo())) return s;
@@ -373,6 +387,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         throw new EncomendaNotFoundException();
     }
 
+    /**
+     * Método que atualiza uma encomenda como estando já levantada
+     * @param enc
+     */
     public void updateEncomendaLoja(Encomenda enc){
         ArrayList<Encomenda> aux = new ArrayList<>();
         enc.setLevantada(true);
@@ -385,6 +403,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         setRegistos(aux);
     }
 
+    /**
+     * Método que devolve as encomendas não entregues
+     * @return
+     */
     public String getNaoEntregue(){
         StringBuilder sb = new StringBuilder();
         int count = 0;
@@ -398,9 +420,13 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return sb.toString();
     }
 
+    /**
+     * Método que atualiza uma encomenda como estando já entregue
+     * @param enc
+     */
     public void updateEncomenda(Encomenda enc){
         ArrayList<Encomenda> aux = new ArrayList<>();
-        enc.setLevantada(true);
+        enc.setEntregue(true);
         aux.add(enc);
         for(Encomenda e: this.registos){
             if(!e.getCodigo().equals(enc.getCodigo())){
@@ -410,6 +436,10 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         setRegistos(aux);
     }
 
+    /**
+     * Método que atualiza uma encomenda como estando preparada
+     * @param enc
+     */
     public void updateEncomendaPreparada(Encomenda enc){
         ArrayList<Encomenda> aux = new ArrayList<>();
         enc.setPreparada(true);
@@ -420,6 +450,18 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
             }
         }
         setRegistos(aux);
+    }
+
+    /**
+     * Método que verifica se uma dada encomenda existe
+     * @param enc
+     * @return
+     */
+    public boolean existe(String enc){
+        for(Encomenda e: this.registos){
+            if(e.getCodigo().equals(enc)) return true;
+        }
+        return false;
     }
 
 

@@ -418,7 +418,7 @@ public class TrazAquiController implements Serializable {
                                     this.bd.updateTransportes2(et);
                                     System.out.println("A encomenda " + encomenda2.getCodigo() + " foi entregue ao utilizador " + encomenda2.getCodigo_user());
                                     System.out.println("Demorou " + diff + " minutos a ser entregue");
-                                    System.out.println("Insira 6 para voltar a imprimir o menu");
+                                    System.out.println("Insira 8 para voltar a imprimir o menu");
                                 } catch (UserNotFoundException e) {
                                     System.out.println("Utilizador não foi encontrado");
                                 }
@@ -654,8 +654,13 @@ public class TrazAquiController implements Serializable {
                             try {
                                 Encomenda enc = this.bd.getLojas().getLojas().get(lj.getEmail()).getEnc(cod).clone();
                                 lj.updateEncomenda(enc);
-                                this.bd.updateEncomendaVoluntario(enc);
-                                this.bd.updateLoja3(lj);
+                                if(this.bd.getVoluntarios().existeEnc(enc.getCodigo())) {
+                                    this.bd.updateEncomendaVoluntario(enc);
+                                    this.bd.updateLoja3(lj);
+                                } else {
+                                    this.bd.updateEncomendaTransportes(enc);
+                                    this.bd.updateLoja3(lj);
+                                }
                             } catch (EncomendaNotFoundException e) {
                                 System.out.println("Código de encomenda inválido");
                             }

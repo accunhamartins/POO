@@ -222,4 +222,13 @@ public class BDTransportes implements Serializable {
         return ret;
     }
 
+    public EmpresaTransportes encontraEnc(String enc) throws EncomendaNotFoundException{
+        EmpresaTransportes aux;
+        for(String s: this.transportes.keySet()){
+            aux = this.transportes.get(s);
+            if(aux.existe(enc)) return aux;
+        }
+        throw new EncomendaNotFoundException();
+    }
+
 }
