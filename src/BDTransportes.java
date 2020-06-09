@@ -126,7 +126,7 @@ public class BDTransportes implements Serializable {
     public String printTransportes(){
         StringBuilder sb = new StringBuilder();
         for(String s: this.transportes.keySet()){
-            sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" RATE --> "+ this.transportes.get(s).getClassificao() + "\n" );
+            sb.append(this.transportes.get(s).getCodigo() + " ---> " + this.transportes.get(s).getNome() +" || RATE --> "+ this.transportes.get(s).getClassificao() + "\n" );
         }
         return sb.toString();
     }

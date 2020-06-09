@@ -113,7 +113,7 @@ public class BDVoluntarios implements Serializable {
     public String printVoluntario(){
         StringBuilder sb = new StringBuilder();
         for(String s: this.voluntarios.keySet()){
-            sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() +" RATE --> "+ this.voluntarios.get(s).getClassificacao() + "\n" );
+            sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() +" || RATE --> "+ this.voluntarios.get(s).getClassificacao() + "\n" );
         }
         return sb.toString();
     }
