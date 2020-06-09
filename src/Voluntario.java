@@ -1,10 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Voluntario extends UtilizadorSistema implements Serializable {
     private boolean disponivel;
@@ -374,5 +371,47 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
         sb.append("Efetuou encomendas em " + lojas.size() + " lojas");
         return sb.toString();
     }
+
+    /**
+     * Retorna o número de encomendas por entregar
+     * @return
+     */
+
+    public int porEntregar(){
+        int i = 0;
+        for(Encomenda e: this.historico){
+            if(e.isLevantada() && !e.isEntregue()) i++;
+        }
+        return i;
+    }
+
+    /**
+     * Retorna o número de encomendas por levantar
+     * @return
+     */
+    public int porLevantar(){
+        int i = 0;
+        for(Encomenda e: this.historico){
+            if(!e.isLevantada() && e.isPreparada()) i++;
+        }
+        return i;
+    }
+
+    /**
+     * Método que preve alguns atrasos, por causa das condições atmosféricas, e retorna, em minutos, o tempo perdido;
+     * @return
+     */
+    int calculaAtrasos(){
+        Random random = new Random();
+        int clima = random.nextInt(100);
+        if(clima <= 75){
+            return 0;
+        }
+        else if(clima > 75 && clima <= 94){
+            return 30;
+        }
+        return 60;
+    }
+
 
 }

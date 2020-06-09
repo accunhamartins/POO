@@ -335,6 +335,8 @@ public class TrazAquiController implements Serializable {
             EmpresaTransportes et = bd.loginEmpresa(email, password).clone();
             clearScreen();
             this.view.showMenuTransportes();
+            System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
+            System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar");
             do{
                 op = input.lerInt();
                 switch (op){
@@ -357,6 +359,24 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Prima 9 para voltar ao menu");
                         break;
                     case 3:
+                        System.out.println(et.getRegistos());
+                        System.out.println("Insira o código da encomenda para o qual quer calcular o custo");
+                        String codCust = input.lerString();
+                        try{
+                            Encomenda encomendaCust = this.bd.getTransportes().getTransportes().get(et.getEmail()).getEncomenda(codCust);
+                            Loja ljCust = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomendaCust.getCodigo_loja()));
+                            Utilizador uCust = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(encomendaCust.getCodigo_user())).clone();
+                            int distCust1 = (int) DistanceCalculator.distance(et.getLatitude(), ljCust.getLatitude(), et.getLongitude(), ljCust.getLongitude());
+                            int distCust2 = (int) DistanceCalculator.distance(uCust .getLatitude(), ljCust.getLatitude(), uCust.getLongitude(), ljCust.getLongitude());
+                            int custoTotal = (int) ((distCust1 + distCust2) * et.getCusto_km() + encomendaCust.getPeso() * 0.2);
+                            System.out.println("\nO lucro da encomenda " + codCust + " será de " + custoTotal + " u.m.");
+                        } catch (LojaNotFoundException e) {
+                            System.out.println("Loja inválida");
+                        } catch (EncomendaNotFoundException e) {
+                            System.out.println("Encomenda Inválida");
+                        } catch (UserNotFoundException e){
+                        }
+                        System.out.println("Insira 9 para voltar a imprimir o menu");
                         break;
                     case 4:
                         EmpresaTransportes et2 = this.bd.getTransportes().getTransportes().get(et.getEmail()).clone();
@@ -395,6 +415,7 @@ public class TrazAquiController implements Serializable {
                     case 5:
                         String naoEntregue = this.bd.getTransportes().getTransportes().get(et.getEmail()).getNaoEntregue();
                         if(naoEntregue.equals("0")){System.out.println("Não existem encomendas por entregar");}
+                        else if(naoEntregue.equals("1")) System.out.println("Existem mais de uma encomenda por entregar.\nPrima 6 para realizar todas as entregas");
                         else {
                             System.out.println(naoEntregue);
                             System.out.println("Indique a encomenda que acabou de ser entregue");
@@ -417,6 +438,7 @@ public class TrazAquiController implements Serializable {
                                     totalTime += ((distancia1 + distancia2) * 60) / et.getVelocidade();
                                     totalTime += et.getMinutosDeEspera();
                                     diff += totalTime;
+                                    diff += et.calculaAtrasos();
                                     et.setMinutosDeEspera(0);
                                     u.updateEncomenda(encomenda2);
                                     this.bd.updateUser2(u);
@@ -435,7 +457,57 @@ public class TrazAquiController implements Serializable {
                         }
                         break;
                     case 6:
-
+                        ArrayList<Encomenda> rota = et.getRota();
+                        Encomenda inicial = rota.get(0);
+                        int totalTime = 0;
+                        int totalKms = 0;
+                        if(rota.size() <= 1){
+                            System.out.println("Não existem mais de 1 encomenda levantadas");
+                        }
+                        else {
+                            try {
+                                System.out.println("Serão entregues todas as encomendas que se encontram levantadas");
+                                Utilizador u = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(inicial.getCodigo_user()));
+                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(inicial.getCodigo_loja()));
+                                int distancia1 = (int) DistanceCalculator.distance(et.getLatitude(), lj.getLatitude(), et.getLongitude(), lj.getLongitude());
+                                int distancia2 = (int) DistanceCalculator.distance(u.getLatitude(), lj.getLatitude(), u.getLongitude(), lj.getLongitude());
+                                LocalDateTime entrega = LocalDateTime.now();
+                                LocalDateTime emissao = inicial.getData();
+                                Duration duration = Duration.between(entrega, emissao);
+                                long diff = Math.abs(duration.toMinutes());
+                                totalTime += ((distancia1 + distancia2) * 60) / et.getVelocidade();
+                                int atraso = et.calculaAtrasos();
+                                totalTime += et.getMinutosDeEspera();
+                                diff += totalTime;
+                                diff += atraso;
+                                totalKms += distancia1 + distancia2;
+                                et.setMinutosDeEspera(0);
+                                u.updateEncomenda(inicial);
+                                this.bd.updateUser2(u);
+                                this.bd.updateTransportes2(et);
+                                System.out.println("\nDemorou " + diff + " minutos a ser entregue ao user " + u.getCodigo());
+                                System.out.println("Distância percorrida " + totalKms + " kms");
+                                for (int i = 1; i < rota.size(); i++) {
+                                    Encomenda e1 = rota.get(i-1);
+                                    Utilizador u1 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e1.getCodigo_user()));
+                                    Encomenda e2 = rota.get(i);
+                                    Utilizador u2 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e2.getCodigo_user()));
+                                    int distancia = (int) DistanceCalculator.distance(u1.getLatitude(), u2.getLatitude(), u1.getLongitude(), u2.getLongitude());
+                                    totalKms += distancia;
+                                    totalTime += (distancia * 60) / et.getVelocidade();
+                                    totalTime += atraso;
+                                    u2.updateEncomenda(e2);
+                                    this.bd.updateUser2(u2);
+                                    System.out.println("\nDemorou " + totalTime + " minutos a ser entregue ao user " + u2.getCodigo());
+                                    System.out.println("Distância percorrida " + totalKms + " kms\n");
+                                }
+                            } catch (UserNotFoundException e) {
+                                System.out.println("Utilizador inválido");
+                            } catch (LojaNotFoundException e) {
+                                System.out.println("Loja inválida");
+                            }
+                        }
+                        System.out.println("Prima 9 para voltar ao menu");
                         break;
                     case 7:
                         int size3 = this.bd.getTransportes().getTransportes().get(et.getEmail()).getRegistos().size();
@@ -468,6 +540,8 @@ public class TrazAquiController implements Serializable {
                     case 9:
                         clearScreen();
                         this.view.showMenuTransportes();
+                        System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
+                        System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar");
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -500,6 +574,8 @@ public class TrazAquiController implements Serializable {
             Voluntario v = bd.loginVoluntario(email, password).clone();
             clearScreen();
             this.view.showMenuVoluntario();
+            System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar.");
+            System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar");
             do {
                 op = input.lerInt();
                 switch (op) {
@@ -592,6 +668,7 @@ public class TrazAquiController implements Serializable {
                                     System.out.println(v.getMinutosDeEspera());
                                     System.out.println(lj.getNrPessoasEmFila());
                                     diff += totalTime;
+                                    diff += v.calculaAtrasos();
                                     v.setMinutosDeEspera(0);
                                     u.updateEncomenda(encomenda2);
                                     this.bd.updateUser2(u);
@@ -613,6 +690,8 @@ public class TrazAquiController implements Serializable {
                     case 6:
                         clearScreen();
                         this.view.showMenuVoluntario();
+                        System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar.");
+                        System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar");
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -967,12 +1046,34 @@ public class TrazAquiController implements Serializable {
                             String cod1 = input.lerString();
                             try {
                                 Encomenda enc = u.devolveEncomenda(cod1);
+                                String one, two, three, four;
+                                one = "NÃO";
+                                two = "NÃO";
+                                three = "NÃO";
+                                four = "NÃO";
+
+                                if(enc.isEncomendaMedica()){
+                                    one = "SIM";
+                                }
+
+                                if(enc.isPreparada()){
+                                    two = "SIM";
+                                }
+
+                                if(enc.isLevantada()){
+                                    three = "SIM";
+                                }
+
+                                if(enc.isEntregue()){
+                                    four = "SIM";
+                                }
+
                                 System.out.println("\n\nENCOMENDA COM O CÓDIGO " + enc.getCodigo());
                                 System.out.println("\nESTADOS DA ENCOMENDA: ");
-                                System.out.println("\nENCOMENDA MÉDICO ---> " + enc.isEncomendaMedica());
-                                System.out.println("\nENCOMENDA PRONTA A SER LEVANTADA DA LOJA ---> " + enc.isPreparada());
-                                System.out.println("\nENCOMENDA LEVANTADA E A CAMINHO ---> " + enc.isLevantada());
-                                System.out.println("\nENCOMENDA ENTREGUE ---> " + enc.isEntregue());
+                                System.out.println("\nENCOMENDA MÉDICA ---> " + one);
+                                System.out.println("\nENCOMENDA PRONTA A SER LEVANTADA DA LOJA ---> " + two);
+                                System.out.println("\nENCOMENDA LEVANTADA E A CAMINHO ---> " + three);
+                                System.out.println("\nENCOMENDA ENTREGUE ---> " + four);
                                 System.out.println("\nInsira 12 para retroceder");
                             } catch (EncomendaNotFoundException e){
                                 System.out.println("Código inválido");
@@ -1081,7 +1182,7 @@ public class TrazAquiController implements Serializable {
                             System.out.println("\nInsira 12 para retroceder");
                             break;
                         case 11:
-                            System.out.println("TOP10 voluntário e empresas que mais kms percorreram: \n");
+                            System.out.println("TOP10 empresas que mais kms percorreram: \n");
                             Set<Pair> result2 = this.bd.top10KmsPercorridos();
                             result2.stream().limit(10).forEach(e -> System.out.println(e.toString() + " kms percorridos"));
                             System.out.println("\nInsira 12 para retroceder");

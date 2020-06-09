@@ -1,9 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EmpresaTransportes extends UtilizadorSistema implements Serializable {
@@ -417,6 +414,11 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
             }
         }
         if(count == 0) sb.append("0");
+        if(count > 1){
+            StringBuilder aux = new StringBuilder();
+            aux.append("1");
+            return aux.toString();
+        }
         return sb.toString();
     }
 
@@ -464,5 +466,59 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return false;
     }
 
+    /**
+     * Método que devolve um array com todas as encomendas levantadas e prontas a serem entregues
+     * @return
+     */
+    public ArrayList<Encomenda> getRota(){
+       ArrayList<Encomenda> ret = new ArrayList<>();
+       for(Encomenda e: this.registos){
+            if(e.isLevantada()) {
+               ret.add(e.clone());
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * Retorna o número de encomendas por entregar
+     * @return
+     */
+
+    public int porEntregar(){
+        int i = 0;
+        for(Encomenda e: this.registos){
+            if(e.isLevantada() && !e.isEntregue()) i++;
+        }
+        return i;
+    }
+
+    /**
+     * Retorna o número de encomendas por levantar
+     * @return
+     */
+    public int porLevantar(){
+        int i = 0;
+        for(Encomenda e: this.registos){
+            if(!e.isLevantada() && e.isPreparada()) i++;
+        }
+        return i;
+    }
+
+    /**
+     * Método que preve alguns atrasos, por causa das condições atmosféricas, e retorna, em minutos, o tempo perdido;
+     * @return
+     */
+    int calculaAtrasos(){
+        Random random = new Random();
+        int clima = random.nextInt(100);
+        if(clima <= 75){
+            return 0;
+        }
+        else if(clima > 75 && clima <= 94){
+            return 30;
+        }
+        return 60;
+    }
 
 }
