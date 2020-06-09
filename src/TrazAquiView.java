@@ -14,6 +14,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("3.Gravar estado");
         System.out.println("4.Carregar estado");
         System.out.println("0.Sair da aplicação");
+        System.out.print("\nInsira uma opção --> ");
     }
 
 
@@ -21,6 +22,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("ESCOLHA O TIPO DE LOAD QUE PRETENDE REALIZAR");
         System.out.println("1. LER FICHEIRO LOGS.TXT");
         System.out.println("2. LER OUTRO FICHEIRO .DAT");
+        System.out.print("\nInsira uma opção --> ");
     }
 
     public void printHeader(){
@@ -35,6 +37,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("3. Loja");
         System.out.println("4. Empresa de Transportes");
         System.out.println("0. Retroceder");
+        System.out.print("\nInsira uma opção --> ");
     }
 
     public void showMenuLogin(){
@@ -44,6 +47,7 @@ public class TrazAquiView implements Serializable {
         System.out.println("3. Loja");
         System.out.println("4. Empresa de Transportes");
         System.out.println("0. Retroceder");
+        System.out.print("\nInsira uma opção --> ");
     }
 
     public void headRegistoUser() {

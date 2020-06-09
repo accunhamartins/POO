@@ -336,7 +336,8 @@ public class TrazAquiController implements Serializable {
             clearScreen();
             this.view.showMenuTransportes();
             System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
-            System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar");
+            System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar\n");
+            System.out.print("\nInsira uma opção --> ");
             do{
                 op = input.lerInt();
                 switch (op){
@@ -546,7 +547,8 @@ public class TrazAquiController implements Serializable {
                         clearScreen();
                         this.view.showMenuTransportes();
                         System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
-                        System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar");
+                        System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar\n");
+                        System.out.print("\nInsira uma opção --> ");
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -579,8 +581,9 @@ public class TrazAquiController implements Serializable {
             Voluntario v = bd.loginVoluntario(email, password).clone();
             clearScreen();
             this.view.showMenuVoluntario();
-            System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar.");
-            System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar");
+            System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar");
+            System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar\n");
+            System.out.print("\nInsira uma opção --> ");
             do {
                 op = input.lerInt();
                 switch (op) {
@@ -696,8 +699,9 @@ public class TrazAquiController implements Serializable {
                     case 6:
                         clearScreen();
                         this.view.showMenuVoluntario();
-                        System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar.");
-                        System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar");
+                        System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar");
+                        System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar\n");
+                        System.out.print("\nInsira uma opção --> ");
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -732,6 +736,7 @@ public class TrazAquiController implements Serializable {
             Loja lj = bd.loginLoja(email, password).clone();
             clearScreen();
             this.view.showMenuLoja();
+            System.out.print("\nInsira uma opção --> ");;
             do {
                 op = input.lerInt();
                 switch (op) {
@@ -785,6 +790,7 @@ public class TrazAquiController implements Serializable {
                     case 4:
                         clearScreen();
                         this.view.showMenuLoja();
+                        System.out.print("\nInsira uma opção --> ");
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -819,6 +825,7 @@ public class TrazAquiController implements Serializable {
             Utilizador u = bd.loginUser(email, password).clone();
             clearScreen();
             this.view.showMenuUser();
+            System.out.print("\nInsira uma opção --> ");
                 do {
                     op = input.lerInt();
                     switch (op) {
@@ -1196,6 +1203,7 @@ public class TrazAquiController implements Serializable {
                         case 12:
                             clearScreen();
                             this.view.showMenuUser();
+                            System.out.print("\nInsira uma opção --> ");
                             break;
                         default:
                             System.out.println("Opcao inválida");
