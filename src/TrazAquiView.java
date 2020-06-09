@@ -91,10 +91,12 @@ public class TrazAquiView implements Serializable {
         System.out.println("----------------VOLUNTÁRIO----------------");
         System.out.println("1. Declarar-se disponível para ir buscar encomenda");
         System.out.println("2. Declarar-se indisponível para ir buscar encomenda");
-        System.out.println("3. Histórico total de encomendas.");
-        System.out.println("4. Sinalizar levantamento de encomenda em loja");
-        System.out.println("5. Sinalizar entrega de encomenda a utilizador");
-        System.out.println("6. Imprimir menu.");
+        System.out.println("3. Declarar-se disponível para transportar encomendas médicas");
+        System.out.println("4. Declarar-se indisponível para transportar encomendas médicas");
+        System.out.println("5. Histórico total de encomendas.");
+        System.out.println("6. Sinalizar levantamento de encomenda em loja");
+        System.out.println("7. Sinalizar entrega de encomenda a utilizador");
+        System.out.println("8. Imprimir menu.");
         System.out.println("0. Retroceder");
     }
 
@@ -110,13 +112,15 @@ public class TrazAquiView implements Serializable {
         System.out.println("----------------EMPRESA TRANSPORTADORA----------------");
         System.out.println("1. Declarar-se disponível para transporte de encomenda");
         System.out.println("2. Declarar-se indisponível para transporte de encomenda");
-        System.out.println("3. Apresentar preço de transporte de encomenda");
-        System.out.println("4. Sinalizar levantamento de encomenda na loja");
-        System.out.println("5. Anotar tempo e entrega de uma encomenda");
-        System.out.println("6. Entregar todas as encomendas");
-        System.out.println("7. Histórico de encomendas");
-        System.out.println("8. Total faturado entre 2 datas");
-        System.out.println("9. Imprimir menu");
+        System.out.println("3. Declarar-se disponível para transportar encomendas médicas");
+        System.out.println("4. Declarar-se indisponível para transportar encomendas médicas");
+        System.out.println("5. Apresentar preço de transporte de encomenda");
+        System.out.println("6. Sinalizar levantamento de encomenda na loja");
+        System.out.println("7. Anotar tempo e entrega de uma encomenda");
+        System.out.println("8. Entregar todas as encomendas");
+        System.out.println("9. Histórico de encomendas");
+        System.out.println("10. Total faturado entre 2 datas");
+        System.out.println("11. Imprimir menu");
         System.out.println("0. Retroceder");
     }
 
