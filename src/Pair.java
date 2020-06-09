@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Pair{
+public class Pair implements Serializable {
 
     private String fst;
     private int snd;

@@ -123,6 +123,30 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
           this.encomendas_realizadas.add(e.clone());
       }
 
+    public void updateEncomendaLoja(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setLevantada(true);
+        aux.add(enc);
+        for(Encomenda e: this.encomendas_realizadas){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setEncomendas(aux);
+    }
+
+    public void updateEncomendaPronta(Encomenda enc){
+        ArrayList<Encomenda> aux = new ArrayList<>();
+        enc.setPreparada(true);
+        aux.add(enc);
+        for(Encomenda e: this.encomendas_realizadas){
+            if(!e.getCodigo().equals(enc.getCodigo())){
+                aux.add(e);
+            }
+        }
+        setEncomendas(aux);
+    }
+
     /**
      * Método que atualiza uma encomenda
      * @param enc
@@ -137,5 +161,17 @@ public class Utilizador extends UtilizadorSistema implements Serializable {
             }
         }
         setEncomendas(aux);
+    }
+
+    /**
+     * Método que devolve uma encomenda com o código cod
+     * @param cod
+     * @return
+     */
+    public Encomenda devolveEncomenda(String cod) throws EncomendaNotFoundException{
+        for(Encomenda e: this.encomendas_realizadas){
+            if(e.getCodigo().equals(cod)) return e.clone();
+        }
+        throw new EncomendaNotFoundException();
     }
 }
