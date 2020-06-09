@@ -440,6 +440,7 @@ public class TrazAquiController implements Serializable {
                                     diff += totalTime;
                                     diff += et.calculaAtrasos();
                                     et.setMinutosDeEspera(0);
+                                    et.updateEncomenda(encomenda2);
                                     u.updateEncomenda(encomenda2);
                                     this.bd.updateUser2(u);
                                     this.bd.updateTransportes2(et);
@@ -467,21 +468,23 @@ public class TrazAquiController implements Serializable {
                         else {
                             try {
                                 System.out.println("Serão entregues todas as encomendas que se encontram levantadas");
-                                Utilizador u = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(inicial.getCodigo_user()));
-                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(inicial.getCodigo_loja()));
+                                Utilizador u = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(inicial.getCodigo_user())).clone();
+                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(inicial.getCodigo_loja())).clone();
                                 int distancia1 = (int) DistanceCalculator.distance(et.getLatitude(), lj.getLatitude(), et.getLongitude(), lj.getLongitude());
                                 int distancia2 = (int) DistanceCalculator.distance(u.getLatitude(), lj.getLatitude(), u.getLongitude(), lj.getLongitude());
+                                int distancia3 = et.distanciaEntreLojas(rota, this.bd);
                                 LocalDateTime entrega = LocalDateTime.now();
                                 LocalDateTime emissao = inicial.getData();
                                 Duration duration = Duration.between(entrega, emissao);
                                 long diff = Math.abs(duration.toMinutes());
-                                totalTime += ((distancia1 + distancia2) * 60) / et.getVelocidade();
+                                totalTime += ((distancia1 + distancia2 + distancia3) * 60) / et.getVelocidade();
                                 int atraso = et.calculaAtrasos();
                                 totalTime += et.getMinutosDeEspera();
                                 diff += totalTime;
                                 diff += atraso;
-                                totalKms += distancia1 + distancia2;
+                                totalKms += distancia1 + distancia2 + distancia3;
                                 et.setMinutosDeEspera(0);
+                                et.updateEncomenda(inicial);
                                 u.updateEncomenda(inicial);
                                 this.bd.updateUser2(u);
                                 this.bd.updateTransportes2(et);
@@ -496,8 +499,10 @@ public class TrazAquiController implements Serializable {
                                     totalKms += distancia;
                                     totalTime += (distancia * 60) / et.getVelocidade();
                                     totalTime += atraso;
+                                    et.updateEncomenda(e2);
                                     u2.updateEncomenda(e2);
                                     this.bd.updateUser2(u2);
+                                    this.bd.updateTransportes2(et);
                                     System.out.println("\nDemorou " + totalTime + " minutos a ser entregue ao user " + u2.getCodigo());
                                     System.out.println("Distância percorrida " + totalKms + " kms\n");
                                 }
@@ -670,6 +675,7 @@ public class TrazAquiController implements Serializable {
                                     diff += totalTime;
                                     diff += v.calculaAtrasos();
                                     v.setMinutosDeEspera(0);
+                                    v.updateEncomenda(encomenda2);
                                     u.updateEncomenda(encomenda2);
                                     this.bd.updateUser2(u);
                                     this.bd.updateVoluntario2(v);

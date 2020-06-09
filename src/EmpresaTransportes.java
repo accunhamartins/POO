@@ -521,4 +521,20 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return 60;
     }
 
+    int distanciaEntreLojas(ArrayList<Encomenda> rota, BDGeral bd){
+        int total = 0;
+        for(int i = 1; i < rota.size(); i++) {
+            Encomenda next = rota.get(i);
+            Encomenda ant = rota.get(i - 1);
+            try {
+                Loja anterior = bd.getLojas().getLojas().get(bd.getLojas().getEmail(ant.getCodigo_loja())).clone();
+                Loja seguinte = bd.getLojas().getLojas().get(bd.getLojas().getEmail(next.getCodigo_loja())).clone();
+                total += DistanceCalculator.distance(anterior.getLatitude(), seguinte.getLatitude(), anterior.getLongitude(), seguinte.getLongitude());
+            } catch (LojaNotFoundException e) {
+
+            }
+        }
+        return total;
+    }
+
 }
