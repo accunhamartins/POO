@@ -802,7 +802,11 @@ public class TrazAquiController implements Serializable {
                         System.out.println("Prima 4 para imprimir o menu");
                         break;
                     case 2:
-                        System.out.println(this.bd.getLojas().getLojas().get(lj.getEmail()).getEncomendas_recebidas());
+                        if(this.bd.getLojas().getLojas().get(lj.getEmail()).getEncomendas_recebidas().size() == 0){
+                            System.out.println("Não existem encomendas por levantar");
+                        }
+                        else System.out.println(this.bd.getLojas().getLojas().get(lj.getEmail()).getEncomendas_recebidas());
+                        System.out.println("Prima 4 para imprimir o menu");
                         break;
                     case 3:
                         System.out.println("Insira quantas pessoas se encontram na fila");
