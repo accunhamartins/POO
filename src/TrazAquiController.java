@@ -434,7 +434,7 @@ public class TrazAquiController implements Serializable {
                     case 7:
                         String naoEntregue = this.bd.getTransportes().getTransportes().get(et.getEmail()).getNaoEntregue();
                         if(naoEntregue.equals("0")){System.out.println("Não existem encomendas por entregar");}
-                        else if(naoEntregue.equals("1")) System.out.println("Existem mais de uma encomenda por entregar.\nPrima 6 para realizar todas as entregas");
+                        else if(naoEntregue.equals("1")) System.out.println("Existem mais de uma encomenda por entregar.\nPrima 8 para realizar todas as entregas");
                         else {
                             System.out.println(naoEntregue);
                             System.out.println("Indique a encomenda que acabou de ser entregue");
@@ -1001,6 +1001,7 @@ public class TrazAquiController implements Serializable {
                                 }
                                 clearScreen();
                                 produtosSel2.remove("0");
+                                produto = "";
                                 System.out.println(bd.getProdutos().listProdutosNormais());
                                 System.out.println("Pretende encomendar mais produtos não-médicos? (Prima 0 se não pretender encomendar nenhum)");
                                 while (!produto.equals("0")) {
