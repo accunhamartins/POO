@@ -9,8 +9,6 @@ public class Main{
         BDGeral base = controller.readFlow();
         controller.setBd(base);
         controller.mainFlow();
-        System.out.println("Gravando último estado da aplicação...");
-        base.gravarFicheiro("update");
         System.out.println("Saindo do programa....");
         
     }

@@ -84,7 +84,7 @@ public class TrazAquiController implements Serializable {
             op = input.lerInt();
             switch(op){
                 case 0:
-                    return;
+                    break;
                 case 1:
                     clearScreen();
                     registosFlow();
@@ -108,8 +108,16 @@ public class TrazAquiController implements Serializable {
                 default:
                     System.out.println("Opção inválida");
             }
+        } while (op != 0);
+        System.out.println("\nPRETENDE GRAVAR O ÚLTIMO ESTADO DA APLICAÇÃO?");
+        System.out.println("NÃO -> 0 || SIM -> 1");
+        op = input.lerInt();
+        if(op == 1){
+            this.bd.gravarFicheiro("update");
+            System.out.println("O estado foi gravado no ficheiro update");
+            return;
         }
-        while (op != 0);
+        else return;
     }
 
     /**
