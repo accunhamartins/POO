@@ -101,7 +101,7 @@ import java.util.stream.Collectors;
             StringBuilder sb = new StringBuilder();
             Map<String, LinhaEncomenda> normais = new HashMap<>();
             for(String s: this.produtos.keySet()){
-                if(!s.equals("Desinfetante") || !s.equals("Alcool") || !s.equals("Saco de lixo 50l") || !s.equals("Saco de lixo 30l")){
+                if(!s.equals("Desinfetante") && !s.equals("Alcool") && !s.equals("Saco de lixo 50l") && !s.equals("Saco de lixo 30l")){
                     normais.put(s, this.produtos.get(s));
                 }
             }

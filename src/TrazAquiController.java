@@ -256,8 +256,6 @@ public class TrazAquiController implements Serializable {
                         raio = input.lerDouble();
                         this.view.nif();
                         nif = input.lerInt();
-                        this.view.nr_min_encomendas();
-                        nrMinimo = input.lerInt();
                         this.view.encomendas_medicas();
                         medico = input.lerBoolean();
                         System.out.println("Insira a velocidade a que se costuma deslocar");
@@ -269,7 +267,7 @@ public class TrazAquiController implements Serializable {
                         input.lerString();
                         System.out.println("Input inválido");
                     }
-                    bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), nrMinimo, medico, 0, 0, false,0 , velocidade).clone());
+                    bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), 0, medico, 0, 0, false,0 , velocidade).clone());
                     System.out.println("REGISTO EFETUADO COM SUCESSO");
                     System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
@@ -874,8 +872,8 @@ public class TrazAquiController implements Serializable {
                             System.out.println("Selecione o código de uma loja");
                             loja = input.lerString();
                             try {
-                                System.out.println(bd.getProdutos().listProdutosNormais());
                                 String emailLoja = this.bd.getLojas().getEmail(loja);
+                                System.out.println(bd.getProdutos().listProdutosNormais());
                                 while (!produto.equals("0")) {
                                     this.view.produto();
                                     System.out.println("Insira 0 para concluir a seleção de produtos");
@@ -984,8 +982,8 @@ public class TrazAquiController implements Serializable {
                             System.out.println("Selecione o código de uma loja");
                             loja2 = input.lerString();
                             try {
-                                System.out.println(bd.getProdutos().listProdutosMedicos());
                                 String emailLoja = this.bd.getLojas().getEmail(loja2);
+                                System.out.println(bd.getProdutos().listProdutosMedicos());
                                 while (!produto2.equals("0")) {
                                     this.view.produto();
                                     System.out.println("Insira 0 para concluir a seleção de produtos");
@@ -1088,43 +1086,49 @@ public class TrazAquiController implements Serializable {
                             System.out.println("Insira 12 para imprimir de novo o menu");
                             break;
                         case 5:
-                            System.out.println(u.getEncomendas());
-                            System.out.println("Insira o código da encomenda que pretende analisar");
-                            String cod1 = input.lerString();
-                            try {
-                                Encomenda enc = u.devolveEncomenda(cod1);
-                                String one, two, three, four;
-                                one = "NÃO";
-                                two = "NÃO";
-                                three = "NÃO";
-                                four = "NÃO";
-
-                                if(enc.isEncomendaMedica()){
-                                    one = "SIM";
-                                }
-
-                                if(enc.isPreparada()){
-                                    two = "SIM";
-                                }
-
-                                if(enc.isLevantada()){
-                                    three = "SIM";
-                                }
-
-                                if(enc.isEntregue()){
-                                    four = "SIM";
-                                }
-
-                                System.out.println("\n\nENCOMENDA COM O CÓDIGO " + enc.getCodigo());
-                                System.out.println("\nESTADOS DA ENCOMENDA: ");
-                                System.out.println("\nENCOMENDA MÉDICA ---> " + one);
-                                System.out.println("\nENCOMENDA PRONTA A SER LEVANTADA DA LOJA ---> " + two);
-                                System.out.println("\nENCOMENDA LEVANTADA E A CAMINHO ---> " + three);
-                                System.out.println("\nENCOMENDA ENTREGUE ---> " + four);
-                                System.out.println("\nInsira 12 para retroceder");
-                            } catch (EncomendaNotFoundException e){
-                                System.out.println("Código inválido");
+                            if(u.getEncomendas().size() == 0){
+                                System.out.println("Não tem encomendas efetuadas");
                                 System.out.println("Insira 12 para retroceder");
+                            }
+                            else {
+                                System.out.println(u.getEncomendas());
+                                System.out.println("Insira o código da encomenda que pretende analisar");
+                                String cod1 = input.lerString();
+                                try {
+                                    Encomenda enc = u.devolveEncomenda(cod1);
+                                    String one, two, three, four;
+                                    one = "NÃO";
+                                    two = "NÃO";
+                                    three = "NÃO";
+                                    four = "NÃO";
+
+                                    if (enc.isEncomendaMedica()) {
+                                        one = "SIM";
+                                    }
+
+                                    if (enc.isPreparada()) {
+                                        two = "SIM";
+                                    }
+
+                                    if (enc.isLevantada()) {
+                                        three = "SIM";
+                                    }
+
+                                    if (enc.isEntregue()) {
+                                        four = "SIM";
+                                    }
+
+                                    System.out.println("\n\nENCOMENDA COM O CÓDIGO " + enc.getCodigo());
+                                    System.out.println("\nESTADOS DA ENCOMENDA: ");
+                                    System.out.println("\nENCOMENDA MÉDICA ---> " + one);
+                                    System.out.println("\nENCOMENDA PRONTA A SER LEVANTADA DA LOJA ---> " + two);
+                                    System.out.println("\nENCOMENDA LEVANTADA E A CAMINHO ---> " + three);
+                                    System.out.println("\nENCOMENDA ENTREGUE ---> " + four);
+                                    System.out.println("\nInsira 12 para retroceder");
+                                } catch (EncomendaNotFoundException e) {
+                                    System.out.println("Código inválido");
+                                    System.out.println("Insira 12 para retroceder");
+                                }
                             }
                             break;
                         case 6:
