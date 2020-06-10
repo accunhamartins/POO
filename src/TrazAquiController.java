@@ -333,8 +333,8 @@ public class TrazAquiController implements Serializable {
             EmpresaTransportes et = bd.loginEmpresa(email, password).clone();
             clearScreen();
             this.view.showMenuTransportes();
-            System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
-            System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar\n");
+            System.out.println("\n-> Tem " + et.porLevantar() + " encomendas por levantar.");
+            System.out.println("\n-> Tem " + et.porEntregar() + " encomendas prontas a entregar\n");
             System.out.print("\nInsira uma opção --> ");
             do{
                 op = input.lerInt();
@@ -556,8 +556,8 @@ public class TrazAquiController implements Serializable {
                     case 11:
                         clearScreen();
                         this.view.showMenuTransportes();
-                        System.out.println("\nTem " + et.porLevantar() + " encomendas por levantar.");
-                        System.out.println("\nTem " + et.porEntregar() + " encomendas prontas a entregar\n");
+                        System.out.println("\n-> Tem " + et.porLevantar() + " encomendas por levantar.");
+                        System.out.println("\n-> Tem " + et.porEntregar() + " encomendas prontas a entregar\n");
                         System.out.print("\nInsira uma opção --> ");
                         break;
                     default:
@@ -591,8 +591,8 @@ public class TrazAquiController implements Serializable {
             Voluntario v = bd.loginVoluntario(email, password).clone();
             clearScreen();
             this.view.showMenuVoluntario();
-            System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar");
-            System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar\n");
+            System.out.println("\n-> Tem " + v.porLevantar() + " encomendas por levantar");
+            System.out.println("\n-> Tem " + v.porEntregar() + " encomendas prontas a entregar\n");
             System.out.print("\nInsira uma opção --> ");
             do {
                 op = input.lerInt();
@@ -721,8 +721,8 @@ public class TrazAquiController implements Serializable {
                     case 8:
                         clearScreen();
                         this.view.showMenuVoluntario();
-                        System.out.println("\nTem " + v.porLevantar() + " encomendas por levantar");
-                        System.out.println("\nTem " + v.porEntregar() + " encomendas prontas a entregar\n");
+                        System.out.println("\n-> Tem " + v.porLevantar() + " encomendas por levantar");
+                        System.out.println("\n-> Tem " + v.porEntregar() + " encomendas prontas a entregar\n");
                         System.out.print("\nInsira uma opção --> ");
                         break;
                     default:
