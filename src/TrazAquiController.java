@@ -58,9 +58,18 @@ public class TrazAquiController implements Serializable {
                     System.out.println("Insira o ficheiro a ler");
                     String aux = Input.lerString();
                     this.bd = new BDGeral();
-                    BDGeral base2 = this.bd.lerFicheiro(aux);
-                    System.out.println("DONE!");
-                    return base2;
+                    try {
+                        BDGeral base2 = this.bd.lerFicheiro(aux);
+                        System.out.println("DONE!");
+                        return base2;
+                    } catch (IOException e){
+                        System.out.println("\nFicheiro inválido\n");
+                        this.view.loadMenu();
+                    } catch (ClassNotFoundException e){
+                        System.out.println("\nFicheiro inválido\n");
+                        this.view.loadMenu();
+                    }
+                    break;
                 default:
                     System.out.println("Opção inválida!");
                     break;
@@ -99,6 +108,23 @@ public class TrazAquiController implements Serializable {
                     String l = Input.lerString();
                     this.bd.gravarFicheiro(l);
                     System.out.println("DONE");
+                    System.out.println("Insira 5 para voltar a imprimir o menu");
+                    break;
+                case 4:
+                    System.out.println("Insira o ficheiro a ler");
+                    String aux = Input.lerString();
+                    this.bd = new BDGeral();
+                    try {
+                        BDGeral base2 = this.bd.lerFicheiro(aux);
+                        this.bd = new BDGeral(base2);
+                        System.out.println("DONE!");
+                    } catch (IOException e){
+                        System.out.println("\nFicheiro inválido\n");
+                        this.view.loadMenu();
+                    } catch (ClassNotFoundException e){
+                        System.out.println("\nFicheiro inválido\n");
+                        this.view.loadMenu();
+                    }
                     System.out.println("Insira 5 para voltar a imprimir o menu");
                     break;
                 case 5:
@@ -558,7 +584,8 @@ public class TrazAquiController implements Serializable {
                             System.out.println(et.getFaturacao(d1, d2, this.bd.clone()));
                             System.out.println("Prima 11 para voltar ao menu");
                         }  catch (ParseException e){
-
+                            System.out.println("Data inválida");
+                            System.out.println("Insira 11 para retroceder");
                         }
                         break;
                     case 11:
@@ -1211,14 +1238,14 @@ public class TrazAquiController implements Serializable {
                                 LocalDateTime d2 = dateTime2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
                                 System.out.println(v.getInfoEncomendas(d1, d2));
                                 System.out.println("Prima 12 para retroceder");
-                                break;
-
                             } catch (VoluntarioNotFoundException e){
                                 System.out.println("Código inválido");
                                 System.out.println("Insira 12 para retroceder");
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                System.out.println("Data inválida");
+                                System.out.println("Insira 12 para retroceder");
                             }
+                            break;
                         case 9:
                             System.out.println(this.bd.getTransportes().printTransportes());
                             System.out.println("Insira o código da empresa de transportes que pretende analisar");
@@ -1239,13 +1266,14 @@ public class TrazAquiController implements Serializable {
                                 LocalDateTime d2 = dateTime2.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
                                 System.out.println(et.getInfoEncomendas(d1, d2));
                                 System.out.println("Prima 12 para retroceder");
-                                break;
                             } catch (TransporteNotFoundException e){
                                 System.out.println("Código inválido");
                                 System.out.println("Insira 12 para retroceder");
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                System.out.println("Data inválida");
+                                System.out.println("Insira 12 para retroceder");
                             }
+                            break;
                         case 10:
                             System.out.println("TOP10 voluntário e empresas que mais encomendas realizaram: \n");
                             Set<Pair> result = this.bd.top10Encomendas();
