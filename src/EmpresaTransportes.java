@@ -13,7 +13,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
     private double classificao;
     private int avaliacoes;
     private ArrayList<Encomenda> registos;
-    private int numeroMinimoEncomenda;
     private boolean transporteMedico;
     private boolean disponivel;
 
@@ -25,7 +24,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.local = " ";
         this.raioDeAcao = 0.0;
         this.registos = new ArrayList<>();
-        this.numeroMinimoEncomenda = 0;
         this.avaliacoes = 0;
         this.classificao = 0;
         this.transporteMedico = false;
@@ -34,7 +32,7 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.velocidade = 0;
     }
 
-    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos, int numeroMinimoEncomenda,
+    public EmpresaTransportes(String email,String password,String codigo, String nome, int nif, double custo_km, String local,double latitude, double longitude, double raioDeAcao, ArrayList<Encomenda> registos,
                               boolean transporteMedico, double classificao, int avaliacoes, boolean disponivel, int minutosDeEspera, int velocidade){
         super(email, password, "Transportadora", codigo, nome, latitude, longitude);
         this.nif = nif;
@@ -42,7 +40,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.local = local;
         this.raioDeAcao = raioDeAcao;
         this.setRegistos(registos);
-        this.numeroMinimoEncomenda = numeroMinimoEncomenda;
         this.transporteMedico = transporteMedico;
         this.classificao = classificao;
         this.avaliacoes = avaliacoes;
@@ -58,7 +55,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.local = a.getLocal();
         this.raioDeAcao = a.getRaioDeAcao();
         this.setRegistos(a.getRegistos());
-        this.numeroMinimoEncomenda = a.getNumeroMinimoEncomenda();
         this.transporteMedico = a.aceitoTransporteMedicamentos();
         this.avaliacoes = a.getAvaliacoes();
         this.classificao = a.getClassificao();
@@ -135,11 +131,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         return this.registos.stream().map(Encomenda::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public int getNumeroMinimoEncomenda() {
-        return numeroMinimoEncomenda;
-    }
-
-
     public void setMinutosDeEspera(int minutosDeEspera) {
         this.minutosDeEspera = minutosDeEspera;
     }
@@ -176,10 +167,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         this.local = local;
     }
 
-    public void setNumeroMinimoEncomenda(int numeroMinimoEncomenda) {
-        this.numeroMinimoEncomenda = numeroMinimoEncomenda;
-    }
-
     public void setRaioDeAcao(double raioDeAcao) {
         this.raioDeAcao = raioDeAcao;
     }
@@ -209,7 +196,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
                 this.custo_km == e.getCusto_km() &&
                 this.local.equals(e.getLocal()) &&
                 this.raioDeAcao == e.getRaioDeAcao() &&
-                this.numeroMinimoEncomenda == e.getNumeroMinimoEncomenda() &&
                 this.registos.equals(e.getRegistos()) &&
                 this.transporteMedico == e.aceitoTransporteMedicamentos();
     }
@@ -236,7 +222,6 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
         sb.append("Registos de encomendas: ");
         sb.append(this.registos.toString());
         sb.append("Número mínimo de encomendas: ");
-        sb.append(this.numeroMinimoEncomenda+"\n");
         sb.append("Apta para transportes médicos: ");
         sb.append(this.transporteMedico+"\n");
 

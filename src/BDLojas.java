@@ -175,28 +175,6 @@ public class BDLojas implements Serializable {
     }
 
     /**
-     * Nétodo que imprime as lojas, indicando a distância a um determinado voluntário
-     * @param u
-     * @return
-     */
-
-    public String listLojasVol(Voluntario u){
-        StringBuilder sb = new StringBuilder();
-        sb.append("LISTA DE LOJAS\n");
-        int count = 0;
-        for(String s: this.lojas.keySet()) {
-            Loja j = this.lojas.get(s);
-            double dist = DistanceCalculator.distance(u.getLatitude(), j.getLatitude(), u.getLongitude(), j.getLongitude());
-            if (dist <= u.getRaio_acao()) {
-                sb.append(this.lojas.get(s).getCodigo() + " --> " + this.lojas.get(s).getNome() + " ----> DIST: " + dist + " KMS" + "\n");
-                count++;
-            }
-        }
-        if(count == 0) sb.append("Não existem lojas no seu raio de ação");
-        return sb.toString();
-    }
-
-    /**
      * Método que devolve o email de uma loja, quando lhe é fornecido o seu código
      * @param cod
      * @return

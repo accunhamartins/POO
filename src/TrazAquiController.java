@@ -267,7 +267,7 @@ public class TrazAquiController implements Serializable {
                         input.lerString();
                         System.out.println("Input inválido");
                     }
-                    bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), 0, medico, 0, 0, false,0 , velocidade).clone());
+                    bd.addTransporte(new EmpresaTransportes(email, password, codigo, nome, nif,custo,local,latitude,longitude,raio, new ArrayList<>(), medico, 0, 0, false,0 , velocidade).clone());
                     System.out.println("REGISTO EFETUADO COM SUCESSO");
                     System.out.println("PRIMA 0 PARA VOLTAR AO MENU INICIAL");
                     break;
@@ -875,8 +875,8 @@ public class TrazAquiController implements Serializable {
                                 String emailLoja = this.bd.getLojas().getEmail(loja);
                                 System.out.println(bd.getProdutos().listProdutosNormais());
                                 while (!produto.equals("0")) {
-                                    this.view.produto();
                                     System.out.println("Insira 0 para concluir a seleção de produtos");
+                                    this.view.produto();
                                     produto = input.lerString();
                                     produtosSel.add(produto);
                                     System.out.println("\n");
@@ -989,6 +989,17 @@ public class TrazAquiController implements Serializable {
                                     System.out.println("Insira 0 para concluir a seleção de produtos");
                                     produto2 = input.lerString();
                                     produtosSel2.add(produto2);
+                                    System.out.println("\n");
+                                }
+                                clearScreen();
+                                produtosSel2.remove("0");
+                                System.out.println(bd.getProdutos().listProdutosNormais());
+                                System.out.println("Pretende encomendar mais produtos não-médicos? (Prima 0 se não pretender encomendar nenhum)");
+                                while (!produto.equals("0")) {
+                                    System.out.println("Insira 0 para concluir a seleção de produtos");
+                                    this.view.produto();
+                                    produto = input.lerString();
+                                    produtosSel2.add(produto);
                                     System.out.println("\n");
                                 }
                                 produtosSel2.remove("0");
@@ -1117,7 +1128,7 @@ public class TrazAquiController implements Serializable {
                                     if (enc.isEntregue()) {
                                         four = "SIM";
                                     }
-
+                                    clearScreen();
                                     System.out.println("\n\nENCOMENDA COM O CÓDIGO " + enc.getCodigo());
                                     System.out.println("\nESTADOS DA ENCOMENDA: ");
                                     System.out.println("\nENCOMENDA MÉDICA ---> " + one);

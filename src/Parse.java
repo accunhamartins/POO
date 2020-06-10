@@ -213,7 +213,7 @@ public class Parse {
         int low = 90;
         int high = 120;
         int velocidade = random.nextInt(high-low) + low;
-        return new EmpresaTransportes(email, password, codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), 0, true, 0, 0, true, 0, velocidade);
+        return new EmpresaTransportes(email, password, codigo, nome, nif, custo_km, " ", latitude, longitude, raioDeAcao, new ArrayList<>(), true, 0, 0, true, 0, velocidade);
     }
 
     /**
