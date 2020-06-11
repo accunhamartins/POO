@@ -105,7 +105,7 @@ public class BDTransportes implements Serializable {
      * @return
      */
     public EmpresaTransportes tryLogin(String email, String password){
-        EmpresaTransportes aux = this.transportes.get(email).clone();
+        EmpresaTransportes aux = this.transportes.get(email);
         if(aux == null) System.out.println("Não existe essa empresa de transportes");
         else{
             if(aux.getPassword().equals(password)){

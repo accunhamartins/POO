@@ -92,7 +92,7 @@ public class BDVoluntarios implements Serializable {
      * @return
      */
     public Voluntario tryLogin(String email, String password){
-        Voluntario aux = this.voluntarios.get(email).clone();
+        Voluntario aux = this.voluntarios.get(email);
         if(aux == null) System.out.println("Não existe esse voluntário");
         else{
             if(aux.getPassword().equals(password)){
