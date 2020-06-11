@@ -111,7 +111,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
     public List<Encomenda> getHistorico(){
         List<Encomenda> res = new ArrayList<>();
-        for(Encomenda s: this.historico) res.add(s);
+        for(Encomenda s: this.historico) res.add(s.clone());
         return res;
     }
 
@@ -162,7 +162,7 @@ public class Voluntario extends UtilizadorSistema implements Serializable {
 
     public void setHistorico(List<Encomenda> a){
         this.historico = new ArrayList<>();
-        for(Encomenda s: a) this.historico.add(s);
+        for(Encomenda s: a) this.historico.add(s.clone());
     }
 
     //Método de clonar um objeto

@@ -82,6 +82,7 @@ public class BDVoluntarios implements Serializable {
 
     public void add(Voluntario v){
         this.voluntarios.put(v.getEmail(), v.clone());
+        this.codigos.add(v.getCodigo());
     }
 
     /**
@@ -91,7 +92,7 @@ public class BDVoluntarios implements Serializable {
      * @return
      */
     public Voluntario tryLogin(String email, String password){
-        Voluntario aux = this.voluntarios.get(email);
+        Voluntario aux = this.voluntarios.get(email).clone();
         if(aux == null) System.out.println("Não existe esse voluntário");
         else{
             if(aux.getPassword().equals(password)){
@@ -113,7 +114,7 @@ public class BDVoluntarios implements Serializable {
     public String printVoluntario(){
         StringBuilder sb = new StringBuilder();
         for(String s: this.voluntarios.keySet()){
-            sb.append(this.voluntarios.get(s).getCodigo() + " ---> " + this.voluntarios.get(s).getNome() +" || RATE --> "+ this.voluntarios.get(s).getClassificacao() + "\n" );
+            sb.append(this.voluntarios.get(s).clone().getCodigo() + " ---> " + this.voluntarios.get(s).clone().getNome() +" || RATE --> "+ this.voluntarios.get(s).clone().getClassificacao() + "\n" );
         }
         return sb.toString();
     }
@@ -144,7 +145,7 @@ public class BDVoluntarios implements Serializable {
     public List<Voluntario> voluntariosDisponíveis(Loja j, Utilizador u) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
-            Voluntario v = this.voluntarios.get(s);
+            Voluntario v = this.voluntarios.get(s).clone();
             Double dist1 = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
             Double dist2 = DistanceCalculator.distance(j.getLatitude(), u.getLatitude(), j.getLongitude(), u.getLongitude());
             if (dist1 <= v.getRaio_acao() && dist2 <= v.getRaio_acao() && v.getDisponibilidade()) {
@@ -176,7 +177,7 @@ public class BDVoluntarios implements Serializable {
     public List<Voluntario> voluntariosDisponíveis2(Loja j, Voluntario v) {
         List<Voluntario> ret = new ArrayList<>();
         for (String s : this.voluntarios.keySet()) {
-            Voluntario v2 = this.voluntarios.get(s);
+            Voluntario v2 = this.voluntarios.get(s).clone();
             double dist = DistanceCalculator.distance(j.getLatitude(), v.getLatitude(), j.getLongitude(), v.getLongitude());
             if (dist <= v2.getRaio_acao() && v2.getDisponibilidade() && !v.getCodigo().equals(v2.getCodigo())) {
                 ret.add(v2);
@@ -193,7 +194,7 @@ public class BDVoluntarios implements Serializable {
      */
     public String getEmail(String cod) throws VoluntarioNotFoundException{
         for(String s: this.voluntarios.keySet()){
-            if(this.voluntarios.get(s).getCodigo().equals(cod)) return this.voluntarios.get(s).getEmail();
+            if(this.voluntarios.get(s).clone().getCodigo().equals(cod)) return this.voluntarios.get(s).clone().getEmail();
         }
         throw new VoluntarioNotFoundException();
     }
@@ -226,7 +227,7 @@ public class BDVoluntarios implements Serializable {
     public Voluntario encontraEnc(String enc) throws EncomendaNotFoundException{
         Voluntario aux;
         for(String s: this.voluntarios.keySet()){
-            aux = this.voluntarios.get(s);
+            aux = this.voluntarios.get(s).clone();
             if(aux.existe(enc)) return aux;
         }
         throw new EncomendaNotFoundException();
@@ -240,7 +241,7 @@ public class BDVoluntarios implements Serializable {
     public boolean existeEnc(String enc){
         Voluntario aux;
         for(String s: this.voluntarios.keySet()){
-            aux = this.voluntarios.get(s);
+            aux = this.voluntarios.get(s).clone();
             if(aux.existe(enc)) return true;
         }
         return false;

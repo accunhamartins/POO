@@ -118,7 +118,7 @@ public class BDUtilizador implements Serializable {
     public Utilizador tryLogin(String email, String password){
         if(!this.users.containsKey(email)) return null;
         else{
-            Utilizador aux = this.users.get(email);
+            Utilizador aux = this.users.get(email).clone();
             if(aux.getPassword().equals(password)){
                 System.out.println("Login feito com sucesso");
                 return aux;
@@ -132,7 +132,7 @@ public class BDUtilizador implements Serializable {
 
     public String getEmail(String cod) throws UserNotFoundException{
         for(String s: this.users.keySet()){
-            if(this.users.get(s).getCodigo().equals(cod)) return this.users.get(s).getEmail();
+            if(this.users.get(s).clone().getCodigo().equals(cod)) return this.users.get(s).getEmail();
         }
         throw new UserNotFoundException();
     }

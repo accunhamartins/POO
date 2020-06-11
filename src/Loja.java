@@ -56,7 +56,7 @@ public class Loja extends UtilizadorSistema implements Serializable {
     public ArrayList<Encomenda> getEncomendas_recebidas(){
         ArrayList<Encomenda> aux = new ArrayList<>();
         for(Encomenda s: this.encomendas_recebidas){
-            aux.add(s);
+            aux.add(s.clone());
         }
         return aux;
     }
@@ -88,7 +88,7 @@ public class Loja extends UtilizadorSistema implements Serializable {
     public void setEncomendas_recebidas(ArrayList<Encomenda> encomendas_recebidas) {
         this.encomendas_recebidas = new ArrayList<>();
         for(Encomenda s: encomendas_recebidas){
-            this.encomendas_recebidas.add(s);
+            this.encomendas_recebidas.add(s.clone());
         }
     }
 

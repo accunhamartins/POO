@@ -409,7 +409,7 @@ public class TrazAquiController implements Serializable {
                         String codCust = input.lerString();
                         try{
                             Encomenda encomendaCust = this.bd.getTransportes().getTransportes().get(et.getEmail()).getEncomenda(codCust);
-                            Loja ljCust = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomendaCust.getCodigo_loja()));
+                            Loja ljCust = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomendaCust.getCodigo_loja())).clone();
                             Utilizador uCust = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(encomendaCust.getCodigo_user())).clone();
                             int distCust1 = (int) DistanceCalculator.distance(et.getLatitude(), ljCust.getLatitude(), et.getLongitude(), ljCust.getLongitude());
                             int distCust2 = (int) DistanceCalculator.distance(uCust .getLatitude(), ljCust.getLatitude(), uCust.getLongitude(), ljCust.getLongitude());
@@ -435,7 +435,7 @@ public class TrazAquiController implements Serializable {
                             String cod = Input.lerString();
                             try {
                                 Encomenda encomenda = this.bd.getTransportes().getTransportes().get(et.getEmail()).getEncomenda(cod);
-                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomenda.getCodigo_loja()));
+                                Loja lj = this.bd.getLojas().getLojas().get(this.bd.getLojas().getEmail(encomenda.getCodigo_loja())).clone();
                                 Utilizador u = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(encomenda.getCodigo_user())).clone();
                                 int minutos = (int) (lj.getTempo_espera() + lj.getNrPessoasEmFila() * lj.getTempo_espera());
                                 et.setMinutosDeEspera(minutos);
@@ -537,9 +537,9 @@ public class TrazAquiController implements Serializable {
                                 System.out.println("Distância percorrida " + totalKms + " kms");
                                 for (int i = 1; i < rota.size(); i++) {
                                     Encomenda e1 = rota.get(i-1);
-                                    Utilizador u1 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e1.getCodigo_user()));
+                                    Utilizador u1 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e1.getCodigo_user())).clone();
                                     Encomenda e2 = rota.get(i);
-                                    Utilizador u2 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e2.getCodigo_user()));
+                                    Utilizador u2 = this.bd.getUtilizadores().getUsers().get(this.bd.getUtilizadores().getEmail(e2.getCodigo_user())).clone();
                                     int distancia = (int) DistanceCalculator.distance(u1.getLatitude(), u2.getLatitude(), u1.getLongitude(), u2.getLongitude());
                                     totalKms += distancia;
                                     totalTime += (distancia * 60) / et.getVelocidade();
@@ -729,7 +729,7 @@ public class TrazAquiController implements Serializable {
                                 String codUser = encomenda2.getCodigo_user();
                                 try {
                                     String emailUser = this.bd.getUtilizadores().getEmail(codUser);
-                                    Utilizador u = this.bd.getUtilizadores().getUsers().get(emailUser).clone().clone();
+                                    Utilizador u = this.bd.getUtilizadores().getUsers().get(emailUser).clone();
                                     int distancia2 = (int) DistanceCalculator.distance(v.getLatitude(),lj.getLatitude(), v.getLongitude(), lj.getLongitude());
                                     totalTime += ((distancia1 + distancia2) * 60) / v.getVelocidade();
                                     totalTime += v.getMinutosDeEspera();

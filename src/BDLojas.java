@@ -134,6 +134,7 @@ public class BDLojas implements Serializable {
 
     public void add(Loja l){
         this.lojas.put(l.getEmail(), l.clone());
+        this.codigos.add(l.getCodigo());
     }
 
     /**
@@ -143,7 +144,7 @@ public class BDLojas implements Serializable {
      * @return
      */
     public Loja tryLogin(String email, String password){
-        Loja aux = this.lojas.get(email);
+        Loja aux = this.lojas.get(email).clone();
         if(aux == null) System.out.println("Não existe essa loja");
         else{
             if(aux.getPassword().equals(password)){
@@ -167,7 +168,7 @@ public class BDLojas implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("LISTA DE LOJAS\n");
         for(String s: this.lojas.keySet()){
-            Loja j = this.lojas.get(s);
+            Loja j = this.lojas.get(s).clone();
             double dist = DistanceCalculator.distance(u.getLatitude(), j.getLatitude(), u.getLongitude(), j.getLongitude());
             sb.append(this.lojas.get(s).getCodigo() + " --> " + this.lojas.get(s).getNome() + " ----> DIST:  " + dist +" KMS" +"\n");
         }
@@ -183,7 +184,7 @@ public class BDLojas implements Serializable {
 
     public String getEmail(String cod) throws LojaNotFoundException{
         for(String s: this.lojas.keySet()){
-            if(this.lojas.get(s).getCodigo().equals(cod)) return this.lojas.get(s).getEmail();
+            if(this.lojas.get(s).clone().getCodigo().equals(cod)) return this.lojas.get(s).getEmail();
         }
         throw new LojaNotFoundException();
     }

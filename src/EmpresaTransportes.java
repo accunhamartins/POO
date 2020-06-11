@@ -289,8 +289,8 @@ public class EmpresaTransportes extends UtilizadorSistema implements Serializabl
             if(date.compareTo(d1) >= 0 && date.compareTo(d2) <= 0){
                 unit += e.getPeso() * 0.2;
                 try {
-                    Utilizador userEnc = bd.getUtilizadores().getUsers().get(bd.getUtilizadores().getEmail(e.getCodigo_user()));
-                    Loja lojaEnc = bd.getLojas().getLojas().get(bd.getLojas().getEmail(e.getCodigo_loja()));
+                    Utilizador userEnc = bd.getUtilizadores().getUsers().get(bd.getUtilizadores().getEmail(e.getCodigo_user())).clone();
+                    Loja lojaEnc = bd.getLojas().getLojas().get(bd.getLojas().getEmail(e.getCodigo_loja())).clone();
                     kms += DistanceCalculator.distance(this.getLatitude(), lojaEnc.getLatitude(), this.getLongitude(), lojaEnc.getLongitude());
                     kms += DistanceCalculator.distance(lojaEnc.getLatitude(), userEnc.getLatitude(), lojaEnc.getLongitude(), userEnc.getLongitude());
 
