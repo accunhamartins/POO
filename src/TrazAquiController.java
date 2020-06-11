@@ -898,6 +898,7 @@ public class TrazAquiController implements Serializable {
                             int quantidade = 0;
                             double quantidadeTot = 0.0;
                             double custoTotal = 0.0;
+                            produto = "";
                             String loja;
                             List<String> produtosSel = new ArrayList<>();
                             Map<String, LinhaEncomenda> produtos = new TreeMap<>();
@@ -928,7 +929,7 @@ public class TrazAquiController implements Serializable {
                                         quantidadeTot += quantidade;
                                         custoTotal += bd.getProdutos().getProdutos().get(s).getPreco() * quantidade;
                                     }
-                                    System.out.println("Custo total da encomenda: " + custoTotal);
+                                    System.out.println("\nCusto total da encomenda: " + custoTotal);
                                     Loja j = this.bd.getLojas().getLojas().get(emailLoja).clone();
                                     Random random = new Random();
                                     int low = 1000;
@@ -943,21 +944,22 @@ public class TrazAquiController implements Serializable {
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveis(j, u);
 
                                     if(disponiveis.size() == 0){
-                                        System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
-                                        System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        System.out.println("\nNão existem voluntários disponíveis perto da loja selecionada.");
+                                        System.out.println("\nSerá necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
                                         String r = this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso());
                                         if(r.equals("0")){
                                             System.out.println("\nNão existem empresas disponíveis...\n");
                                             System.out.println("A sua encomenda foi cancelada...\n");
                                             System.out.println("Prima 12 para voltar ao menu");
+                                            r = "";
                                             break;
                                         }
                                         System.out.println(this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso()));
                                         System.out.println("Selecione o código de uma empresa ou 0 para cancelar a encomenda");
                                         String opEmpresa = input.lerString();
                                         if(opEmpresa.equals("0")){
-                                            System.out.println("A sua encomenda foi cancelada");
-                                            System.out.println("Prima 12 para voltar ao menu");
+                                            System.out.println("\nA sua encomenda foi cancelada");
+                                            System.out.println("\nPrima 12 para voltar ao menu");
                                             break;
                                         }
                                         else {
@@ -1057,7 +1059,7 @@ public class TrazAquiController implements Serializable {
                                         quantidadeTot2 += quantidade2;
                                         custoTotal2 += bd.getProdutos().getProdutos().get(s).getPreco() * quantidade2;
                                     }
-                                    System.out.println("Custo total da encomenda: " + custoTotal2);
+                                    System.out.println("\nCusto total da encomenda: " + custoTotal2);
                                     Loja j = this.bd.getLojas().getLojas().get(emailLoja).clone();
                                     Random random = new Random();
                                     int low = 1000;
@@ -1072,21 +1074,22 @@ public class TrazAquiController implements Serializable {
                                     List<Voluntario> disponiveis = this.bd.getVoluntarios().voluntariosDisponíveisMed(j, u);
 
                                     if(disponiveis.size() == 0){
-                                        System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
-                                        System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        System.out.println("\nNão existem voluntários disponíveis perto da loja selecionada.");
+                                        System.out.println("\nSerá necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
                                         String ret = this.bd.getTransportes().printEmpresasMed(u, j, novaEnc.getPeso());
                                         if(ret.equals("0")){
                                             System.out.println("\nNão existem empresas disponíveis\n");
                                             System.out.println("A sua encomenda foi cancelada...\n");
                                             System.out.println("Prima 12 para voltar ao menu");
+                                            ret = "";
                                             break;
                                         }
                                         System.out.println(this.bd.getTransportes().printEmpresasMed(u, j, novaEnc.getPeso()));
                                         System.out.println("Selecione o código de uma empresa ou 0 para cancelar a encomenda");
                                         String opEmpresa = input.lerString();
                                         if(opEmpresa.equals("0")){
-                                            System.out.println("A sua encomenda foi cancelada");
-                                            System.out.println("Prima 12 para voltar ao menu");
+                                            System.out.println("\nA sua encomenda foi cancelada");
+                                            System.out.println("\nPrima 12 para voltar ao menu");
                                             break;
                                         }
                                         else {
