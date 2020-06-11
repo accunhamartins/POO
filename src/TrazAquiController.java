@@ -945,6 +945,13 @@ public class TrazAquiController implements Serializable {
                                     if(disponiveis.size() == 0){
                                         System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
                                         System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        String r = this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso());
+                                        if(r.equals("0")){
+                                            System.out.println("\nNão existem empresas disponíveis...\n");
+                                            System.out.println("A sua encomenda foi cancelada...\n");
+                                            System.out.println("Prima 12 para voltar ao menu");
+                                            break;
+                                        }
                                         System.out.println(this.bd.getTransportes().printEmpresas(u, j, novaEnc.getPeso()));
                                         System.out.println("Selecione o código de uma empresa ou 0 para cancelar a encomenda");
                                         String opEmpresa = input.lerString();
@@ -1067,6 +1074,13 @@ public class TrazAquiController implements Serializable {
                                     if(disponiveis.size() == 0){
                                         System.out.println("Não existem voluntários disponíveis perto da loja selecionada.");
                                         System.out.println("Será necessário selecionar uma empresa transportadora, pagando pelos seus serviços.");
+                                        String ret = this.bd.getTransportes().printEmpresasMed(u, j, novaEnc.getPeso());
+                                        if(ret.equals("0")){
+                                            System.out.println("\nNão existem empresas disponíveis\n");
+                                            System.out.println("A sua encomenda foi cancelada...\n");
+                                            System.out.println("Prima 12 para voltar ao menu");
+                                            break;
+                                        }
                                         System.out.println(this.bd.getTransportes().printEmpresasMed(u, j, novaEnc.getPeso()));
                                         System.out.println("Selecione o código de uma empresa ou 0 para cancelar a encomenda");
                                         String opEmpresa = input.lerString();
