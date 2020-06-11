@@ -239,7 +239,7 @@ public class Parse {
             String aux = campos[i] + "," + campos[i + 1] + "," + campos[i + 2] + "," + campos[i + 3];
             LinhaEncomenda le = parseLinhaEncomenda(aux);
             if (le.isMed()) med = true;
-            produtos.put(le.getCodigo(), le.clone());
+            produtos.put(le.getDescricao(), le.clone());
             baseGeral.addProduto(le);
         }
         return new Encomenda(codigo, codigo_user, codigo_loja, peso, comprador, vendedor, produtos, med, LocalDateTime.now(), false, false, true);
