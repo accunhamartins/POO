@@ -548,7 +548,8 @@ public class TrazAquiController implements Serializable {
                                     u2.updateEncomenda(e2);
                                     this.bd.updateUser2(u2);
                                     this.bd.updateTransportes2(et);
-                                    System.out.println("\nDemorou " + totalTime + " minutos a ser entregue ao user " + u2.getCodigo());
+                                    diff += totalTime;
+                                    System.out.println("\nDemorou " + diff + " minutos a ser entregue ao user " + u2.getCodigo());
                                     System.out.println("Distância percorrida " + totalKms + " kms\n");
                                 }
                             } catch (UserNotFoundException e) {
