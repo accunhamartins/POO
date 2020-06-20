@@ -63,7 +63,7 @@ public class Parse {
         List<String> ler = lerFicheiro("logs.txt");
         String[] linhaPartida;
         for (String linha : ler) {
-            linhaPartida = linha.split(":", -1);
+            linhaPartida = linha.split(":", 2);
             switch (linhaPartida[0]) {
                 case "Utilizador":
                     Utilizador u = parseUtilizador(linhaPartida[1]);
@@ -328,7 +328,7 @@ public class Parse {
                     EmpresaTransportes et = disponiveisTrans.get(0).clone();
                     et.addEncomenda(e);
                     this.baseGeral.updateTransportes2(et);
-                } else {
+                } else if(disponiveis.size() > 2) {
                     Random random = new Random();
                     int choice = random.nextInt(disponiveis.size() - 1);
                     Voluntario v = disponiveis.get(choice).clone();
@@ -360,7 +360,7 @@ public class Parse {
                         EmpresaTransportes et = disponiveisTrans.get(0).clone();
                         et.addEncomenda(e);
                         this.baseGeral.updateTransportes2(et);
-                    } else {
+                    } else if (disponiveis.size() > 2) {
                         Random random = new Random();
                         int choice = random.nextInt(disponiveis.size() - 1);
                         Voluntario v = disponiveis.get(choice).clone();
