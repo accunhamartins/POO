@@ -3,10 +3,6 @@ Trabalho Prático da UC  Programação Orientada aos Objetos
 
 Desenvolvimento de uma aplicação de entrega de encomendas ao domicílio.
 
-Compilar:
+Compilar: javac Main.java
 
-javac Main.java
-
-Executar:
-
-java Main
+Executar: java Main
