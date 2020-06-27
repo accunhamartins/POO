@@ -21,4 +21,5 @@ Explicação mais pormenorizada no relatório do trabalho prático.
 # Executar 
 
 `javac Main.java`
+
 `java Main`
